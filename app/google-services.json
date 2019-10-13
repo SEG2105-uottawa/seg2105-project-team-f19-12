@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "277192834884",
+    "firebase_url": "https://walkinclinicapp-ffe7e.firebaseio.com",
+    "project_id": "walkinclinicapp-ffe7e",
+    "storage_bucket": "walkinclinicapp-ffe7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277192834884:android:dcdea40001c9ea9791a111",
+        "android_client_info": {
+          "package_name": "com.samarthsaxena.walkinclinicapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277192834884-o5m9a34cflvhh7f5jb32tiv0rpvm69jb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.samarthsaxena.walkinclinicapp",
+            "certificate_hash": "49f2f494864f017b79065f21e36c615b83e9b2a9"
+          }
+        },
+        {
+          "client_id": "277192834884-sreb13odcs6qchaepqd1o1865l1u8f95.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM0Ofz-cDQQyV-GgHgiFm5drvYEBsbi3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277192834884-sreb13odcs6qchaepqd1o1865l1u8f95.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
