@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="EmployeeSignupActivity">
+    tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/employeeSU"
+        android:id="@+id/welcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/employeeSignup"
+        android:text="@string/welcome"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,15 +28,16 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/employeeSU">
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeText">
 
         <TextView
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:textSize="18sp"
             android:text="@string/username" />
 
         <EditText
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
+            android:textSize="18sp"
             android:text="@string/username" />
 
         <TextView
@@ -61,30 +63,32 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPassword"
-            tools:text="@string/password" />
-
-        <TextView
-            android:id="@+id/rpassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/repassword" />
-
-        <EditText
-            android:id="@+id/rpasswordText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:inputType="textPassword"
+            android:textSize="18sp"
             tools:text="@string/password" />
 
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/signup" />
+            android:textSize="18sp"
+            android:text="@string/login" />
 
+        <TextView
+            android:id="@+id/signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:text="@string/signupText"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@string/signup"
+            app:layout_constraintTop_toBottomOf="@+id/signup" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

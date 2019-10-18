@@ -1,5 +1,4 @@
 package com.samarthsaxena.walkinclinicapp;
 
-public class EmployeeSignupActivity {
-
+public class LoginActivity {
 }
