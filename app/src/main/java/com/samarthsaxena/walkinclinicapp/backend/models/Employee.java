@@ -2,8 +2,9 @@ package com.samarthsaxena.walkinclinicapp.backend.models;
 
 public class Employee extends User {
 
-    public Employee(int id, String firstName, String username, String hashedPassword) {
-        super(id, firstName, username, hashedPassword);
+    public Employee(String email, String username, String hashedPassword) {
+        super(email, username, hashedPassword);
         this.type = "employee";
+        dbStore();
     }
 }

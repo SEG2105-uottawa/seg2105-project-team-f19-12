@@ -1,9 +1,11 @@
 package com.samarthsaxena.walkinclinicapp.backend.models;
 
+
 public class Patient extends User {
 
-    public Patient(int id, String firstName, String username, String hashedPassword) {
-        super(id, firstName, username, hashedPassword);
+    public Patient(String email, String username, String hashedPassword) {
+        super(email, username, hashedPassword);
         this.type = "patient";
+        dbStore();
     }
 }

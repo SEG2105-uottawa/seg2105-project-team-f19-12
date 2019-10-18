@@ -1,5 +1,7 @@
 package com.samarthsaxena.walkinclinicapp;
 
+import com.samarthsaxena.walkinclinicapp.backend.Authentication;
+import com.samarthsaxena.walkinclinicapp.backend.models.*;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,102 +10,68 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 public class SignupActivity extends AppCompatActivity {
 
-    DatabaseReference usersRef;
-    RadioButton patient;
-    RadioButton employee;
+    RadioButton patientOption;
+    RadioButton employeeOption;
     EditText usernameText;
     EditText emailText;
     EditText passwordText;
     EditText rpasswordText;
     Button loginButton;
-FirebaseAuth firebaseAuth;
 
-     int count=0;
-     Member member;
-
+    int count = 0;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        patient=findViewById(R.id.patient);
-        employee=findViewById(R.id.employee);
-        usernameText=findViewById(R.id.usernameText);
-        passwordText=findViewById(R.id.passwordText);
-        rpasswordText=findViewById(R.id.rpasswordText);
-        loginButton=findViewById(R.id.loginButton);
-        emailText=findViewById(R.id.emailText);
-member=new Member();
+        patientOption = findViewById(R.id.patient);
+        employeeOption = findViewById(R.id.employee);
+        usernameText = findViewById(R.id.usernameText);
+        passwordText = findViewById(R.id.passwordText);
+        rpasswordText = findViewById(R.id.rpasswordText);
+        loginButton = findViewById(R.id.loginButton);
+        emailText = findViewById(R.id.emailText);
 
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-firebaseAuth= FirebaseAuth.getInstance();
-usersRef=FirebaseDatabase.getInstance().getReference().child("Member");
+                // Obtain fields from UI
+                final String username = usernameText.getText().toString();
+                final String pass = passwordText.getText().toString();
+                final String rpass = rpasswordText.getText().toString();
+                final String email = emailText.getText().toString();
+                String typesel = "";
 
-loginButton.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        final String username=usernameText.getText().toString();
-        final String pass=passwordText.getText().toString();
-        final String rpass=rpasswordText.getText().toString();
-        final String email=emailText.getText().toString();
-         String typesel="";
-        if(patient.isChecked()){
-            typesel=patient.getText().toString();
-        }
-        else if(employee.isChecked())
-            typesel=employee.getText().toString();
-        else{
-            typesel="Admin";
-        }
-final String type=typesel;
-        firebaseAuth.createUserWithEmailAndPassword(emailText.getText().toString().trim(), passwordText.getText().toString().trim())
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                // Determine user type
+                if (employeeOption.isChecked()) {
+                    typesel = "employee";
+                } else {
+                    typesel = "patient";
+                }
 
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            member.setEmail(email);
-
-                            member.setUsername(username);
-                            member.setPass(pass);
-                            member.setRpass(rpass);
-                            member.setTypesel(type);
-                            usersRef.push().setValue(member);
-                            Toast.makeText(SignupActivity.this,"User is successfully registered",Toast.LENGTH_LONG).show();
-
-
-                        } else {
-                            Toast.makeText(SignupActivity.this,task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-
-//                            Toast.makeText(SignupActivity.this, "Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-
-                        }
-
-
-                    }
-                });
+                // Register user
+                User user;
+                try {
+                    user = Authentication.register(email, username, pass, typesel);
+                } catch (RuntimeException e) {
+                    sendMessage("User registration error: " + e.toString());
+                }
+            }
+        });
 
     }
-});
-    }
 
+    public void sendMessage(String message) {
+        Toast.makeText(SignupActivity.this, message, Toast.LENGTH_LONG).show();
+    }
 }
+
