@@ -27,6 +27,7 @@ public class SignupActivity extends AppCompatActivity {
     RadioButton patient;
     RadioButton employee;
     EditText usernameText;
+    EditText emailText;
     EditText passwordText;
     EditText rpasswordText;
     Button loginButton;
@@ -48,6 +49,7 @@ FirebaseAuth firebaseAuth;
         passwordText=findViewById(R.id.passwordText);
         rpasswordText=findViewById(R.id.rpasswordText);
         loginButton=findViewById(R.id.loginButton);
+        emailText=findViewById(R.id.emailText);
 member=new Member();
 
 
@@ -57,9 +59,10 @@ usersRef=FirebaseDatabase.getInstance().getReference().child("Member");
 loginButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        final String name=usernameText.getText().toString();
+        final String username=usernameText.getText().toString();
         final String pass=passwordText.getText().toString();
         final String rpass=rpasswordText.getText().toString();
+        final String email=emailText.getText().toString();
          String typesel="";
         if(patient.isChecked()){
             typesel=patient.getText().toString();
@@ -70,14 +73,15 @@ loginButton.setOnClickListener(new View.OnClickListener() {
             typesel="Admin";
         }
 final String type=typesel;
-        firebaseAuth.createUserWithEmailAndPassword(usernameText.getText().toString().trim(), passwordText.getText().toString().trim())
+        firebaseAuth.createUserWithEmailAndPassword(emailText.getText().toString().trim(), passwordText.getText().toString().trim())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            member.setEmail(email);
 
-                            member.setName(name);
+                            member.setUsername(username);
                             member.setPass(pass);
                             member.setRpass(rpass);
                             member.setTypesel(type);
