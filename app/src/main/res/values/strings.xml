@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">WalkInClinicApp</string>
+
+    //MainActivity
     <string name="welcome">Welcome To The Walk In Clinic App</string>
     <string name="username">Enter Username:</string>
     <string name="password">Enter Password:</string>
-    <string name="login">LOGIN</string>
     <string name="signupText">Don\'t have an account?</string>
+    <string name="login">LOGIN</string>
     <string name="signup">SIGN UP</string>
+
+    //EmployeeSignupActivity
+    <string name="employeeSignup">Create an employee account:</string>
+    <string name="repassword">Renter Password:</string>
 </resources>
