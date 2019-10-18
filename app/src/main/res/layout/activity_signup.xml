@@ -76,7 +76,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textSize="18sp"
-            android:text="@string/username" />
+            android:text="" />
 
         <TextView
             android:id="@+id/password"
