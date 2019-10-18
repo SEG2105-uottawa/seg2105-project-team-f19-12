@@ -22,20 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 public class SignupActivity extends AppCompatActivity {
-    class User{
-        String name="";
-        String pass="";
-        String rpass="";
-        String typesel="";
 
-
-        User(String name,String pass,String rpass,String typesel){
-            this.name=name;
-            this.pass=pass;
-            this.rpass=rpass;
-            this.typesel=typesel;
-        }
-    }
     DatabaseReference usersRef;
     RadioButton patient;
     RadioButton employee;
@@ -44,10 +31,9 @@ public class SignupActivity extends AppCompatActivity {
     EditText rpasswordText;
     Button loginButton;
 FirebaseAuth firebaseAuth;
-    DatabaseReference userregister;
-     String type="";
-     int count=0;
 
+     int count=0;
+     Member member;
 
 
 
@@ -62,56 +48,56 @@ FirebaseAuth firebaseAuth;
         passwordText=findViewById(R.id.passwordText);
         rpasswordText=findViewById(R.id.rpasswordText);
         loginButton=findViewById(R.id.loginButton);
+member=new Member();
 
-        if(patient.isChecked()){
-            type=patient.getText().toString();
-        }
-        else if(employee.isChecked())
-            type=employee.getText().toString();
-        else{
-
-        }
 
 firebaseAuth= FirebaseAuth.getInstance();
-
+usersRef=FirebaseDatabase.getInstance().getReference().child("Member");
 
 loginButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-
-        firebaseAuth.createUserWithEmailAndPassword(usernameText.getText().toString(), passwordText.getText().toString())
+        final String name=usernameText.getText().toString();
+        final String pass=passwordText.getText().toString();
+        final String rpass=rpasswordText.getText().toString();
+         String typesel="";
+        if(patient.isChecked()){
+            typesel=patient.getText().toString();
+        }
+        else if(employee.isChecked())
+            typesel=employee.getText().toString();
+        else{
+            typesel="Admin";
+        }
+final String type=typesel;
+        firebaseAuth.createUserWithEmailAndPassword(usernameText.getText().toString().trim(), passwordText.getText().toString().trim())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    String name=usernameText.getText().toString();
-                    String pass=passwordText.getText().toString();
-                    String rpass=rpasswordText.getText().toString();
-                    String typesel=type;
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            userregister = FirebaseDatabase.getInstance().getReference();
-                            usersRef = userregister.child("users");
-
-                            Map<String,User> users = new HashMap<>();
-                            users.put("Registered", new User(name,pass,rpass,typesel));
-
-                            usersRef.setValue(users);
-
+                            member.setName(name);
+                            member.setPass(pass);
+                            member.setRpass(rpass);
+                            member.setTypesel(type);
+                            usersRef.push().setValue(member);
                             Toast.makeText(SignupActivity.this,"User is successfully registered",Toast.LENGTH_LONG).show();
 
 
                         } else {
-//                            Toast.makeText(SignupActivity.this,task.getException().getMessage(),
-//                                    Toast.LENGTH_SHORT).show();
-
-                            Toast.makeText(SignupActivity.this, "Authentication failed.",
+                            Toast.makeText(SignupActivity.this,task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
+
+//                            Toast.makeText(SignupActivity.this, "Authentication failed.",
+//                                    Toast.LENGTH_SHORT).show();
 
                         }
 
 
                     }
                 });
+
     }
 });
     }
