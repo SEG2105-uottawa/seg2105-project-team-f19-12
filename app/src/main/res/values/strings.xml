@@ -9,7 +9,10 @@
     <string name="login">LOGIN</string>
     <string name="signup">SIGN UP</string>
 
-    //EmployeeSignupActivity
-    <string name="employeeSignup">Create an employee account:</string>
+    //SignupActivity
+    <string name="employeeSignup">Create an account:</string>
+    <string name="typeText">Type of Account:</string>
+    <string name="patientText">Patient</string>
+    <string name="employeeText">Employee</string>
     <string name="repassword">Renter Password:</string>
 </resources>
