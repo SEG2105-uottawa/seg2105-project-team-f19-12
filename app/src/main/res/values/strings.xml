@@ -7,6 +7,7 @@
     <string name="password">Enter Password:</string>
     <string name="signupText">Don\'t have an account?</string>
     <string name="login">LOGIN</string>
+    <string name="email">Enter email:</string>
     <string name="signup">SIGN UP</string>
 
     //SignupActivity
