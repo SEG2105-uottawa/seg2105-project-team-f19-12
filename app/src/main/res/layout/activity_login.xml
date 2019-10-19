@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/welcome"
+        android:text="Log In:"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,13 +23,13 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="355dp"
+        android:layout_height="352dp"
         android:orientation="vertical"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/welcomeText">
 
         <TextView
@@ -37,8 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:textSize="18sp"
-            android:text="@string/username" />
+            android:text="@string/username"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/usernameText"
@@ -46,15 +46,16 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:text="@string/username" />
+            android:text=""
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/password" />
+            android:text="@string/password"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/passwordText"
@@ -63,31 +64,31 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPassword"
-            android:textSize="18sp"
-            tools:text="@string/password" />
+            android:text=""
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="@string/login" />
+            android:text="@string/login"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:textSize="18sp"
             android:text="@string/signupText"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/signupButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
             android:text="@string/signup"
+            android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@+id/signup" />
     </LinearLayout>
 

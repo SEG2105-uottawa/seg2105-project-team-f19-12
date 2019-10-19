@@ -8,18 +8,19 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-Button move;
+
+    Button signUp;
+    Button logIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-move=findViewById(R.id.move);
+        signUp = findViewById(R.id.signup);
+        logIn = findViewById(R.id.login);
 
-//        Intent myIntent1 = new Intent(this, SignupActivity.class);
-//        startActivity(myIntent1);
-
-        move.setOnClickListener(new View.OnClickListener() {
+        signUp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 // Start NewActivity.class
@@ -28,6 +29,15 @@ move=findViewById(R.id.move);
                 startActivity(myIntent);
             }
         });
-    }
-    }
 
+        logIn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                // Start NewActivity.class
+                Intent myIntent = new Intent(MainActivity.this,
+                        LoginActivity.class);
+                startActivity(myIntent);
+            }
+        });
+    }
+}
