@@ -23,9 +23,6 @@ public class SignupActivity extends AppCompatActivity {
     EditText rpasswordText;
     Button loginButton;
 
-    int count = 0;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -50,6 +47,18 @@ public class SignupActivity extends AppCompatActivity {
                 final String rpass = rpasswordText.getText().toString();
                 final String email = emailText.getText().toString();
                 String typesel = "";
+
+                // Check fields aren't empty
+                if (username.isEmpty() || pass.isEmpty() || email.isEmpty()) {
+                    sendMessage("Empty fields aren't allowed!");
+                    return;
+                }
+
+                // Check passwords are the same
+                if (!pass.equals(rpass)) {
+                    sendMessage("Passwords don't match!");
+                    return;
+                }
 
                 // Determine user type
                 if (employeeOption.isChecked()) {

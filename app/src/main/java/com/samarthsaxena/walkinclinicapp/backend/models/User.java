@@ -1,9 +1,9 @@
 package com.samarthsaxena.walkinclinicapp.backend.models;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
-import java.io.IOException;
-import java.security.AccessControlException;
 import java.util.ArrayList;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,8 +39,16 @@ public class User {
         this.hashedPassword = hashedPassword;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
     // Store user object in database
-    protected void dbStore() throws RuntimeException {
+    public void dbStore() throws RuntimeException {
 
         fbAuth.createUserWithEmailAndPassword(email.trim(), hashedPassword.trim())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -60,11 +68,14 @@ public class User {
                 });
     }
 
-    // TODO
     // Find all Users in db where <param> == <value>
-    public static ArrayList<User> dbGetAll(final String param, String value) {
+    // The callback method is required due to the async nature of data retrieval
+    public static ArrayList<User> dbGetAll(
+            final String param,
+            final String value,
+            final MyCallback cb) throws RuntimeException {
 
-        ArrayList<User> users = new ArrayList<User>();
+        final ArrayList<User> users = new ArrayList<User>();
 
         // Check param type is an existing user field
         if  (
@@ -73,11 +84,53 @@ public class User {
                 !param.equals(USER_HASH_PASSWORD_STRING) &&
                 !param.equals(USER_TYPE_STRING)
             ) {
-            return users; // TODO Maybe throw an exception?
+            throw new RuntimeException("Invalid user parameter");
         }
+
+
+        DatabaseReference ref = db.getReference().child(USER_STRING);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    if (userSnapshot.child(param).getValue().toString().equals(value)) {
+
+                        User user;
+                        String type = userSnapshot.child(USER_TYPE_STRING).getValue().toString();
+                        String email = userSnapshot.child(USER_EMAIL_STRING).getValue().toString();
+                        String username = userSnapshot.child(USER_USERNAME_STRING).getValue().toString();
+                        String password = userSnapshot.child(USER_HASH_PASSWORD_STRING).getValue().toString();
+
+                        if (type.equals("patient")) {
+                            user = new Patient(email, username, password);
+                        } else if (type.equals("employee")) {
+                            user = new Employee(email, username, password);
+                        } else {
+                            user = new Admin(email, username, password);
+                        }
+                        users.add(user);
+                    }
+                }
+                cb.onCallback(users);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw new RuntimeException(databaseError.toException());
+            }
+        });
 
         return users;
     }
 
-
+    @Override
+    public String toString() {
+        String output =
+                "<username: " + username + ", " +
+                "email: " + email + ", " +
+                "type: " + type + ">";
+        return output;
+    }
 }

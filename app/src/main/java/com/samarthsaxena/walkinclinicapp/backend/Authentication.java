@@ -4,6 +4,7 @@ import com.samarthsaxena.walkinclinicapp.backend.models.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public class Authentication {
 
@@ -11,18 +12,36 @@ public class Authentication {
         // No ctor
     }
 
-    public static User login() {
-        // TODO
-        return null;
+    // Login method with callback
+    public static void login(final String username, final String password, final MyCallback cb) throws RuntimeException {
+
+        // Check username is registered
+        User.dbGetAll("username", username, new MyCallback() {
+            @Override
+            public void onCallback(Object obj) {
+                ArrayList<User> value = (ArrayList<User>) obj;
+                User user = value.get(0);
+                if (!username.equals(user.getUsername())) {
+                    throw new RuntimeException("Username does not exist!");
+                }
+                if (!getHash(password).equals(user.getHashedPassword())) {
+                    throw new RuntimeException("Password is incorrect!");
+                }
+                cb.onCallback(user);
+            }
+        });
     }
 
     public static User register(String email, String username, String password, String type) throws RuntimeException {
 
+        User out;
         if (type.equals("patient")) {
-            return new Patient(email, username, getHash(password));
+            out = new Patient(email, username, getHash(password));
         } else {
-            return new Employee(email, username, getHash(password));
+            out = new Employee(email, username, getHash(password));
         }
+        out.dbStore();
+        return out;
     }
 
     public static String getHash(String password) {
@@ -46,6 +65,7 @@ public class Authentication {
             x.append(String.format("%02x", b & 0xFF));
         return x.toString();
     }
+
 }
 
 
