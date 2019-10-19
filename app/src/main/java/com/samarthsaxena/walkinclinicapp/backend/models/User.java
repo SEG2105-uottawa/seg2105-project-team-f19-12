@@ -60,7 +60,6 @@ public class User {
                             user.child(USER_USERNAME_STRING)        .setValue(username);
                             user.child(USER_HASH_PASSWORD_STRING)   .setValue(hashedPassword);
                             user.child(USER_TYPE_STRING)            .setValue(type);
-                            cb.onCallback(user);
                         } else {
                             cb.exceptionHandler(task.getException().getMessage());
                         }
@@ -95,13 +94,24 @@ public class User {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    if (userSnapshot.child(param).getValue().toString().equals(value)) {
+                    if (userSnapshot.child(param).getValue() != null &&
+                            userSnapshot.child(param).getValue().toString().equals(value)) {
+
+                        String type = "";
+                        String email = "";
+                        String username = "";
+                        String password = "";
 
                         User user;
-                        String type = userSnapshot.child(USER_TYPE_STRING).getValue().toString();
-                        String email = userSnapshot.child(USER_EMAIL_STRING).getValue().toString();
-                        String username = userSnapshot.child(USER_USERNAME_STRING).getValue().toString();
-                        String password = userSnapshot.child(USER_HASH_PASSWORD_STRING).getValue().toString();
+                        try {
+                            type = userSnapshot.child(USER_TYPE_STRING).getValue().toString();
+                            email = userSnapshot.child(USER_EMAIL_STRING).getValue().toString();
+                            username = userSnapshot.child(USER_USERNAME_STRING).getValue().toString();
+                            password = userSnapshot.child(USER_HASH_PASSWORD_STRING).getValue().toString();
+                        } catch (NullPointerException e) {
+                            break;
+                        }
+
 
                         if (type.equals("patient")) {
                             user = new Patient(email, username, password);

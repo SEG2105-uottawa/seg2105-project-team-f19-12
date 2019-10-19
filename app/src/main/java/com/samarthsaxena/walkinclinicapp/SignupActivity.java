@@ -16,13 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SignupActivity extends AppCompatActivity {
-//
-//    User user;
-//    try {
-//        user = Authentication.login("user", "");
-//    } catch (IndexOutOfBoundsException e) {
-//
-//    }
 
     RadioButton patientOption;
     RadioButton employeeOption;
@@ -69,6 +62,12 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
+                // Check password is minimum of 8 characters
+                if (pass.length() < 8) {
+                    sendMessage("Password must be at least 8 characters!");
+                    return;
+                }
+
                 // Determine user type
                 if (employeeOption.isChecked()) {
                     typesel = "employee";
@@ -77,8 +76,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
 
                 // Register user
-                User user;
-                user = Authentication.register(email, username, pass, typesel, new MyCallback() {
+                Authentication.register(email, username, pass, typesel, new MyCallback() {
 
                     @Override
                     public void onCallback(Object value) {
@@ -94,7 +92,6 @@ public class SignupActivity extends AppCompatActivity {
                 // Go back to main activity
                 Intent myIntent = new Intent(SignupActivity.this, MainActivity.class);
                 startActivity(myIntent);
-
             }
         });
 
