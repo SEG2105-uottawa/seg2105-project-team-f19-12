@@ -13,7 +13,7 @@ public class Authentication {
     }
 
     // Login method with callback
-    public static void login(final String username, final String password, final MyCallback cb) throws RuntimeException {
+    public static void login(final String username, final String password, final MyCallback cb) {
 
         // Check username is registered
         User.dbGetAll("username", username, new MyCallback() {
@@ -22,17 +22,24 @@ public class Authentication {
                 ArrayList<User> value = (ArrayList<User>) obj;
                 User user = value.get(0);
                 if (!username.equals(user.getUsername())) {
-                    throw new RuntimeException("Username does not exist!");
+                    exceptionHandler("Username does not exist!");
+                    return;
                 }
                 if (!getHash(password).equals(user.getHashedPassword())) {
-                    throw new RuntimeException("Password is incorrect!");
+                    exceptionHandler("Password is incorrect!");
+                    return;
                 }
                 cb.onCallback(user);
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+                cb.exceptionHandler(message);
             }
         });
     }
 
-    public static User register(String email, String username, String password, String type) throws RuntimeException {
+    public static User register(String email, String username, String password, String type, MyCallback cb) {
 
         User out;
         if (type.equals("patient")) {
@@ -40,7 +47,7 @@ public class Authentication {
         } else {
             out = new Employee(email, username, getHash(password));
         }
-        out.dbStore();
+        out.dbStore(cb);
         return out;
     }
 

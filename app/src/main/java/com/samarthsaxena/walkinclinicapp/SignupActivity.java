@@ -1,8 +1,10 @@
 package com.samarthsaxena.walkinclinicapp;
 
 import com.samarthsaxena.walkinclinicapp.backend.Authentication;
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.models.*;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SignupActivity extends AppCompatActivity {
+//
+//    User user;
+//    try {
+//        user = Authentication.login("user", "");
+//    } catch (IndexOutOfBoundsException e) {
+//
+//    }
 
     RadioButton patientOption;
     RadioButton employeeOption;
@@ -69,11 +78,23 @@ public class SignupActivity extends AppCompatActivity {
 
                 // Register user
                 User user;
-                try {
-                    user = Authentication.register(email, username, pass, typesel);
-                } catch (RuntimeException e) {
-                    sendMessage("User registration error: " + e.toString());
-                }
+                user = Authentication.register(email, username, pass, typesel, new MyCallback() {
+
+                    @Override
+                    public void onCallback(Object value) {
+                        User user = (User) value;
+                        sendMessage("User " + user.getUsername() + " successfully registered.");
+                    }
+
+                    @Override
+                    public void exceptionHandler(String message) {
+                        sendMessage("User registration error: " + message);
+                    }
+                });
+                // Go back to main activity
+                Intent myIntent = new Intent(SignupActivity.this, MainActivity.class);
+                startActivity(myIntent);
+
             }
         });
 

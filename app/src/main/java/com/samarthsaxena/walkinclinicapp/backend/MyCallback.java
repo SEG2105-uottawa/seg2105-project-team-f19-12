@@ -1,4 +1,4 @@
-package com.samarthsaxena.walkinclinicapp.backend.models;
+package com.samarthsaxena.walkinclinicapp.backend;
 
 import java.util.ArrayList;
 
@@ -9,4 +9,5 @@ import java.util.ArrayList;
 */
 public interface MyCallback {
     void onCallback(Object value);
+    void exceptionHandler(String message);
 }

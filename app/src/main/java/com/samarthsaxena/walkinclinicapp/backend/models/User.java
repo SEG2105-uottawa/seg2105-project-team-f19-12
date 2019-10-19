@@ -1,7 +1,5 @@
 package com.samarthsaxena.walkinclinicapp.backend.models;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -10,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
 import com.google.firebase.database.*;
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 
 public class User {
 
@@ -48,7 +47,7 @@ public class User {
     }
 
     // Store user object in database
-    public void dbStore() throws RuntimeException {
+    public void dbStore(final MyCallback cb) throws RuntimeException {
 
         fbAuth.createUserWithEmailAndPassword(email.trim(), hashedPassword.trim())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -61,8 +60,9 @@ public class User {
                             user.child(USER_USERNAME_STRING)        .setValue(username);
                             user.child(USER_HASH_PASSWORD_STRING)   .setValue(hashedPassword);
                             user.child(USER_TYPE_STRING)            .setValue(type);
+                            cb.onCallback(user);
                         } else {
-                            throw new RuntimeException(task.getException().getMessage());
+                            cb.exceptionHandler(task.getException().getMessage());
                         }
                     }
                 });
@@ -73,7 +73,7 @@ public class User {
     public static ArrayList<User> dbGetAll(
             final String param,
             final String value,
-            final MyCallback cb) throws RuntimeException {
+            final MyCallback cb) {
 
         final ArrayList<User> users = new ArrayList<User>();
 
@@ -84,7 +84,7 @@ public class User {
                 !param.equals(USER_HASH_PASSWORD_STRING) &&
                 !param.equals(USER_TYPE_STRING)
             ) {
-            throw new RuntimeException("Invalid user parameter");
+            cb.exceptionHandler("Invalid user parameter");
         }
 
 
@@ -118,7 +118,7 @@ public class User {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                throw new RuntimeException(databaseError.toException());
+                cb.exceptionHandler(databaseError.getMessage());
             }
         });
 
