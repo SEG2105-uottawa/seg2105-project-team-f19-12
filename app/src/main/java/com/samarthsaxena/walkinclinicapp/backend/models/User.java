@@ -1,5 +1,7 @@
 package com.samarthsaxena.walkinclinicapp.backend.models;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -60,6 +62,8 @@ public class User {
                             user.child(USER_USERNAME_STRING)        .setValue(username);
                             user.child(USER_HASH_PASSWORD_STRING)   .setValue(hashedPassword);
                             user.child(USER_TYPE_STRING)            .setValue(type);
+
+                            cb.onCallback(User.this);
                         } else {
                             cb.exceptionHandler(task.getException().getMessage());
                         }
@@ -69,10 +73,7 @@ public class User {
 
     // Find all Users in db where <param> == <value>
     // The callback method is required due to the async nature of data retrieval
-    public static ArrayList<User> dbGetAll(
-            final String param,
-            final String value,
-            final MyCallback cb) {
+    public static ArrayList<User> dbGetAll(final String param, final String value, final MyCallback cb) {
 
         final ArrayList<User> users = new ArrayList<User>();
 
@@ -86,12 +87,13 @@ public class User {
             cb.exceptionHandler("Invalid user parameter");
         }
 
-
         DatabaseReference ref = db.getReference().child(USER_STRING);
 
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.i("EEEEEEEEEEEEEEEEEEEEE", "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     if (userSnapshot.child(param).getValue() != null &&

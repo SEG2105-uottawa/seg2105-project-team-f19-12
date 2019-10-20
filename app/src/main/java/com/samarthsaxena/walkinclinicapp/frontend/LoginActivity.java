@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void exceptionHandler(String message) {
+
                         sendMessage(message);
                     }
                 });

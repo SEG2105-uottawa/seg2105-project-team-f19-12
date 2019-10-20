@@ -7,6 +7,7 @@ import com.samarthsaxena.walkinclinicapp.backend.models.*;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -81,6 +82,7 @@ public class SignupActivity extends AppCompatActivity {
 
                     @Override
                     public void onCallback(Object value) {
+
                         User user = (User) value;
                         sendMessage("User " + user.getUsername() + " successfully registered.");
                     }

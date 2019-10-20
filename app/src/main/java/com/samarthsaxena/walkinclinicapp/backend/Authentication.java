@@ -1,8 +1,9 @@
 package com.samarthsaxena.walkinclinicapp.backend;
 
+import android.util.Log;
+
 import com.samarthsaxena.walkinclinicapp.backend.models.*;
 
-import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -66,11 +67,11 @@ public class Authentication {
                     out = new Employee(email, username, getHash(password));
                 }
                 out.dbStore(cb);
-                cb.onCallback(out);
             }
 
             @Override
             public void exceptionHandler(String message) {
+
                 cb.exceptionHandler(message);
             }
         });
