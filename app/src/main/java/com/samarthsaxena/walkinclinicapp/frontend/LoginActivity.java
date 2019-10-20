@@ -50,9 +50,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCallback(Object value) {
                         User user = (User) value;
                         sendMessage("User " + user.getUsername() + " succesfully logged in.");
-                        // Switch to welcome layout
+                        // Switch to welcome layout and send user parameters
                         Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                         intent.putExtra("EXTRA_USERNAME", user.getUsername());
+                        intent.putExtra("EXTRA_USER_TYPE", user.getType());
                         LoginActivity.this.startActivity(intent);
                     }
 

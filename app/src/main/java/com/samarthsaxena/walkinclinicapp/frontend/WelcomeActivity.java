@@ -20,14 +20,17 @@ public class WelcomeActivity extends AppCompatActivity {
 
         welcomeText = findViewById(R.id.welcome);
 
+        // Obtain user fields from logging in
         String username = getIntent().getStringExtra("EXTRA_USERNAME");
+        String type = getIntent().getStringExtra("EXTRA_USER_TYPE");
 
-        Log.i("OOOOOOOOOOOOOOOOO", username);
-        if (username != null) {
-            String welcomeMessage = "Welcome ".concat(username);
-            welcomeText.setText(welcomeMessage);
-        } else {
+        if (username == null) {
             welcomeText.setText("User null");
+            return;
         }
+
+        // Display user name and type
+        String welcomeMessage = "Welcome " + type + " " + username;
+        welcomeText.setText(welcomeMessage);
     }
 }

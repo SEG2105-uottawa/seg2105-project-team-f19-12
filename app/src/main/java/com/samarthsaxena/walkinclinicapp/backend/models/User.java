@@ -48,6 +48,10 @@ public class User {
         return hashedPassword;
     }
 
+    public String getEmail() { return email; }
+
+    public String getType() { return type; }
+
     // Store user object in database
     public void dbStore(final MyCallback cb) throws RuntimeException {
 
