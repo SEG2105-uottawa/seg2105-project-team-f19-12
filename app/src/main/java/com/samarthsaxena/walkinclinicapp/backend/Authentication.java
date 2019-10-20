@@ -21,6 +21,10 @@ public class Authentication {
             @Override
             public void onCallback(Object obj) {
                 ArrayList<User> value = (ArrayList<User>) obj;
+                if (value.isEmpty()) {
+                    exceptionHandler("Username does not exist!");
+                    return;
+                }
                 User user = value.get(0);
                 if (!username.equals(user.getUsername())) {
                     exceptionHandler("Username does not exist!");
@@ -35,6 +39,7 @@ public class Authentication {
 
             @Override
             public void exceptionHandler(String message) {
+
                 cb.exceptionHandler(message);
             }
         });

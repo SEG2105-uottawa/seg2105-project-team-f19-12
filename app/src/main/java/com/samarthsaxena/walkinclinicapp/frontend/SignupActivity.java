@@ -1,5 +1,6 @@
-package com.samarthsaxena.walkinclinicapp;
+package com.samarthsaxena.walkinclinicapp.frontend;
 
+import com.samarthsaxena.walkinclinicapp.R;
 import com.samarthsaxena.walkinclinicapp.backend.Authentication;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.models.*;
@@ -17,13 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SignupActivity extends AppCompatActivity {
 
-    RadioButton patientOption;
-    RadioButton employeeOption;
-    EditText usernameText;
-    EditText emailText;
-    EditText passwordText;
-    EditText rpasswordText;
-    Button loginButton;
+    private RadioButton patientOption;
+    private RadioButton employeeOption;
+    private EditText usernameText;
+    private EditText emailText;
+    private EditText passwordText;
+    private EditText rpasswordText;
+    private Button signupButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,10 +37,10 @@ public class SignupActivity extends AppCompatActivity {
         usernameText = findViewById(R.id.usernameText);
         passwordText = findViewById(R.id.passwordText);
         rpasswordText = findViewById(R.id.rpasswordText);
-        loginButton = findViewById(R.id.loginButton);
+        signupButton = findViewById(R.id.loginButton);
         emailText = findViewById(R.id.emailText);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
