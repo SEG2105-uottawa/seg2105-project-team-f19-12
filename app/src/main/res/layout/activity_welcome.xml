@@ -10,17 +10,17 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="231dp"
-            android:layout_height="47dp"
-            android:text="Welcome User"
+            android:id="@+id/welcome"
+            android:layout_width="321dp"
+            android:layout_height="156dp"
+            android:editable="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="HELLO"
+            app:layout_constraintVertical_bias="0.041"
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
