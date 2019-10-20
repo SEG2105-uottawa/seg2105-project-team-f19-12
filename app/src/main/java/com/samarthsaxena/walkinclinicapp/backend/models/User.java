@@ -93,8 +93,6 @@ public class User {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Log.i("EEEEEEEEEEEEEEEEEEEEE", "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     if (userSnapshot.child(param).getValue() != null &&
                             userSnapshot.child(param).getValue().toString().equals(value)) {

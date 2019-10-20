@@ -85,6 +85,9 @@ public class SignupActivity extends AppCompatActivity {
 
                         User user = (User) value;
                         sendMessage("User " + user.getUsername() + " successfully registered.");
+                        // Go back to main activity
+                        Intent myIntent = new Intent(SignupActivity.this, MainActivity.class);
+                        SignupActivity.this.startActivity(myIntent);
                     }
 
                     @Override
@@ -92,9 +95,7 @@ public class SignupActivity extends AppCompatActivity {
                         sendMessage("User registration error: " + message);
                     }
                 });
-                // Go back to main activity
-                Intent myIntent = new Intent(SignupActivity.this, MainActivity.class);
-                startActivity(myIntent);
+
             }
         });
 

@@ -50,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCallback(Object value) {
                         User user = (User) value;
                         sendMessage("User " + user.getUsername() + " succesfully logged in.");
+                        Intent myIntent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                        LoginActivity.this.startActivity(myIntent);
                     }
 
                     @Override
