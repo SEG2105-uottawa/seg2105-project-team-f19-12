@@ -1,7 +1,8 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/WalkInClinicApp
+    working_directory: ~/seg2105-project-team-f19-12
+
     docker:
       - image: circleci/android:api-28-alpha
     environment:
