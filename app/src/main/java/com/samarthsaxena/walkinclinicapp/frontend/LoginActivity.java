@@ -13,6 +13,7 @@ import com.samarthsaxena.walkinclinicapp.R;
 import com.samarthsaxena.walkinclinicapp.backend.Authentication;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.models.User;
+import com.samarthsaxena.walkinclinicapp.frontend.Admin.AdminActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,7 +52,12 @@ public class LoginActivity extends AppCompatActivity {
                         User user = (User) value;
                         sendMessage("User " + user.getUsername() + " succesfully logged in.");
                         // Switch to welcome layout and send user parameters
-                        Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                        Intent intent;
+                        if (user.getType().equals("admin")) {
+                            intent = new Intent(LoginActivity.this, AdminActivity.class);
+                        } else {
+                            intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                        }
                         intent.putExtra("EXTRA_USERNAME", user.getUsername());
                         intent.putExtra("EXTRA_USER_TYPE", user.getType());
                         LoginActivity.this.startActivity(intent);

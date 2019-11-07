@@ -19,6 +19,9 @@
         <activity android:name=".frontend.SignupActivity"></activity>
         <activity android:name=".frontend.LoginActivity"></activity>
         <activity android:name=".frontend.WelcomeActivity"></activity>
+        <activity android:name=".frontend.Admin.AdminActivity"></activity>
+        <activity android:name=".frontend.Admin.ManageUserActivity"></activity>
+        <activity android:name=".frontend.Admin.ManageServiceActivity"></activity>
     </application>
 
 </manifest>
