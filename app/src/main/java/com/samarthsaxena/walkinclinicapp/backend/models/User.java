@@ -27,7 +27,6 @@ public class User {
     protected String hashedPassword;
     protected String type;
 
-    // Instance to database
     private static final FirebaseDatabase db = FirebaseDatabase.getInstance();
     private static final FirebaseAuth fbAuth = FirebaseAuth.getInstance();
 
@@ -81,6 +80,7 @@ public class User {
 
         final ArrayList<User> users = new ArrayList<User>();
 
+
         // Check param type is an existing user field
         if  (
                 !param.equals(USER_EMAIL_STRING) &&
@@ -119,8 +119,10 @@ public class User {
 
                         if (type.equals("patient")) {
                             user = new Patient(email, username, password);
+
                         } else if (type.equals("employee")) {
                             user = new Employee(email, username, password);
+
                         } else {
                             user = new Admin(email, username, password);
                         }
@@ -139,6 +141,7 @@ public class User {
         return users;
     }
 
+
     @Override
     public String toString() {
         String output =
@@ -147,4 +150,5 @@ public class User {
                 "type: " + type + ">";
         return output;
     }
+
 }
