@@ -16,4 +16,5 @@
     <string name="patientText">Patient</string>
     <string name="employeeText">Employee</string>
     <string name="repassword">Renter Password:</string>
+
 </resources>
