@@ -1,7 +1,14 @@
 package com.samarthsaxena.walkinclinicapp;
 
+import com.samarthsaxena.walkinclinicapp.backend.Authentication;
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+import com.samarthsaxena.walkinclinicapp.backend.models.Patient;
+import com.samarthsaxena.walkinclinicapp.backend.models.User;
+
 import org.junit.Test;
 
+import static com.samarthsaxena.walkinclinicapp.backend.Authentication.getHash;
+import static com.samarthsaxena.walkinclinicapp.backend.Authentication.register;
 import static org.junit.Assert.*;
 
 /**
@@ -10,8 +17,36 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+   // @Test
+   // public void addition_isCorrect() {
+        //assertEquals(4, 2 + 2);
+    //}
+
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-    }
+    public void checkUsername(){
+        final String FAKE_USERNAME = "ax";
+        final String FAKE_EMAIL = "x@email.com";
+        final String FAKE_PASSWORD = "abcdefgh";
+        final String FAKE_TYPE = "patient";
+        final User[] x = new User[1];
+
+
+        Authentication.register(FAKE_EMAIL,FAKE_USERNAME,FAKE_PASSWORD,FAKE_TYPE, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
+                if (FAKE_TYPE.equals("patient")) {
+                    x[0] = new Patient(FAKE_EMAIL, FAKE_USERNAME, getHash(FAKE_PASSWORD));
+            }
+
+        }
+
+            @Override
+            public void exceptionHandler(String message) {
+
+                exceptionHandler(message);
+            };
+    });
+
+                assertEquals(x[0].getUsername(),FAKE_USERNAME);
+}
 }
