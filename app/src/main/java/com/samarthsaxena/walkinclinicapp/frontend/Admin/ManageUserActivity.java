@@ -3,7 +3,6 @@ package com.samarthsaxena.walkinclinicapp.frontend.Admin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -34,7 +33,7 @@ public class ManageUserActivity extends AppCompatActivity {
         ArrayList<String> emailsList = new ArrayList<String>(Arrays.asList(emails));
         ArrayList<String> typesList = new ArrayList<String>(Arrays.asList(types));
 
-        CustomListAdapter adapter = new CustomListAdapter(this, usernamesList, emailsList, typesList);
+        CustomListAdapterUser adapter = new CustomListAdapterUser(this, usernamesList, emailsList, typesList);
         ListView listView = (ListView) findViewById(R.id.userlist);
         listView.setAdapter(adapter);
 

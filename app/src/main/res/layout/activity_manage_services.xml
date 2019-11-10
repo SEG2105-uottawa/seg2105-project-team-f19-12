@@ -67,7 +67,7 @@
                 tools:text="Enter Role:" />
 
             <EditText
-                android:id="@+id/RoleInputField"
+                android:id="@+id/roleInputField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"

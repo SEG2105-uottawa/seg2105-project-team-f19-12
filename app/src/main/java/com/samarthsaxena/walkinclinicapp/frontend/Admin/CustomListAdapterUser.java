@@ -13,7 +13,7 @@ import com.samarthsaxena.walkinclinicapp.R;
 
 import java.util.ArrayList;
 
-public class CustomListAdapter extends ArrayAdapter {
+public class CustomListAdapterUser extends ArrayAdapter {
 
     //to reference the Activity
     private Activity context;
@@ -22,10 +22,10 @@ public class CustomListAdapter extends ArrayAdapter {
     private ArrayList<String> userEmailArray;
     private ArrayList<String> userTypeArray;
 
-    public CustomListAdapter(Activity context,
-                             ArrayList<String> userNameArray,
-                             ArrayList<String> userEmailArray,
-                             ArrayList<String> userTypeArray){
+    public CustomListAdapterUser(Activity context,
+                                 ArrayList<String> userNameArray,
+                                 ArrayList<String> userEmailArray,
+                                 ArrayList<String> userTypeArray){
 
         super(context, R.layout.user_info_row , userNameArray);
 
