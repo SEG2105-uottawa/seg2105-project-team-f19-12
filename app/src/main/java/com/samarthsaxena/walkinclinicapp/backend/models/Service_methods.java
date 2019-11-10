@@ -1,9 +1,13 @@
 package com.samarthsaxena.walkinclinicapp.backend.models;
 
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.samarthsaxena.walkinclinicapp.frontend.WelcomeActivity;
 
 import java.util.List;
 
@@ -42,4 +46,14 @@ public class Service_methods {
         });
     }
 
+    protected void updateService(String id, String serviceoffered, String role){
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("service").child(id);
+        Service service = new Service(id, serviceoffered, role);
+        dR.setValue(service);
+    }
+
+    protected void removeService(String id) {
+        DatabaseReference dRService = FirebaseDatabase.getInstance().getReference("service").child(id);
+        dRService.removeValue();
+    }
 }

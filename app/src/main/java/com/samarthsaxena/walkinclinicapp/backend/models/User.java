@@ -32,7 +32,7 @@ public class User {
 
     // Protected since only an instance of user subclass is allowed to exist
     // Protected guarantees a type of user is specified in the subclasses ctors
-    protected User(String email, String username, String hashedPassword) {
+    public User(String email, String username, String hashedPassword) {
 
         this.email = email;
         this.username = username;
