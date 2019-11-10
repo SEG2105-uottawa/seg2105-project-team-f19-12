@@ -20,17 +20,15 @@ public class ManageServiceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_users);
+        setContentView(R.layout.activity_manage_services);
 
         homeButton = findViewById(R.id.backButton);
 
         // Replace fake users with actual users from db
         String services[] = {"Triage", "X-ray", "Check-up"};
-
         String roles[] = {"role1", "role2", "role3"};
 
         ArrayList<String> serviceList = new ArrayList<String>(Arrays.asList(services));
-
         ArrayList<String> roleList = new ArrayList<String>(Arrays.asList(roles));
 
         CustomListAdapterServices adapter = new CustomListAdapterServices(this, serviceList, roleList);

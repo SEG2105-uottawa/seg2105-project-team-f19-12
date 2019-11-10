@@ -34,13 +34,12 @@ public class CustomListAdapterServices extends ArrayAdapter {
     public View getView(final int position, View view, final ViewGroup parent) {
 
         LayoutInflater inflater = context.getLayoutInflater();
-        final View rowView = inflater.inflate(R.layout.user_info_row, null, true);
+        final View rowView = inflater.inflate(R.layout.service_info_row, null, true);
 
         final TextView serviceField = (TextView) rowView.findViewById(R.id.servField);
 
         final TextView roleField = (TextView) rowView.findViewById(R.id.roleField);
 
-        //this code sets the values of the objects to values from the arrays
         serviceField.setText(serviceServiceArray.get(position));
         roleField.setText(serviceRoleArray.get(position));
 
@@ -55,6 +54,7 @@ public class CustomListAdapterServices extends ArrayAdapter {
                 // TODO: Replace with user deletion from database
                 // Update in layout
                 serviceServiceArray.remove(position);
+                serviceRoleArray.remove(position);
                 notifyDataSetChanged();
             }
         });
@@ -100,7 +100,7 @@ public class CustomListAdapterServices extends ArrayAdapter {
                 }
 
                 // Update in layout
-             serviceServiceArray.add(newService);
+                serviceServiceArray.add(newService);
                 serviceRoleArray.add(newRole);
 
                 notifyDataSetChanged();

@@ -60,6 +60,8 @@ public class CustomListAdapterUser extends ArrayAdapter {
                 // TODO: Replace with user deletion from database
                 // Update in layout
                 userNameArray.remove(position);
+                userEmailArray.remove(position);
+                userTypeArray.remove(position);
                 notifyDataSetChanged();
             }
         });
