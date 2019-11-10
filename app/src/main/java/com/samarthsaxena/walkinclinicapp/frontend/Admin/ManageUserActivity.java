@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.samarthsaxena.walkinclinicapp.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ManageUserActivity extends AppCompatActivity {
 
     Button homeButton;
@@ -27,7 +30,11 @@ public class ManageUserActivity extends AppCompatActivity {
         String emails[] = {"alice@email.com", "bob@email.com", "charlie@email.com"};
         String types[] = {"patient", "employee", "patient"};
 
-        CustomListAdapter adapter = new CustomListAdapter(this, usernames, emails, types);
+        ArrayList<String> usernamesList = new ArrayList<String>(Arrays.asList(usernames));
+        ArrayList<String> emailsList = new ArrayList<String>(Arrays.asList(emails));
+        ArrayList<String> typesList = new ArrayList<String>(Arrays.asList(types));
+
+        CustomListAdapter adapter = new CustomListAdapter(this, usernamesList, emailsList, typesList);
         ListView listView = (ListView) findViewById(R.id.userlist);
         listView.setAdapter(adapter);
 
