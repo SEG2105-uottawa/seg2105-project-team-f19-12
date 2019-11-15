@@ -82,7 +82,8 @@ public class CustomListAdapterServices extends ArrayAdapter {
                     return;
                 }
 
-                // Update in layout
+                // Update in db and layout
+                Service.dbEdit(services.get(position).getServiceOffered(), newService, newRole);
                 services.get(position).setServiceOffered(newService);
                 services.get(position).setRole(newRole);
 
