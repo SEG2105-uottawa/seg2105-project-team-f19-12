@@ -86,7 +86,8 @@ public class User {
                 !param.equals(USER_EMAIL_STRING) &&
                 !param.equals(USER_USERNAME_STRING) &&
                 !param.equals(USER_HASH_PASSWORD_STRING) &&
-                !param.equals(USER_TYPE_STRING)
+                !param.equals(USER_TYPE_STRING) &&
+                !param.equals("all")
             ) {
             cb.exceptionHandler("Invalid user parameter");
         }
@@ -98,8 +99,9 @@ public class User {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    if (userSnapshot.child(param).getValue() != null &&
-                            userSnapshot.child(param).getValue().toString().equals(value)) {
+                    if ((userSnapshot.child(param).getValue() != null &&
+                         userSnapshot.child(param).getValue().toString().equals(value)) ||
+                         param.equals("all")) {
 
                         String type = "";
                         String email = "";
