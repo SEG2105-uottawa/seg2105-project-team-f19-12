@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+import com.samarthsaxena.walkinclinicapp.backend.models.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,13 +28,19 @@ public class ManageServiceActivity extends AppCompatActivity {
         homeButton = findViewById(R.id.backButton);
 
         // Replace fake users with actual users from db
-        String services[] = {"Triage", "X-ray", "Check-up"};
-        String roles[] = {"role1", "role2", "role3"};
+        ArrayList<Service> services = Service.dbGetAll("all", null, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
 
-        ArrayList<String> serviceList = new ArrayList<String>(Arrays.asList(services));
-        ArrayList<String> roleList = new ArrayList<String>(Arrays.asList(roles));
+            }
 
-        CustomListAdapterServices adapter = new CustomListAdapterServices(this, serviceList, roleList);
+            @Override
+            public void exceptionHandler(String message) {
+                sendMessage("Error: Could not load users from database");
+            }
+        });
+
+        CustomListAdapterServices adapter = new CustomListAdapterServices(ManageServiceActivity.this, services);
         ListView listView = (ListView) findViewById(R.id.serviceList);
         listView.setAdapter(adapter);
 
@@ -44,5 +53,7 @@ public class ManageServiceActivity extends AppCompatActivity {
         });
     }
 
-
+    public void sendMessage(String message) {
+        Toast.makeText(ManageServiceActivity.this, message, Toast.LENGTH_LONG).show();
+    }
 }

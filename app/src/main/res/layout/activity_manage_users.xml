@@ -98,12 +98,6 @@
                 android:ems="10"
                 android:inputType="textPersonName" />
 
-            <Button
-                android:id="@+id/addBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Add User" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

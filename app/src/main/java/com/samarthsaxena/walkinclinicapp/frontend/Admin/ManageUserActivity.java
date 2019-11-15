@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+import com.samarthsaxena.walkinclinicapp.backend.models.User;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ManageUserActivity extends AppCompatActivity {
 
@@ -25,15 +27,20 @@ public class ManageUserActivity extends AppCompatActivity {
         homeButton = findViewById(R.id.backButton);
 
         // Replace fake users with actual users from db
-        String usernames[] = {"Alice", "Bob", "Charlie"};
-        String emails[] = {"alice@email.com", "bob@email.com", "charlie@email.com"};
-        String types[] = {"patient", "employee", "patient"};
 
-        ArrayList<String> usernamesList = new ArrayList<String>(Arrays.asList(usernames));
-        ArrayList<String> emailsList = new ArrayList<String>(Arrays.asList(emails));
-        ArrayList<String> typesList = new ArrayList<String>(Arrays.asList(types));
+        ArrayList<User> users = User.dbGetAll("all", null, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
 
-        CustomListAdapterUser adapter = new CustomListAdapterUser(this, usernamesList, emailsList, typesList);
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+                sendMessage("Error: Could not load users from database");
+            }
+        });
+
+        CustomListAdapterUser adapter = new CustomListAdapterUser(ManageUserActivity.this, users);
         ListView listView = (ListView) findViewById(R.id.userlist);
         listView.setAdapter(adapter);
 
@@ -46,5 +53,8 @@ public class ManageUserActivity extends AppCompatActivity {
         });
     }
 
+    public void sendMessage(String message) {
+        Toast.makeText(ManageUserActivity.this, message, Toast.LENGTH_LONG).show();
+    }
 
 }

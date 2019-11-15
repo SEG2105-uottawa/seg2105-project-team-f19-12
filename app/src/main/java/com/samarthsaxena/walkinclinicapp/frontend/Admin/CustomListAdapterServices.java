@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.models.Service;
 
 import java.util.ArrayList;
 
@@ -17,18 +18,14 @@ public class CustomListAdapterServices extends ArrayAdapter {
 
     //to reference the Activity
     private Activity context;
+    private ArrayList<Service> services;
 
-    private ArrayList<String> serviceServiceArray;
-    private ArrayList<String> serviceRoleArray;
+    public CustomListAdapterServices(final Activity context, ArrayList<Service> services) {
 
-    public CustomListAdapterServices(final Activity context, ArrayList<String> service, ArrayList<String> serviceRole) {
-
-        super(context, R.layout.user_info_row, service);
+        super(context, R.layout.service_info_row, services);
 
         this.context = context;
-        this.serviceServiceArray = service;
-        this.serviceRoleArray = serviceRole;
-
+        this.services = services;
     }
 
     public View getView(final int position, View view, final ViewGroup parent) {
@@ -37,24 +34,35 @@ public class CustomListAdapterServices extends ArrayAdapter {
         final View rowView = inflater.inflate(R.layout.service_info_row, null, true);
 
         final TextView serviceField = (TextView) rowView.findViewById(R.id.servField);
-
         final TextView roleField = (TextView) rowView.findViewById(R.id.roleField);
 
-        serviceField.setText(serviceServiceArray.get(position));
-        roleField.setText(serviceRoleArray.get(position));
+        serviceField.setText(services.get(position).getServiceOffered());
+        roleField.setText(services.get(position).getRole());
 
         // set button handlers
         final Button deleteButton = (Button) rowView.findViewById(R.id.deleteBtn);
         final Button editButton = (Button) rowView.findViewById(R.id.editBtn);
         final Button addButton = (Button) context.findViewById(R.id.addBtn);
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Replace with user deletion from database
-                // Update in layout
-                serviceServiceArray.remove(position);
-                serviceRoleArray.remove(position);
+
+                final EditText serviceText = context.findViewById(R.id.serviceInputField);
+                final EditText roleText = context.findViewById(R.id.roleInputField);
+
+                String newService = serviceText.getText().toString();
+                String newRole = roleText.getText().toString();
+
+                // Check field validation
+                if (newService.isEmpty() || newRole.isEmpty()) {
+                    return;
+                }
+
+                // Update in layout and db
+                Service service = new Service(newService, newRole);
+                service.dbStore(null);
+                services.add(service);
                 notifyDataSetChanged();
             }
         });
@@ -75,38 +83,21 @@ public class CustomListAdapterServices extends ArrayAdapter {
                 }
 
                 // Update in layout
-                serviceServiceArray.set(position, newService);
-                serviceRoleArray.set(position, newRole);
+                services.get(position).setServiceOffered(newService);
+                services.get(position).setRole(newRole);
 
                 notifyDataSetChanged();
             }
         });
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                final EditText serviceText = context.findViewById(R.id.serviceInputField);
-
-                final EditText roleText = context.findViewById(R.id.roleInputField);
-
-                String newService = serviceText.getText().toString();
-
-                String newRole = roleText.getText().toString();
-
-                // Check field validation
-                if (newService.isEmpty() || newRole.isEmpty()) {
-                    return;
-                }
-
-                // Update in layout
-                serviceServiceArray.add(newService);
-                serviceRoleArray.add(newRole);
-
+                Service.dbDelete(services.get(position).getServiceOffered());
+                services.remove(position);
                 notifyDataSetChanged();
             }
         });
-
 
         return rowView;
     }

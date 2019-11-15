@@ -43,21 +43,15 @@ public class User {
     public String getUsername() {
         return username;
     }
-
     public String getHashedPassword() {
         return hashedPassword;
     }
-
     public String getEmail() { return email; }
-
     public String getType() { return type; }
 
     public void setUsername(String username) { this.username = username; }
-
     public void setPassword(String newHash) { hashedPassword = newHash; }
-
     public void setEmail(String email) { this.email = email; }
-
     public void setType(String type) { this.type = type; }
 
     // Store user object in database
@@ -75,7 +69,9 @@ public class User {
                             user.child(USER_HASH_PASSWORD_STRING)   .setValue(hashedPassword);
                             user.child(USER_TYPE_STRING)            .setValue(type);
 
-                            cb.onCallback(User.this);
+                            if (cb != null) {
+                                cb.onCallback(User.this);
+                            }
                         } else {
                             cb.exceptionHandler(task.getException().getMessage());
                         }
@@ -140,7 +136,9 @@ public class User {
                         users.add(user);
                     }
                 }
-                cb.onCallback(users);
+                if (cb != null) {
+                    cb.onCallback(users);
+                }
             }
 
             @Override

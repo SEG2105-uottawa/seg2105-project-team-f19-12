@@ -1,11 +1,10 @@
 package com.samarthsaxena.walkinclinicapp.backend.models;
 
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 
@@ -15,7 +14,7 @@ public class Service {
 
     // Name of fields stored in database
     private static final String SERVICE_STRING                      = "Services";
-    private static final String SERVICE_OFFERED_STRING              = "service offered";
+    private static final String SERVICE_OFFERED_STRING              = "serviceOffered";
     private static final String SERVICE_ROLE_STRING                 = "role";
 
     private  String serviceOffered;
@@ -32,12 +31,15 @@ public class Service {
         this.role = role;
     }
 
-    public String getServiceoffered() {
+    public String getServiceOffered() {
         return serviceOffered;
     }
     public String getRole() {
         return role;
     }
+
+    public void setServiceOffered(String serviceOffered) { this.serviceOffered = serviceOffered; }
+    public void setRole(String role) { this.role = role; }
 
     // Store service object in database
     public void dbStore(final MyCallback cb) throws RuntimeException {
@@ -45,7 +47,9 @@ public class Service {
         DatabaseReference serviceRef = db.getReference().child(SERVICE_STRING).push();
         serviceRef.child(SERVICE_OFFERED_STRING)    .setValue(serviceOffered);
         serviceRef.child(SERVICE_ROLE_STRING)       .setValue(role);
-        cb.onCallback(Service.this);
+        if (cb != null) {
+            cb.onCallback(Service.this);
+        }
     }
 
     // Get all services from database
@@ -57,8 +61,9 @@ public class Service {
         // Check param type is an existing service field
         if  (
                 !param.equals(SERVICE_STRING) &&
-                        !param.equals(SERVICE_OFFERED_STRING) &&
-                        !param.equals(SERVICE_ROLE_STRING)
+                !param.equals(SERVICE_OFFERED_STRING) &&
+                !param.equals(SERVICE_ROLE_STRING) &&
+                !param.equals("all")
         ) {
             cb.exceptionHandler("Invalid service parameter");
         }
@@ -70,8 +75,9 @@ public class Service {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot servSnapshot : dataSnapshot.getChildren()) {
-                    if (servSnapshot.child(param).getValue() != null &&
-                            servSnapshot.child(param).getValue().toString().equals(value)) {
+                    if ((servSnapshot.child(param).getValue() != null &&
+                            servSnapshot.child(param).getValue().toString().equals(value)) ||
+                         param.equals("all")) {
 
                         String serviceOffered = "";
                         String role = "";
@@ -87,7 +93,9 @@ public class Service {
                         services.add(service);
                     }
                 }
-                cb.onCallback(services);
+                if (cb != null) {
+                    cb.onCallback(services);
+                }
             }
 
 
@@ -101,16 +109,28 @@ public class Service {
     }
 
 
-
-    protected void updateService(String id, String serviceoffered, String role){
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("service").child(id);
+    public void updateService(String serviceoffered, String role){
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("service").push();
         Service service = new Service(serviceoffered, role);
         dR.setValue(service);
     }
 
-    protected void removeService(String id) {
-        DatabaseReference dRService = FirebaseDatabase.getInstance().getReference("service").child(id);
-        dRService.removeValue();
+    public static void dbDelete(String serviceOffered) {
+        Query dbQuery = db.getReference().child(SERVICE_STRING).orderByChild(SERVICE_OFFERED_STRING).equalTo(serviceOffered);
+
+        dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot servSnapshot: dataSnapshot.getChildren()) {
+                    servSnapshot.getRef().removeValue();
+                    return;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 }
