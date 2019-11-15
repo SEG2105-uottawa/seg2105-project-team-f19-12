@@ -1,16 +1,13 @@
 package com.samarthsaxena.walkinclinicapp.backend.models;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
-
-import java.util.ArrayList;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
 import com.google.firebase.database.*;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+
+import java.util.ArrayList;
 
 public class User {
 
@@ -30,8 +27,12 @@ public class User {
     private static final FirebaseDatabase db = FirebaseDatabase.getInstance();
     private static final FirebaseAuth fbAuth = FirebaseAuth.getInstance();
 
-    // Protected since only an instance of user subclass is allowed to exist
-    // Protected guarantees a type of user is specified in the subclasses ctors
+    public User() {
+        this.email = null;
+        this.username = null;
+        this.hashedPassword = null;
+    }
+
     public User(String email, String username, String hashedPassword) {
 
         this.email = email;
@@ -50,6 +51,14 @@ public class User {
     public String getEmail() { return email; }
 
     public String getType() { return type; }
+
+    public void setUsername(String username) { this.username = username; }
+
+    public void setPassword(String newHash) { hashedPassword = newHash; }
+
+    public void setEmail(String email) { this.email = email; }
+
+    public void setType(String type) { this.type = type; }
 
     // Store user object in database
     public void dbStore(final MyCallback cb) throws RuntimeException {
@@ -141,6 +150,25 @@ public class User {
         });
 
         return users;
+    }
+
+    public static void dbDelete(String username) {
+
+        Query dbQuery = db.getReference().child(USER_STRING).orderByChild(USER_USERNAME_STRING).equalTo(username);
+
+        dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    userSnapshot.getRef().removeValue();
+                    return;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 
