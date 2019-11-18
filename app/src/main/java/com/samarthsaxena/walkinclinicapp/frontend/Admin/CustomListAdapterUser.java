@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Admin;
 import com.samarthsaxena.walkinclinicapp.backend.models.User;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class CustomListAdapterUser extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 // Remove from both layout array and database
-                User.dbDelete(users.get(position).getUsername());
+                Admin.deleteUser(users.get(position).getUsername());
                 users.remove(position);
                 notifyDataSetChanged();
             }

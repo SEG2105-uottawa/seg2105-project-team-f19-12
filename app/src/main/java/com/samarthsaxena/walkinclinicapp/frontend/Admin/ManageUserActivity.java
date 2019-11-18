@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.samarthsaxena.walkinclinicapp.R;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Admin;
 import com.samarthsaxena.walkinclinicapp.backend.models.User;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class ManageUserActivity extends AppCompatActivity {
 
         // Replace fake users with actual users from db
 
-        ArrayList<User> users = User.dbGetAll("all", null, new MyCallback() {
+        ArrayList<User> users = Admin.getAllUsers(new MyCallback() {
             @Override
             public void onCallback(Object value) {
 
@@ -36,7 +37,7 @@ public class ManageUserActivity extends AppCompatActivity {
 
             @Override
             public void exceptionHandler(String message) {
-                sendMessage("Error: Could not load users from database");
+                sendMessage(message);
             }
         });
 

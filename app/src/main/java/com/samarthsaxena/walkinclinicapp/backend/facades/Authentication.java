@@ -1,7 +1,5 @@
 package com.samarthsaxena.walkinclinicapp.backend.facades;
 
-import android.util.Log;
-
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.models.*;
 

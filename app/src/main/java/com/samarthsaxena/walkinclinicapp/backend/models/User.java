@@ -33,11 +33,12 @@ public class User {
         this.hashedPassword = null;
     }
 
-    public User(String email, String username, String hashedPassword) {
+    public User(String email, String username, String hashedPassword, String type) {
 
         this.email = email;
         this.username = username;
         this.hashedPassword = hashedPassword;
+        this.type = type;
     }
 
     public String getUsername() {
@@ -123,16 +124,7 @@ public class User {
                             break;
                         }
 
-
-                        if (type.equals("patient")) {
-                            user = new Patient(email, username, password);
-
-                        } else if (type.equals("employee")) {
-                            user = new Employee(email, username, password);
-
-                        } else {
-                            user = new Admin(email, username, password);
-                        }
+                        user = new User(email, username, password, type);
                         users.add(user);
                     }
                 }

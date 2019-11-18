@@ -1,14 +1,12 @@
 package com.samarthsaxena.walkinclinicapp;
 
-import com.samarthsaxena.walkinclinicapp.backend.Authentication;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Authentication;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
-import com.samarthsaxena.walkinclinicapp.backend.models.Patient;
 import com.samarthsaxena.walkinclinicapp.backend.models.User;
 
 import org.junit.Test;
 
-import static com.samarthsaxena.walkinclinicapp.backend.Authentication.getHash;
-import static com.samarthsaxena.walkinclinicapp.backend.Authentication.register;
+import static com.samarthsaxena.walkinclinicapp.backend.facades.Authentication.getHash;
 import static org.junit.Assert.*;
 
 /**
@@ -35,7 +33,7 @@ public class ExampleUnitTest {
             @Override
             public void onCallback(Object value) {
                 if (FAKE_TYPE.equals("patient")) {
-                    x[0] = new Patient(FAKE_EMAIL, FAKE_USERNAME, getHash(FAKE_PASSWORD));
+                    x[0] = new User(FAKE_EMAIL, FAKE_USERNAME, getHash(FAKE_PASSWORD), "patient");
             }
 
         }

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Admin;
 import com.samarthsaxena.walkinclinicapp.backend.models.Service;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class CustomListAdapterServices extends ArrayAdapter {
 
                 // Update in layout and db
                 Service service = new Service(newService, newRole);
-                service.dbStore(null);
+                Admin.createService(service);
                 services.add(service);
                 notifyDataSetChanged();
             }
@@ -83,7 +84,7 @@ public class CustomListAdapterServices extends ArrayAdapter {
                 }
 
                 // Update in db and layout
-                Service.dbEdit(services.get(position).getServiceOffered(), newService, newRole);
+                Admin.editService(services.get(position).getServiceOffered(), newService, newRole);
                 services.get(position).setServiceOffered(newService);
                 services.get(position).setRole(newRole);
 
@@ -94,7 +95,7 @@ public class CustomListAdapterServices extends ArrayAdapter {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Service.dbDelete(services.get(position).getServiceOffered());
+                Admin.deleteService(services.get(position).getServiceOffered());
                 services.remove(position);
                 notifyDataSetChanged();
             }
