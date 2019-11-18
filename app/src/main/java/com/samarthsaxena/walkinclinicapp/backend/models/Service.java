@@ -109,10 +109,23 @@ public class Service {
     }
 
 
-    public void updateService(String serviceoffered, String role){
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("service").push();
-        Service service = new Service(serviceoffered, role);
-        dR.setValue(service);
+    public static void dbEdit(String prevService, final String newService, final String newRole){
+        Query dbQuery = db.getReference().child(SERVICE_STRING).orderByChild(SERVICE_OFFERED_STRING).equalTo(prevService);
+
+        dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot servSnapshot: dataSnapshot.getChildren()) {
+                    servSnapshot.getRef().child(SERVICE_OFFERED_STRING).setValue(newService);
+                    servSnapshot.getRef().child(SERVICE_ROLE_STRING).setValue(newRole);
+                    return;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     public static void dbDelete(String serviceOffered) {
