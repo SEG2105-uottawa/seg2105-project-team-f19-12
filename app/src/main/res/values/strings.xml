@@ -21,5 +21,7 @@
     <string name="insurancetext">Type of Insurance</string>
     <string name="paytext">Type of Payment</string>
     <string name="fullname">Full Name</string>
+    <string name="settime">Start Time</string>
+    <string name="setendtime">End Time</string>
 
 </resources>

@@ -10,7 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.samarthsaxena.walkinclinicapp.R;
-import com.samarthsaxena.walkinclinicapp.frontend.WelcomeActivity;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
+import com.samarthsaxena.walkinclinicapp.backend.models.Profile;
+import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,12 +27,11 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText fullnameText;
     private EditText phoneText;
     private EditText addressText;
-    private Button Submit;
+    private Button Save;
     private Button Back;
     private TextView welcomeText;
-
-
-
+    private TimePicker timestartPicker;
+    private TimePicker timeendPicker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,10 +48,11 @@ public class ProfileActivity extends AppCompatActivity {
         fullnameText = findViewById(R.id.fullnametext);
         addressText = findViewById(R.id.addressText);
         phoneText = findViewById(R.id.phonetext);
-        Submit = findViewById(R.id.submit);
+        Save = findViewById(R.id.save);
         Back = findViewById(R.id.back);
         welcomeText = findViewById(R.id.welcome);
-
+        timestartPicker = (TimePicker) findViewById(R.id.timePicker2);
+        timeendPicker = (TimePicker) findViewById(R.id.timePicker1);
         // Obtain user fields from logging in
         final String username = getIntent().getStringExtra("EXTRA_USERNAME");
 
@@ -58,21 +60,25 @@ public class ProfileActivity extends AppCompatActivity {
         String welcomeMessage = "Welcome employee "+username;
         welcomeText.setText(welcomeMessage);
 
-
-
-        Submit.setOnClickListener(new View.OnClickListener() {
+        Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // Obtain fields from UI
                 final String fullname = fullnameText.getText().toString();
                 final String address = addressText.getText().toString();
-                final String phone = phoneText.getText().toString();
+                final int phone = Integer.parseInt(phoneText.getText().toString());
                 String insurancesel = "";
                 String paysel = "";
 
+                int hourstart = timestartPicker.getCurrentHour();
+                int minstart = timestartPicker.getCurrentMinute();
+                int hourend= timeendPicker.getCurrentHour();
+                int minend = timeendPicker.getCurrentMinute();
+                String starttime=showstartTime(hourstart,minstart);
+                String endtime=showendTime(hourend,minend);
                 // Check fields aren't empty
-                if (fullname.isEmpty() || address.isEmpty() || phone.isEmpty()) {
+                if (fullname.isEmpty() || address.isEmpty() || phoneText.getText().toString().isEmpty()) {
                     sendMessage("Empty fields aren't allowed!");
                     return;
                 }
@@ -100,7 +106,14 @@ public class ProfileActivity extends AppCompatActivity {
                     paysel="Cash";
                 }
 
-                //TODO: Register employee profile
+
+
+
+                String a="User profile saved";
+                Profile x=new Profile(username,address,phone,fullname,insurancesel,paysel);
+                Employee.createProfile(x);
+                Toast.makeText(ProfileActivity.this, a, Toast.LENGTH_LONG).show();
+
 
 
             }
@@ -116,10 +129,52 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
     }
+    String starttime="";
+    public String showstartTime(int hour, int min) {
+String format="";
+        if (hour == 0) {
+            hour += 12;
+            format = "AM";
+        } else if (hour == 12) {
+            format = "PM";
+        } else if (hour > 12) {
+            hour -= 12;
+            format = "PM";
+        } else {
+            format = "AM";
+        }
+        starttime=(hour)+" : "+(min)+" "+format;
+return starttime;
+
+
+    }
+
+    String endtime="";
+    public String showendTime(int hour, int min) {
+        String format="";
+        if (hour == 0) {
+            hour += 12;
+            format = "AM";
+        } else if (hour == 12) {
+            format = "PM";
+        } else if (hour > 12) {
+            hour -= 12;
+            format = "PM";
+        } else {
+            format = "AM";
+        }
+        endtime=(hour)+" : "+(min)+" "+format;
+        return endtime;
+
+
+    }
+
 
     public void sendMessage(String message) {
         Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_LONG).show();
     }
+
+
 }
 
 
