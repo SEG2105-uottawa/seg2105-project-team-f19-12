@@ -52,7 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
         welcomeText = findViewById(R.id.welcome);
 
         // Obtain user fields from logging in
-        String username = getIntent().getStringExtra("EXTRA_USERNAME");
+        final String username = getIntent().getStringExtra("EXTRA_USERNAME");
 
         // Display user name
         String welcomeMessage = "Welcome employee "+username;
@@ -110,6 +110,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(ProfileActivity.this, EmployeeActivity.class);
+                myIntent.putExtra("EXTRA_USERNAME", username);
                 startActivity(myIntent);
             }
         });

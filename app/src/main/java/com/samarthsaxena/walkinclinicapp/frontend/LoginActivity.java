@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (user.getType().equals("admin")) {
                             intent = new Intent(LoginActivity.this, AdminActivity.class);
                         }
-                        if (user.getType().equals("employee")) {
+                        else if (user.getType().equals("employee")) {
                             intent = new Intent(LoginActivity.this, EmployeeActivity.class);
                         }
                         else {

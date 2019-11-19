@@ -27,7 +27,7 @@ public class EmployeeActivity extends AppCompatActivity {
         welcomeText = findViewById(R.id.welcome);
         manageServicesButton = findViewById(R.id.serviceButton);
         profileButton = findViewById(R.id.profileButton);
-        String username = getIntent().getStringExtra("EXTRA_USERNAME");
+        final String username = getIntent().getStringExtra("EXTRA_USERNAME");
         String welcomeMessage = "Welcome employee "+username;
         welcomeText.setText(welcomeMessage);
 
@@ -36,6 +36,7 @@ public class EmployeeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent myIntent = new Intent(EmployeeActivity.this, ProfileActivity.class);
+                myIntent.putExtra("EXTRA_USERNAME", username);
                 startActivity(myIntent);
             }
         });
