@@ -16,5 +16,10 @@
     <string name="patientText">Patient</string>
     <string name="employeeText">Employee</string>
     <string name="repassword">Renter Password:</string>
+    <string name="address">Address</string>
+    <string name="phone">Phone Number</string>
+    <string name="insurancetext">Type of Insurance</string>
+    <string name="paytext">Type of Payment</string>
+    <string name="fullname">Full Name</string>
 
 </resources>

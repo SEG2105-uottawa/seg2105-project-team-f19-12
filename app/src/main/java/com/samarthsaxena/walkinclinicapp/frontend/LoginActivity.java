@@ -14,6 +14,7 @@ import com.samarthsaxena.walkinclinicapp.backend.Authentication;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.models.User;
 import com.samarthsaxena.walkinclinicapp.frontend.Admin.AdminActivity;
+import com.samarthsaxena.walkinclinicapp.frontend.Employee.EmployeeActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -55,7 +56,11 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent;
                         if (user.getType().equals("admin")) {
                             intent = new Intent(LoginActivity.this, AdminActivity.class);
-                        } else {
+                        }
+                        if (user.getType().equals("employee")) {
+                            intent = new Intent(LoginActivity.this, EmployeeActivity.class);
+                        }
+                        else {
                             intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                         }
                         intent.putExtra("EXTRA_USERNAME", user.getUsername());
