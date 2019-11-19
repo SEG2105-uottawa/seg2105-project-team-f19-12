@@ -1,7 +1,6 @@
-package com.samarthsaxena.walkinclinicapp.backend;
+package com.samarthsaxena.walkinclinicapp.backend.facades;
 
-import android.util.Log;
-
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.models.*;
 
 import java.security.MessageDigest;
@@ -60,12 +59,7 @@ public class Authentication {
                     exceptionHandler("Username already taken!");
                     return;
                 }
-                User out;
-                if (type.equals("patient")) {
-                    out = new Patient(email, username, getHash(password));
-                } else {
-                    out = new Employee(email, username, getHash(password));
-                }
+                User out = new User(email, username, getHash(password), type);
                 out.dbStore(cb);
             }
 

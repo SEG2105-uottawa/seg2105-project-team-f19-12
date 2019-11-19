@@ -11,10 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.samarthsaxena.walkinclinicapp.R;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Admin;
 import com.samarthsaxena.walkinclinicapp.backend.models.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ManageServiceActivity extends AppCompatActivity {
 
@@ -28,7 +28,7 @@ public class ManageServiceActivity extends AppCompatActivity {
         homeButton = findViewById(R.id.backButton);
 
         // Replace fake users with actual users from db
-        ArrayList<Service> services = Service.dbGetAll("all", null, new MyCallback() {
+        ArrayList<Service> services = Admin.getAllServices(new MyCallback() {
             @Override
             public void onCallback(Object value) {
 
@@ -36,7 +36,7 @@ public class ManageServiceActivity extends AppCompatActivity {
 
             @Override
             public void exceptionHandler(String message) {
-                sendMessage("Error: Could not load users from database");
+                sendMessage(message);
             }
         });
 
