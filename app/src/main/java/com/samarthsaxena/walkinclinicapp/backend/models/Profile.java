@@ -33,6 +33,62 @@ public class Profile {
     private String paymentMethod;
     private ArrayList<String> workingTime;
 
+    public String getUser() {
+        return user;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getClinic() {
+        return clinic;
+    }
+
+    public String getInsuranceType() {
+        return insuranceType;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public ArrayList<String> getWorkingTime() {
+        return workingTime;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setClinic(String clinic) {
+        this.clinic = clinic;
+    }
+
+    public void setInsuranceType(String insuranceType) {
+        this.insuranceType = insuranceType;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void setWorkingTime(ArrayList<String> workingTime) {
+        this.workingTime = workingTime;
+    }
+
     public Profile() {
         this.user = null;
         this.address = null;

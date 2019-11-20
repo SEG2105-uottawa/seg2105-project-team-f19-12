@@ -1,4 +1,4 @@
-package com.samarthsaxena.walkinclinicapp.frontend;
+package com.samarthsaxena.walkinclinicapp.frontend.Authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
