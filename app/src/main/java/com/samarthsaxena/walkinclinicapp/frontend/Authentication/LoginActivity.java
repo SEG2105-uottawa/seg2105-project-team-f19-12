@@ -14,6 +14,7 @@ import com.samarthsaxena.walkinclinicapp.backend.facades.Authentication;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.models.User;
 import com.samarthsaxena.walkinclinicapp.frontend.Admin.AdminActivity;
+import com.samarthsaxena.walkinclinicapp.frontend.Authentication.WelcomeActivity;
 import com.samarthsaxena.walkinclinicapp.frontend.Employee.EmployeeActivity;
 
 public class LoginActivity extends AppCompatActivity {
