@@ -1,4 +1,4 @@
-package com.samarthsaxena.walkinclinicapp.frontend;
+package com.samarthsaxena.walkinclinicapp.frontend.Authentication;
 
 import android.os.Bundle;
 import android.widget.TextView;
