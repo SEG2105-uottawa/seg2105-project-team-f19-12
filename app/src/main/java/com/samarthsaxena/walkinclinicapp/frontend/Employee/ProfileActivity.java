@@ -113,7 +113,8 @@ public class ProfileActivity extends AppCompatActivity {
                 Profile x=new Profile(username,address,phone,fullname,insurancesel,paysel);
                 Employee.createProfile(x);
                 Toast.makeText(ProfileActivity.this, a, Toast.LENGTH_LONG).show();
-
+                Intent myIntent = new Intent(ProfileActivity.this, ManageProfileActivity.class);
+                myIntent.putExtra("EXTRA_USERNAME", username);
 
 
             }

@@ -23,6 +23,8 @@
         <activity android:name=".frontend.Employee.EmployeeActivity"></activity>
         <activity android:name=".frontend.Employee.ProfileActivity">
         </activity>
+        <activity android:name=".frontend.Employee.ManageProfileActivity">
+        </activity>
         <activity android:name=".frontend.Admin.ManageUserActivity">
         </activity>
         <activity android:name=".frontend.Admin.ManageServiceActivity">
