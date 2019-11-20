@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ManageServiceEmployeeActivity extends AppCompatActivity {
+public class Manageemployeeservice extends AppCompatActivity {
 
     private TextView welcomeText;
     private EditText text;
@@ -51,7 +51,7 @@ public class ManageServiceEmployeeActivity extends AppCompatActivity {
             }
         });
 
-        CustomEmployeeList adapter = new CustomEmployeeList(ManageServiceEmployeeActivity.this, services);
+        CustomEmployeeList adapter = new CustomEmployeeList(Manageemployeeservice.this, services);
         ListView listView = (ListView) findViewById(R.id.serviceList);
         listView.setAdapter(adapter);
 
@@ -59,6 +59,6 @@ public class ManageServiceEmployeeActivity extends AppCompatActivity {
     }
 
     public void sendMessage(String message) {
-        Toast.makeText(ManageServiceEmployeeActivity.this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(Manageemployeeservice.this, message, Toast.LENGTH_LONG).show();
     }
 }

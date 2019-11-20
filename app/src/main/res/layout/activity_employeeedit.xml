@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".frontend.Employee.ProfileActivity">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.34"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="412dp"
+            android:layout_height="697dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.34"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/welcome"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:layout_marginTop="27dp"
+                android:layout_marginBottom="27dp"
+                android:editable="true"
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/fullname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingStart="12sp"
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/fullname"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/fullnametext"
+                app:layout_constraintTop_toBottomOf="@+id/welcome"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/fullnametext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:ems="10"
+                android:editable="true"
+                android:inputType="text"
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:text=""
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/address"
+                app:layout_constraintTop_toBottomOf="@+id/welcome"
+                app:layout_constraintVertical_bias="0.597"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/address"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/addressText"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/addressText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:ems="10"
+                android:editable="true"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                app:layout_constraintBottom_toTopOf="@+id/phone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/phone"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/phonetext"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/phonetext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:ems="10"
+                android:editable="true"
+                android:inputType="text"
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:text=""
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/insuranceType"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/insuranceType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/insurancetext"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="2dp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup2"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginBottom="8dp"
+                android:orientation='horizontal'
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/payType"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp">
+
+                <RadioButton
+                    android:id="@+id/insuranceuhip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="UHIP"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="462dp" />
+
+                <RadioButton
+                    android:id="@+id/insuranceohip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OHIP"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="462dp" />
+
+                <RadioButton
+                    android:id="@+id/insuranceno"
+                    android:layout_width="133dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="No"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="462dp" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/payType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/paytext"
+                android:textSize="18sp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="2dp"
+                tools:layout_editor_absoluteY="532dp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="371dp"
+                android:layout_height="36dp"
+                android:layout_marginBottom="8dp"
+                android:orientation='horizontal'
+                android:paddingStart="12dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:paddingRight="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/payType"
+                app:layout_constraintVertical_bias="0.12"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp">
+
+
+                <RadioButton
+                    android:id="@+id/paycreditcard"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+
+                    android:text="Credit Card"
+                    android:textSize="18sp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="546dp" />
+
+                <RadioButton
+                    android:id="@+id/paydebitcard"
+                    android:layout_width="97dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Debit Card"
+                    android:textSize="18sp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="546dp" />
+
+                <RadioButton
+                    android:id="@+id/paycash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cash"
+                    android:textSize="18sp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="126dp"
+                    tools:layout_editor_absoluteY="546dp" />
+            </RadioGroup>
+
+
+            <TextView
+                android:id="@+id/settime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/settime"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/addressText"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TimePicker
+                android:id="@+id/timePicker2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/setendtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/setendtime"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/addressText"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints" />
+
+
+            <TimePicker
+                android:id="@+id/timePicker1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="317dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="12dp"
+                android:text="Save new changes"
+                app:layout_constraintEnd_toStartOf="@+id/back"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="655dp" />
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="315dp"
+                android:layout_height="wrap_content"
+
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:text="Back"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="655dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

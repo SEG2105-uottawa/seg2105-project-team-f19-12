@@ -16,14 +16,14 @@ import com.samarthsaxena.walkinclinicapp.backend.models.Service;
 
 import java.util.ArrayList;
 
-public class CustomEmployeeList extends ArrayAdapter {
+public class CustomEmployeeDeleteList extends ArrayAdapter {
 
     private Activity context;
     private ArrayList<Service> services;
 
-    public CustomEmployeeList(final Activity context, ArrayList<Service> services) {
+    public CustomEmployeeDeleteList(final Activity context, ArrayList<Service> services) {
 
-        super(context, R.layout.employee_service_row, services);
+        super(context, R.layout.employee_delete_service_row, services);
 
         this.context = context;
         this.services = services;
@@ -32,7 +32,7 @@ public class CustomEmployeeList extends ArrayAdapter {
     public View getView(final int position, View view, final ViewGroup parent) {
 
         LayoutInflater inflater = context.getLayoutInflater();
-        final View rowView = inflater.inflate(R.layout.employee_service_row, null, true);
+        final View rowView = inflater.inflate(R.layout.employee_delete_service_row, null, true);
 
         final TextView serviceField = (TextView) rowView.findViewById(R.id.servField);
         final TextView roleField = (TextView) rowView.findViewById(R.id.roleField);
@@ -42,9 +42,9 @@ public class CustomEmployeeList extends ArrayAdapter {
 
         // set button handlers
 
-        final Button addButton = (Button) context.findViewById(R.id.addBtn);
+        final Button deletebutton = (Button) context.findViewById(R.id.deleteBtn);
 
-//        addButton.setOnClickListener(new View.OnClickListener() {
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //

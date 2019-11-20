@@ -14,6 +14,8 @@ import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
 import com.samarthsaxena.walkinclinicapp.backend.models.Profile;
 import android.widget.TimePicker;
 
+import java.util.ArrayList;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,8 +59,10 @@ public class ProfileActivity extends AppCompatActivity {
         final String username = getIntent().getStringExtra("EXTRA_USERNAME");
 
         // Display user name
-        String welcomeMessage = "Welcome employee "+username;
+        final String welcomeMessage = "Welcome employee "+username;
         welcomeText.setText(welcomeMessage);
+        final ArrayList<String> time_slot = new ArrayList<>();
+
 
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +111,20 @@ public class ProfileActivity extends AppCompatActivity {
                 }
 
 
-
+                String monday =("Monday: " + starttime +" to "+ endtime);
+                String tuesday =("Tuesday: " + starttime +" to "+ endtime);
+                String wednesday =("Wednesday: " + starttime +" to "+ endtime);
+                String thursday =("Thursday: " + starttime +" to "+ endtime);
+                String friday =("Friday: " + starttime +" to "+ endtime);
+                String saturday =("Saturday: " + starttime +" to "+ endtime);
+                String sunday =("Sunday: " + starttime +" to "+ endtime);
+                time_slot.add(monday);
+                time_slot.add(tuesday);
+                time_slot.add(wednesday);
+                time_slot.add(thursday);
+                time_slot.add(friday);
+                time_slot.add(saturday);
+                time_slot.add(sunday);
 
                 String a="User profile saved";
                 Profile x=new Profile(username,address,phone,fullname,insurancesel,paysel);
