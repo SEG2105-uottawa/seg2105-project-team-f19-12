@@ -40,6 +40,14 @@ public class EmployeeActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+        manageServicesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent myIntent = new Intent(EmployeeActivity.this, ManageServiceEmployeeActivity.class);
+                myIntent.putExtra("EXTRA_USERNAME", username);
+                startActivity(myIntent);
+            }
+        });
 
 
     }
