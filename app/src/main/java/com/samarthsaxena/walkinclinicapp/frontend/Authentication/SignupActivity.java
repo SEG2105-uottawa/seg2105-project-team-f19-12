@@ -1,4 +1,4 @@
-package com.samarthsaxena.walkinclinicapp.frontend;
+package com.samarthsaxena.walkinclinicapp.frontend.Authentication;
 
 import com.samarthsaxena.walkinclinicapp.R;
 import com.samarthsaxena.walkinclinicapp.backend.facades.Authentication;
