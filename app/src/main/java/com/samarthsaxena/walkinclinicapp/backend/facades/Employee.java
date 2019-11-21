@@ -1,5 +1,9 @@
 package com.samarthsaxena.walkinclinicapp.backend.facades;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.models.Profile;
 import com.samarthsaxena.walkinclinicapp.backend.models.Service;
@@ -30,6 +34,7 @@ public class Employee {
 
     public static void createUserServiceAssociation(String user, String service) {
         UserService association = new UserService(user, service);
+        association.dbStore(null);
     }
 
     public static ArrayList<Service> viewServicesOfUser(String user) {
@@ -54,6 +59,7 @@ public class Employee {
     }
 
     public static void deleteServiceOfUser(String user, String service) {
+
 
     }
 
