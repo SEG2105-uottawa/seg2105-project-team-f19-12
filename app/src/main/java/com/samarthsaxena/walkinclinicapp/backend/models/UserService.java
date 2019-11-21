@@ -4,6 +4,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 
@@ -104,8 +105,24 @@ public class UserService {
         return userServices;
     }
 
-    public static void dbDelete() {
+    public static void dbDelete(String user, final String service) {
 
+        Query dbQuery = db.getReference().child(USERSERVICE_STRING).orderByChild(USERSERVICE_USER_STRING).equalTo(user);
 
+        dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot servSnapshot: dataSnapshot.getChildren()) {
+                    if (servSnapshot.child(USERSERVICE_SERVICE_STRING).getValue().equals(service)) {
+                        servSnapshot.getRef().removeValue();
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }
