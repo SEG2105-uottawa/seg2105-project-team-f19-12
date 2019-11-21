@@ -50,6 +50,14 @@ public class ManageProfileActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+        viewbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent myIntent = new Intent(ManageProfileActivity.this, ViewEmployeeProfile.class);
+                myIntent.putExtra("EXTRA_USERNAME", username);
+                startActivity(myIntent);
+            }
+        });
 
     }
 }

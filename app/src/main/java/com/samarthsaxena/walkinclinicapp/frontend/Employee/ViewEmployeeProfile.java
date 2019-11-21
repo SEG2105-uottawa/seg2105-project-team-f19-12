@@ -1,6 +1,7 @@
 package com.samarthsaxena.walkinclinicapp.frontend.Employee;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.samarthsaxena.walkinclinicapp.R;
 
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
 import com.samarthsaxena.walkinclinicapp.backend.models.Profile;
 import com.samarthsaxena.walkinclinicapp.backend.models.Service;
@@ -52,15 +54,27 @@ public class ViewEmployeeProfile extends AppCompatActivity {
         String welcomeMessage = "Welcome employee "+username;
 
         welcomeText.setText(welcomeMessage);
-        Profile employeeprofile = Employee.viewProfile(username);
-        fullnameText.setText(employeeprofile.getClinic());
-        phoneText.setText(employeeprofile.getPhoneNumber());
-        payText.setText(employeeprofile.getPaymentMethod());
-        insuranceText.setText(employeeprofile.getInsuranceType());
-        addressText.setText(employeeprofile.getAddress());
+        Employee.viewProfile(username, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, employeeprofile.getWorkingTime());
-        employeehours.setAdapter(adapter);
+                Profile employeeprofile = (Profile) value;
+                fullnameText.setText(employeeprofile.getClinic());
+                payText.setText(employeeprofile.getPaymentMethod());
+                insuranceText.setText(employeeprofile.getInsuranceType());
+                addressText.setText(employeeprofile.getAddress());
+                phoneText.setText(Integer.toString(employeeprofile.getPhoneNumber()));
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewEmployeeProfile.this, android.R.layout.simple_list_item_1, employeeprofile.getWorkingTime());
+                employeehours.setAdapter(adapter);
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+
+            }
+        });
+
+
 
     }
 

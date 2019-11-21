@@ -27,9 +27,20 @@ public class Employee {
         Profile.dbEdit(user, key, value);
     }
 
-    public static Profile viewProfile(String user) {
-        ArrayList<Profile> profiles = Profile.dbGetAll(Profile.PROFILE_USER_STRING, user, null);
-        return profiles.get(0);
+    public static void viewProfile(String user, final MyCallback cb) {
+        ArrayList<Profile> profiles = Profile.dbGetAll(Profile.PROFILE_USER_STRING, user, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
+                ArrayList<Profile> profiles = (ArrayList<Profile>) value;
+                cb.onCallback(profiles.get(0));
+                return;
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+
+            }
+        });
     }
 
     public static void createUserServiceAssociation(String user, String service) {
