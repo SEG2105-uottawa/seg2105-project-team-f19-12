@@ -51,10 +51,8 @@ public class CustomEmployeeList extends ArrayAdapter {
             @Override
             public void onClick(View view) {
 
-                final EditText serviceText = rowView.findViewById(R.id.servField);
-                String service = serviceText.getText().toString();
-
-                //Employee.createUserServiceAssociation(username, service);
+                String service = serviceField.getText().toString();
+                Employee.createUserServiceAssociation(username, service);
             }
         });
 

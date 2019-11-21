@@ -156,8 +156,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
     String starttime="";
+
     public String showstartTime(int hour, int min) {
-String format="";
+        String format = "";
         if (hour == 0) {
             hour += 12;
             format = "AM";
@@ -169,8 +170,8 @@ String format="";
         } else {
             format = "AM";
         }
-        starttime=(hour)+" : "+(min)+" "+format;
-return starttime;
+        starttime = (hour) + " : " + (min) + " " + format;
+        return starttime;
 
 
     }

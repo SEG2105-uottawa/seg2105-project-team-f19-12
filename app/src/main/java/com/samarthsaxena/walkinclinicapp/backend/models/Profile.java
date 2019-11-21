@@ -225,13 +225,7 @@ public class Profile {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot servSnapshot: dataSnapshot.getChildren()) {
                     if (servSnapshot.getRef().child(PROFILE_USER_STRING).toString().equals(user)) {
-
-                        if (key.equals(PROFILE_TIME_STRING)) {
-                            servSnapshot.getRef().child(key).setValue((ArrayList<String>)value);
-                        } else {
-                            servSnapshot.getRef().child(key).setValue(value);
-                        }
-
+                        servSnapshot.getRef().child(key).setValue(value);
                         return;
                     }
                 }

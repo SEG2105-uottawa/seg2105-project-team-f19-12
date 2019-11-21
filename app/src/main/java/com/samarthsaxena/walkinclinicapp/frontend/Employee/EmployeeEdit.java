@@ -151,7 +151,6 @@ public class EmployeeEdit extends AppCompatActivity {
                 time_slot.add(sunday);
 
                 String a="User profile edited";
-               //TODO:Edit method
                 Employee.editProfile(username, Profile.PROFILE_TIME_STRING, time_slot);
                 Toast.makeText(EmployeeEdit.this, a, Toast.LENGTH_LONG).show();
 

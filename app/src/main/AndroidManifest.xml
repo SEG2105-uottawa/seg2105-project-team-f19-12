@@ -29,8 +29,6 @@
         </activity>
         <activity android:name=".frontend.Employee.ManageServiceEmployeeActivity">
         </activity>
-        <activity android:name=".frontend.Employee.Manageemployeeservice">
-        </activity>
         <activity android:name=".frontend.Employee.ManageProfileActivity">
         </activity>
         <activity android:name=".frontend.Admin.ManageUserActivity">
