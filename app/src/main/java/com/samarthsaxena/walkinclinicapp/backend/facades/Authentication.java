@@ -17,7 +17,7 @@ public class Authentication {
     public static void login(final String username, final String password, final MyCallback cb) {
 
         // Check username is registered
-        User.dbGetAll("username", username, new MyCallback() {
+        User.dbGetAll(User.USER_USERNAME_STRING, username, new MyCallback() {
             @Override
             public void onCallback(Object obj) {
                 ArrayList<User> value = (ArrayList<User>) obj;
@@ -51,7 +51,7 @@ public class Authentication {
                                 final String type,
                                 final MyCallback cb) {
 
-        User.dbGetAll("username", username, new MyCallback() {
+        User.dbGetAll(User.USER_USERNAME_STRING, username, new MyCallback() {
             @Override
             public void onCallback(Object value) {
                 ArrayList<User> users = (ArrayList<User>) value;

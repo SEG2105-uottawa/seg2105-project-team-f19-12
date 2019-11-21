@@ -1,11 +1,13 @@
 package com.samarthsaxena.walkinclinicapp.backend.facades;
 
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.models.Profile;
 import com.samarthsaxena.walkinclinicapp.backend.models.Service;
 import com.samarthsaxena.walkinclinicapp.backend.models.User;
 import com.samarthsaxena.walkinclinicapp.backend.models.UserService;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Employee {
 
@@ -22,7 +24,7 @@ public class Employee {
     }
 
     public static Profile viewProfile(String user) {
-        ArrayList<Profile> profiles = Profile.dbGetAll("user", user, null);
+        ArrayList<Profile> profiles = Profile.dbGetAll(Profile.PROFILE_USER_STRING, user, null);
         return profiles.get(0);
     }
 
@@ -31,12 +33,47 @@ public class Employee {
     }
 
     public static ArrayList<Service> viewServicesOfUser(String user) {
-        ArrayList<Service> services = new ArrayList<>();
 
-        return services;
+        final ArrayList<Service> servicesOfUser = new ArrayList<>();
+
+        UserService.dbGetAll(UserService.USERSERVICE_USER_STRING, user, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
+                ArrayList<UserService> servicesOfUserAssociations = (ArrayList<UserService>) value;
+                Iterator<UserService> iterator = servicesOfUserAssociations.iterator();
+                recuGetServices(servicesOfUser, iterator);
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+
+            }
+        });
+
+        return servicesOfUser;
     }
 
     public static void deleteServiceOfUser(String user, String service) {
+
+    }
+
+    private static void recuGetServices(final ArrayList<Service> services, final Iterator<UserService> iterator) {
+
+        if (iterator.hasNext()) {
+            Service.dbGetAll(Service.SERVICE_OFFERED_STRING, iterator.next().getService(), new MyCallback() {
+                @Override
+                public void onCallback(Object value) {
+                    ArrayList<Service> serviceList = (ArrayList<Service>) value;
+                    services.add(serviceList.get(0));
+                    recuGetServices(services, iterator);
+                }
+
+                @Override
+                public void exceptionHandler(String message) {
+
+                }
+            });
+        }
 
     }
 }

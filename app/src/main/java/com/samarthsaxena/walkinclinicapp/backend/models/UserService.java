@@ -1,21 +1,42 @@
 package com.samarthsaxena.walkinclinicapp.backend.models;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+
+import java.util.ArrayList;
 
 public class UserService {
 
-    private static final String USERSERVICE_STRING = "UserServiceAssociation";
-    private static final String USERSERVICE_USER_STRING = "User";
-    private static final String USERSERVICE_SERVICE_STRING = "Service";
+    public static final String USERSERVICE_STRING = "UserServiceAssociation";
+    public static final String USERSERVICE_USER_STRING = "User";
+    public static final String USERSERVICE_SERVICE_STRING = "Service";
 
     private String user;
     private String service;
-    private FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private static FirebaseDatabase db = FirebaseDatabase.getInstance();
 
     public UserService(String user, String service) {
         this.user = user;
+        this.service = service;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
         this.service = service;
     }
 
@@ -28,4 +49,59 @@ public class UserService {
             cb.onCallback(UserService.this);
         }
     }
+
+    public static ArrayList<UserService> dbGetAll(final String param, final String value, final MyCallback cb) {
+
+        final ArrayList<UserService> userServices = new ArrayList<>();
+
+
+        // Check param type is an existing user field
+        if  (
+                !param.equals(USERSERVICE_USER_STRING) &&
+                        !param.equals(USERSERVICE_SERVICE_STRING) &&
+                        !param.equals("all")
+        ) {
+            cb.exceptionHandler("Invalid userService parameter");
+        }
+
+        DatabaseReference ref = db.getReference().child(USERSERVICE_STRING);
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    if ((userSnapshot.child(param).getValue() != null &&
+                            userSnapshot.child(param).getValue().toString().equals(value)) ||
+                            param.equals("all")) {
+
+                        String user = "";
+                        String service = "";
+
+                        UserService userService;
+                        try {
+                            user = userSnapshot.child(USERSERVICE_USER_STRING).getValue().toString();
+                            service = userSnapshot.child(USERSERVICE_SERVICE_STRING).getValue().toString();
+                        } catch (NullPointerException e) {
+                            break;
+                        }
+
+                        userService = new UserService(user, service);
+                        userServices.add(userService);
+                    }
+                }
+                if (cb != null) {
+                    cb.onCallback(userServices);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                cb.exceptionHandler(databaseError.getMessage());
+            }
+        });
+
+        return userServices;
+    }
+
 }

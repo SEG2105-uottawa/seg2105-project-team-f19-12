@@ -16,14 +16,14 @@ public class Profile {
     private static final FirebaseDatabase db = FirebaseDatabase.getInstance();
 
     // Name of fields stored in database
-    private static final String PROFILE_STRING                      = "Profile";
-    private static final String PROFILE_USER_STRING                 = "user";
-    private static final String PROFILE_ADDRESS_STRING              = "address";
-    private static final String PROFILE_PHONE_NUM_STRING            = "phoneNumber";
-    private static final String PROFILE_CLINIC_STRING               = "clinic";
-    private static final String PROFILE_INSURANCE_STRING            = "insuranceType";
-    private static final String PROFILE_PAYMENT_STRING              = "paymentMethod";
-    private static final String PROFILE_TIME_STRING                 = "workingTime";
+    public static final String PROFILE_STRING                      = "Profile";
+    public static final String PROFILE_USER_STRING                 = "user";
+    public static final String PROFILE_ADDRESS_STRING              = "address";
+    public static final String PROFILE_PHONE_NUM_STRING            = "phoneNumber";
+    public static final String PROFILE_CLINIC_STRING               = "clinic";
+    public static final String PROFILE_INSURANCE_STRING            = "insuranceType";
+    public static final String PROFILE_PAYMENT_STRING              = "paymentMethod";
+    public static final String PROFILE_TIME_STRING                 = "workingTime";
 
     private String user;
     private String address;

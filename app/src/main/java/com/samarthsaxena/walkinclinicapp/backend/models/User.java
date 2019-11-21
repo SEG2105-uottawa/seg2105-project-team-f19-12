@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class User {
 
     // Name of fields stored in database
-    private static final String USER_STRING                    = "Users";
-    private static final String USER_EMAIL_STRING              = "email";
-    private static final String USER_USERNAME_STRING           = "username";
-    private static final String USER_HASH_PASSWORD_STRING      = "hash password";
-    private static final String USER_TYPE_STRING               = "type";
+    public static final String USER_STRING                    = "Users";
+    public static final String USER_EMAIL_STRING              = "email";
+    public static final String USER_USERNAME_STRING           = "username";
+    public static final String USER_HASH_PASSWORD_STRING      = "hash password";
+    public static final String USER_TYPE_STRING               = "type";
 
     // User fields
     protected String email;

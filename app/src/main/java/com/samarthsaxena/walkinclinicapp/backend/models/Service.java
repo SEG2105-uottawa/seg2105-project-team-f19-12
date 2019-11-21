@@ -13,9 +13,9 @@ import java.util.ArrayList;
 public class Service {
 
     // Name of fields stored in database
-    private static final String SERVICE_STRING                      = "Services";
-    private static final String SERVICE_OFFERED_STRING              = "serviceOffered";
-    private static final String SERVICE_ROLE_STRING                 = "role";
+    public static final String SERVICE_STRING                      = "Services";
+    public static final String SERVICE_OFFERED_STRING              = "serviceOffered";
+    public static final String SERVICE_ROLE_STRING                 = "role";
 
     private  String serviceOffered;
     private  String role;
