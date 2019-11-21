@@ -19,7 +19,7 @@ import java.util.Arrays;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ViewemployeeProfile extends AppCompatActivity {
+public class ViewEmployeeProfile extends AppCompatActivity {
 
     private TextView welcomeText;
     private TextView fullnameText;
