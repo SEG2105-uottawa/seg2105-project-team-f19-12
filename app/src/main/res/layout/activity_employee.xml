@@ -26,6 +26,7 @@
 
         <Button
             android:id="@+id/profileButton"
+            style="@style/Widget.AppCompat.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Profile"
@@ -37,6 +38,7 @@
 
         <Button
             android:id="@+id/serviceButton"
+             style="@style/Widget.AppCompat.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="View Services"
