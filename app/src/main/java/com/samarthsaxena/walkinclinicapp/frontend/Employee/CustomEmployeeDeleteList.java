@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.samarthsaxena.walkinclinicapp.R;
 import com.samarthsaxena.walkinclinicapp.backend.facades.Admin;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
 import com.samarthsaxena.walkinclinicapp.backend.models.Service;
+import com.samarthsaxena.walkinclinicapp.backend.models.User;
 
 
 import java.util.ArrayList;
@@ -20,13 +22,15 @@ public class CustomEmployeeDeleteList extends ArrayAdapter {
 
     private Activity context;
     private ArrayList<Service> services;
+    private String username;
 
-    public CustomEmployeeDeleteList(final Activity context, ArrayList<Service> services) {
+    public CustomEmployeeDeleteList(final Activity context, ArrayList<Service> services, String username) {
 
         super(context, R.layout.employee_delete_service_row, services);
 
         this.context = context;
         this.services = services;
+        this.username = username;
     }
 
     public View getView(final int position, View view, final ViewGroup parent) {
@@ -42,30 +46,16 @@ public class CustomEmployeeDeleteList extends ArrayAdapter {
 
         // set button handlers
 
-        final Button deletebutton = (Button) context.findViewById(R.id.deleteBtn);
+        final Button deleteButton = (Button) rowView.findViewById(R.id.deleteBtn);
 
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                final EditText serviceText = context.findViewById(R.id.serviceInputField);
-//                final EditText roleText = context.findViewById(R.id.roleInputField);
-//
-//                String newService = serviceText.getText().toString();
-//                String newRole = roleText.getText().toString();
-//
-//                // Check field validation
-//                if (newService.isEmpty() || newRole.isEmpty()) {
-//                    return;
-//                }
-//
-//                // Update in layout and db
-//                Service service = new Service(newService, newRole);
-//                Admin.createService(service);
-//                services.add(service);
-//                notifyDataSetChanged();
-//            }
-//        });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String service = serviceField.getText().toString();
+                Employee.deleteServiceOfUser(username, service);
+            }
+        });
 
 
 
