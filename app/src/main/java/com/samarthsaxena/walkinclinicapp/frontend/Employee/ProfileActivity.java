@@ -131,8 +131,16 @@ public class ProfileActivity extends AppCompatActivity {
                 Employee.createProfile(x);
                 Toast.makeText(ProfileActivity.this, a, Toast.LENGTH_LONG).show();
                 Intent myIntent = new Intent(ProfileActivity.this, ManageProfileActivity.class);
-                myIntent.putExtra("EXTRA_USERNAME", username);
-
+                Bundle extras = new Bundle();
+                extras.putString("EXTRA_USERNAME",username);
+                extras.putString("EXTRA_address", address);
+                extras.putString("EXTRA_phone", Integer.toString(phone));
+                extras.putString("EXTRA_fullname", fullname);
+                extras.putString("EXTRA_insurance", insurancesel);
+                extras.putString("EXTRA_pay", paysel);
+                extras.putStringArrayList("EXTRA_time", time_slot);
+                myIntent.putExtras(extras);
+                startActivity(myIntent);
 
             }
         });
