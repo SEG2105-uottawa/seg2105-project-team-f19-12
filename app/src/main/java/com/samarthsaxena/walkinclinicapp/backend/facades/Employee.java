@@ -23,7 +23,7 @@ public class Employee {
         profile.dbStore(null);
     }
 
-    public static void editProfile(String user, String key, String value) {
+    public static void editProfile(String user, String key, Object value) {
         Profile.dbEdit(user, key, value);
     }
 

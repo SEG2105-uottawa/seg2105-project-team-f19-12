@@ -205,7 +205,7 @@ public class Profile {
 
 
 
-    public static void dbEdit(final String user, final String key, final String value) {
+    public static void dbEdit(final String user, final String key, final Object value) {
 
         if (!key.equals(PROFILE_USER_STRING) &&
                 !key.equals(PROFILE_ADDRESS_STRING) &&
@@ -225,7 +225,13 @@ public class Profile {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot servSnapshot: dataSnapshot.getChildren()) {
                     if (servSnapshot.getRef().child(PROFILE_USER_STRING).toString().equals(user)) {
-                        servSnapshot.getRef().child(key).setValue(value);
+
+                        if (key.equals(PROFILE_TIME_STRING)) {
+                            servSnapshot.getRef().child(key).setValue((ArrayList<String>)value);
+                        } else {
+                            servSnapshot.getRef().child(key).setValue(value);
+                        }
+
                         return;
                     }
                 }
