@@ -42,6 +42,14 @@ public class ManageProfileActivity extends AppCompatActivity {
             }
         });
 
+        editbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent myIntent = new Intent(ManageProfileActivity.this, EmployeeEdit.class);
+                myIntent.putExtra("EXTRA_USERNAME", username);
+                startActivity(myIntent);
+            }
+        });
 
     }
 }

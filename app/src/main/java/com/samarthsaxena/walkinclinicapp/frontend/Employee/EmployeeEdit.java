@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
+import com.samarthsaxena.walkinclinicapp.backend.models.Profile;
 
 import android.widget.TimePicker;
 
@@ -150,6 +152,7 @@ public class EmployeeEdit extends AppCompatActivity {
 
                 String a="User profile edited";
                //TODO:Edit method
+                Employee.editProfile(username, Profile.PROFILE_TIME_STRING, time_slot);
                 Toast.makeText(EmployeeEdit.this, a, Toast.LENGTH_LONG).show();
 
                 Intent myIntent = new Intent(EmployeeEdit.this, ManageProfileActivity.class);

@@ -51,7 +51,7 @@ public class ManageServiceEmployeeActivity extends AppCompatActivity {
             }
         });
 
-        CustomEmployeeList adapter = new CustomEmployeeList(ManageServiceEmployeeActivity.this, services);
+        CustomEmployeeList adapter = new CustomEmployeeList(ManageServiceEmployeeActivity.this, services, username);
         ListView listView = (ListView) findViewById(R.id.serviceList);
         listView.setAdapter(adapter);
 
