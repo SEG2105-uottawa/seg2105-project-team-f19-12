@@ -10,6 +10,7 @@ import com.samarthsaxena.walkinclinicapp.backend.models.Service;
 import com.samarthsaxena.walkinclinicapp.backend.models.User;
 import com.samarthsaxena.walkinclinicapp.backend.models.UserService;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -43,9 +44,30 @@ public class Employee {
         });
     }
 
-    public static void createUserServiceAssociation(String user, String service) {
-        UserService association = new UserService(user, service);
-        association.dbStore(null);
+    public static void createUserServiceAssociation(final String user, final String service) {
+        UserService.dbGetAll(UserService.USERSERVICE_USER_STRING, user, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
+                ArrayList<UserService> userServices = (ArrayList<UserService>) value;
+                if (!userServices.isEmpty()) {
+                    for (UserService n : userServices) {
+                        if (n.getService().equals(service)) {
+                            return;
+                        }
+                    }
+                    UserService association = new UserService(user, service);
+                    association.dbStore(null);
+                    return;
+                }
+                UserService association = new UserService(user, service);
+                association.dbStore(null);
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+
+            }
+        });
     }
 
     public static ArrayList<Service> viewServicesOfUser(String user) {
