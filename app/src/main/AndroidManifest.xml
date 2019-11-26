@@ -37,6 +37,8 @@
         </activity>
         <activity android:name=".frontend.Admin.ManageServiceActivity">
         </activity>
+        <activity android:name=".frontend.Employee.DeleteServiceEmployeeActivity">
+        </activity>
     </application>
 
 </manifest>

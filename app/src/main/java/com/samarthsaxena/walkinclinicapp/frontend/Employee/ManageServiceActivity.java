@@ -44,7 +44,7 @@ public class ManageServiceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(ManageServiceActivity.this, DeleteServiceEmployeeActivity.class);
-                //myIntent.putExtra("EXTRA_USERNAME", username);
+                myIntent.putExtra("EXTRA_USERNAME", username);
                 startActivity(myIntent);
             }
         });

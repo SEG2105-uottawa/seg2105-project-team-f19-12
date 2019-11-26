@@ -71,7 +71,7 @@ public class Employee {
 
     public static void deleteServiceOfUser(String user, String service) {
 
-
+        UserService.dbDelete(user, service);
     }
 
     private static void recuGetServices(final ArrayList<Service> services, final Iterator<UserService> iterator) {

@@ -18,19 +18,20 @@ import java.util.ArrayList;
 public class DeleteServiceEmployeeActivity extends AppCompatActivity {
     private TextView welcomeText;
     private EditText text;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activiy_deleteemployeeservice);
         welcomeText = findViewById(R.id.welcome);
-        text=findViewById(R.id.fullnametext);
+        text = findViewById(R.id.fullnametext);
         final String username = getIntent().getStringExtra("EXTRA_USERNAME");
         ArrayList<Service> profileservice = Employee.viewServicesOfUser(username);
 
 
-        CustomEmployeeList adapter = new CustomEmployeeList(DeleteServiceEmployeeActivity.this, profileservice, username);
+        CustomEmployeeDeleteList adapter = new CustomEmployeeDeleteList(DeleteServiceEmployeeActivity.this, profileservice, username);
         ListView listView = (ListView) findViewById(R.id.serviceList);
         listView.setAdapter(adapter);
 
 
-}
+    }
 }

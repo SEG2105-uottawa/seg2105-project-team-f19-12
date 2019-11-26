@@ -45,7 +45,6 @@ public class CustomEmployeeDeleteList extends ArrayAdapter {
         roleField.setText(services.get(position).getRole());
 
         // set button handlers
-
         final Button deleteButton = (Button) rowView.findViewById(R.id.deleteBtn);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +53,8 @@ public class CustomEmployeeDeleteList extends ArrayAdapter {
 
                 String service = serviceField.getText().toString();
                 Employee.deleteServiceOfUser(username, service);
+                services.remove(position);
+                notifyDataSetChanged();
             }
         });
 
