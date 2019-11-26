@@ -32,8 +32,8 @@ public class ProfileActivity extends AppCompatActivity {
     private Button Save;
     private Button Back;
     private TextView welcomeText;
-    private TimePicker timestartPicker;
-    private TimePicker timeendPicker;
+//    private TimePicker timestartPicker;
+//    private TimePicker timeendPicker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,15 +53,15 @@ public class ProfileActivity extends AppCompatActivity {
         Save = findViewById(R.id.save);
         Back = findViewById(R.id.back);
         welcomeText = findViewById(R.id.welcome);
-        timestartPicker = (TimePicker) findViewById(R.id.timePicker2);
-        timeendPicker = (TimePicker) findViewById(R.id.timePicker1);
+//        timestartPicker = (TimePicker) findViewById(R.id.timePicker2);
+//        timeendPicker = (TimePicker) findViewById(R.id.timePicker1);
         // Obtain user fields from logging in
         final String username = getIntent().getStringExtra("EXTRA_USERNAME");
 
         // Display user name
         final String welcomeMessage = "Welcome employee "+username;
         welcomeText.setText(welcomeMessage);
-        final ArrayList<String> time_slot = new ArrayList<>();
+       final ArrayList<String> time_slot = new ArrayList<>();
 
 
         Save.setOnClickListener(new View.OnClickListener() {
@@ -75,12 +75,12 @@ public class ProfileActivity extends AppCompatActivity {
                 String insurancesel = "";
                 String paysel = "";
 
-                int hourstart = timestartPicker.getCurrentHour();
-                int minstart = timestartPicker.getCurrentMinute();
-                int hourend= timeendPicker.getCurrentHour();
-                int minend = timeendPicker.getCurrentMinute();
-                String starttime=showstartTime(hourstart,minstart);
-                String endtime=showendTime(hourend,minend);
+//                int hourstart = timestartPicker.getCurrentHour();
+//                int minstart = timestartPicker.getCurrentMinute();
+//                int hourend= timeendPicker.getCurrentHour();
+//                int minend = timeendPicker.getCurrentMinute();
+//                String starttime=showstartTime(hourstart,minstart);
+//                String endtime=showendTime(hourend,minend);
                 // Check fields aren't empty
                 if (fullname.isEmpty() || address.isEmpty() || phoneText.getText().toString().isEmpty()) {
                     sendMessage("Empty fields aren't allowed!");
@@ -110,21 +110,21 @@ public class ProfileActivity extends AppCompatActivity {
                     paysel="Cash";
                 }
 
-
-                String monday =("Monday: " + starttime +" to "+ endtime);
-                String tuesday =("Tuesday: " + starttime +" to "+ endtime);
-                String wednesday =("Wednesday: " + starttime +" to "+ endtime);
-                String thursday =("Thursday: " + starttime +" to "+ endtime);
-                String friday =("Friday: " + starttime +" to "+ endtime);
-                String saturday =("Saturday: " + starttime +" to "+ endtime);
-                String sunday =("Sunday: " + starttime +" to "+ endtime);
-                time_slot.add(monday);
-                time_slot.add(tuesday);
-                time_slot.add(wednesday);
-                time_slot.add(thursday);
-                time_slot.add(friday);
-                time_slot.add(saturday);
-                time_slot.add(sunday);
+//
+//                String monday =("Monday: " + starttime +" to "+ endtime);
+//                String tuesday =("Tuesday: " + starttime +" to "+ endtime);
+//                String wednesday =("Wednesday: " + starttime +" to "+ endtime);
+//                String thursday =("Thursday: " + starttime +" to "+ endtime);
+//                String friday =("Friday: " + starttime +" to "+ endtime);
+//                String saturday =("Saturday: " + starttime +" to "+ endtime);
+//                String sunday =("Sunday: " + starttime +" to "+ endtime);
+//                time_slot.add(monday);
+//                time_slot.add(tuesday);
+//                time_slot.add(wednesday);
+//                time_slot.add(thursday);
+//                time_slot.add(friday);
+//                time_slot.add(saturday);
+//                time_slot.add(sunday);
 
                 String a="User profile saved";
                 Profile x=new Profile(username,address,phone,fullname,insurancesel,paysel,time_slot);
@@ -138,7 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
                 extras.putString("EXTRA_fullname", fullname);
                 extras.putString("EXTRA_insurance", insurancesel);
                 extras.putString("EXTRA_pay", paysel);
-                extras.putStringArrayList("EXTRA_time", time_slot);
+//                extras.putStringArrayList("EXTRA_time", time_slot);
                 myIntent.putExtras(extras);
                 startActivity(myIntent);
 
@@ -155,46 +155,46 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
     }
-    String starttime="";
-
-    public String showstartTime(int hour, int min) {
-        String format = "";
-        if (hour == 0) {
-            hour += 12;
-            format = "AM";
-        } else if (hour == 12) {
-            format = "PM";
-        } else if (hour > 12) {
-            hour -= 12;
-            format = "PM";
-        } else {
-            format = "AM";
-        }
-        starttime = (hour) + " : " + (min) + " " + format;
-        return starttime;
-
-
-    }
-
-    String endtime="";
-    public String showendTime(int hour, int min) {
-        String format="";
-        if (hour == 0) {
-            hour += 12;
-            format = "AM";
-        } else if (hour == 12) {
-            format = "PM";
-        } else if (hour > 12) {
-            hour -= 12;
-            format = "PM";
-        } else {
-            format = "AM";
-        }
-        endtime=(hour)+" : "+(min)+" "+format;
-        return endtime;
-
-
-    }
+//    String starttime="";
+//
+//    public String showstartTime(int hour, int min) {
+//        String format = "";
+//        if (hour == 0) {
+//            hour += 12;
+//            format = "AM";
+//        } else if (hour == 12) {
+//            format = "PM";
+//        } else if (hour > 12) {
+//            hour -= 12;
+//            format = "PM";
+//        } else {
+//            format = "AM";
+//        }
+//        starttime = (hour) + " : " + (min) + " " + format;
+//        return starttime;
+//
+//
+//    }
+//
+//    String endtime="";
+//    public String showendTime(int hour, int min) {
+//        String format="";
+//        if (hour == 0) {
+//            hour += 12;
+//            format = "AM";
+//        } else if (hour == 12) {
+//            format = "PM";
+//        } else if (hour > 12) {
+//            hour -= 12;
+//            format = "PM";
+//        } else {
+//            format = "AM";
+//        }
+//        endtime=(hour)+" : "+(min)+" "+format;
+//        return endtime;
+//
+//
+//    }
 
 
     public void sendMessage(String message) {
