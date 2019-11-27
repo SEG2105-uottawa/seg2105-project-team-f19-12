@@ -77,6 +77,20 @@ public class Patient {
                     return;
                 }
                 // Check waiting time
+                Profile.dbGetTimeSlots(username, new MyCallback() {
+                    @Override
+                    public void onCallback(Object value) {
+                        ArrayList<ArrayList<String>> timeslots = (ArrayList<ArrayList<String>>) value;
+                        ArrayList<String> hours = timeslots.get(weekday);
+                        int waitingPosition = hour;
+                        // TODO: Do waiting time
+                    }
+
+                    @Override
+                    public void exceptionHandler(String message) {
+                        cb.exceptionHandler(message);
+                    }
+                });
             }
 
             @Override
