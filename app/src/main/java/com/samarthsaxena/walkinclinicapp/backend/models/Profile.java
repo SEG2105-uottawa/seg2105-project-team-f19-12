@@ -14,6 +14,9 @@ import java.util.Iterator;
 public class Profile {
 
     private static final FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private static final String weekday[] = {
+            "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    };
 
     // Name of fields stored in database
     public static final String PROFILE_STRING                      = "Profile";
@@ -24,6 +27,7 @@ public class Profile {
     public static final String PROFILE_INSURANCE_STRING            = "insuranceType";
     public static final String PROFILE_PAYMENT_STRING              = "paymentMethod";
     public static final String PROFILE_TIME_STRING                 = "workingTime";
+    public static final String PROFILE_TIME_SLOT_STRING            = "timeslots";
 
     private String user;
     private String address;
@@ -31,7 +35,7 @@ public class Profile {
     private String clinic;
     private String insuranceType;
     private String paymentMethod;
-    private ArrayList<String> workingTime;
+    private ArrayList<ArrayList<String>> workingTime;
 
     public String getUser() {
         return user;
@@ -57,7 +61,7 @@ public class Profile {
         return paymentMethod;
     }
 
-    public ArrayList<String> getWorkingTime() {
+    public ArrayList<ArrayList<String>> getWorkingTime() {
         return workingTime;
     }
 
@@ -85,7 +89,7 @@ public class Profile {
         this.paymentMethod = paymentMethod;
     }
 
-    public void setWorkingTime(ArrayList<String> workingTime) {
+    public void setWorkingTime(ArrayList<ArrayList<String>> workingTime) {
         this.workingTime = workingTime;
     }
 
@@ -105,7 +109,7 @@ public class Profile {
                    String clinic,
                    String insuranceType,
                    String paymentMethod,
-                   ArrayList<String> workingTime) {
+                   ArrayList<ArrayList<String>> workingTime) {
         this.user = user;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -124,7 +128,11 @@ public class Profile {
         profileRef.child(PROFILE_CLINIC_STRING)             .setValue(clinic);
         profileRef.child(PROFILE_INSURANCE_STRING)          .setValue(insuranceType);
         profileRef.child(PROFILE_PAYMENT_STRING)            .setValue(paymentMethod);
-        profileRef.child(PROFILE_TIME_STRING)               .setValue(workingTime);
+        DatabaseReference timeRef = profileRef.child(PROFILE_TIME_STRING);
+        for (int i = 0; i < 7; i++) {
+            timeRef.child(weekday[i])                       .setValue(workingTime.get(i));
+        }
+        generateTimeslots(profileRef);
 
         if (cb != null) {
             cb.onCallback(Profile.this);
@@ -165,7 +173,7 @@ public class Profile {
                         String clinic = "";
                         String insuranceType = "";
                         String paymentMethod = "";
-                        ArrayList<String> workingTime = new ArrayList<>();
+                        ArrayList<ArrayList<String>> workingTime = new ArrayList<>();
 
                         Profile profile;
 
@@ -176,10 +184,13 @@ public class Profile {
                             clinic = userSnapshot.child(PROFILE_CLINIC_STRING).getValue().toString();
                             insuranceType = userSnapshot.child(PROFILE_INSURANCE_STRING).getValue().toString();
                             paymentMethod = userSnapshot.child(PROFILE_PAYMENT_STRING).getValue().toString();
-                            Iterator<DataSnapshot> iter = userSnapshot.child(PROFILE_TIME_STRING).getChildren().iterator();
-                            while (iter.hasNext()) {
-                                workingTime.add(iter.next().toString());
+                            for (int i = 0; i < 7; i++) {
+                                Iterator<DataSnapshot> iter = userSnapshot.child(weekday[i]).getChildren().iterator();
+                                while (iter.hasNext()) {
+                                    workingTime.get(i).add(iter.next().toString());
+                                }
                             }
+
                         } catch (NullPointerException e) {
                             break;
                         }
@@ -201,9 +212,6 @@ public class Profile {
 
         return profiles;
     }
-
-
-
 
     public static void dbEdit(final String user, final String key, final Object value) {
 
@@ -237,4 +245,24 @@ public class Profile {
         });
     }
 
+    private void generateTimeslots(DatabaseReference ref) {
+        for (int i = 0; i < 7; i++) {
+            DatabaseReference slotRef = ref.child(PROFILE_TIME_SLOT_STRING).child(weekday[i]);
+            // Divide time slot into 15 minutes
+            int timeLimitBegin = Integer.parseInt(workingTime.get(i).get(0));
+            int timeLimitEnd = Integer.parseInt(workingTime.get(i).get(1));
+            int numOf15minSlots = (timeLimitEnd - timeLimitBegin) * 4;
+            for (int j = 0; j < numOf15minSlots; j++) {
+                int hour1 = timeLimitBegin + (int)(j / 4);
+                int hour2 = timeLimitBegin + (int)((j + 1) / 4);
+                int min1 = 15*(i % 4);
+                int min2 = 15*((i + 1) % 4);
+                String min1Str = (min1 == 0) ? "00" : Integer.toString(min1);
+                String min2Str = (min2 == 0) ? "00" : Integer.toString(min2);
+                String parsedTime = (hour1 + ":" + min1Str + " - " + hour2 + ":" + min2Str);
+                slotRef.child(parsedTime).setValue("");
+            }
+
+        }
+    }
 }
