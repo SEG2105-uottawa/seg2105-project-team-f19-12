@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Patient {
 
-    public void getClinics(final String userInput, final MyCallback cb) {
+    public static void getClinics(final String userInput, final MyCallback cb) {
 
         Profile.dbGetAll("all", null, new MyCallback() {
             @Override
@@ -58,7 +58,31 @@ public class Patient {
         });
     }
 
-    public void scheduleTimeslot(int hour) {
+    public static void scheduleTimeSlot(final String username, final int weekday, final int hour, final MyCallback cb) {
+        Profile.dbGetAll(Profile.PROFILE_USER_STRING, username, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
+                ArrayList<Profile> profiles = (ArrayList<Profile>) value;
+                // Check only one employee is returned
+                if (profiles.size() != 1) {
+                    cb.exceptionHandler("Error: Employee with username <" + username + "> doesn't exist");
+                    return;
+                }
+                Profile profile = profiles.get(0);
+                // Check time chosen is valid
+                int profileHour1 = Integer.parseInt(profile.getWorkingTime().get(weekday).get(0));
+                int profileHour2 = Integer.parseInt(profile.getWorkingTime().get(weekday).get(1));
+                if (hour < profileHour1 || hour >= profileHour2) {
+                    cb.exceptionHandler("Error: Requested time outside clinic working hours");
+                    return;
+                }
+                // Check waiting time
+            }
 
+            @Override
+            public void exceptionHandler(String message) {
+
+            }
+        });
     }
 }

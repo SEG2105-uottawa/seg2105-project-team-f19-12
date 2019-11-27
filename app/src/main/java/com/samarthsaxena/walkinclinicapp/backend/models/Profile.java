@@ -158,7 +158,7 @@ public class Profile {
 
         DatabaseReference ref = db.getReference().child(PROFILE_STRING);
 
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+               ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -241,8 +241,39 @@ public class Profile {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+    }
+
+    public static void dbGetTimeSlots(final String username, final MyCallback cb) {
+
+        DatabaseReference ref = db.getReference().child(PROFILE_STRING).child(PROFILE_TIME_SLOT_STRING);
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                ArrayList<ArrayList<String>> timeslots = new ArrayList<>();
+
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    ArrayList<String> hours = new ArrayList<>();
+                    Iterator<DataSnapshot> iterator = userSnapshot.getChildren().iterator();
+                    while (iterator.hasNext()) {
+                        hours.add(iterator.next().toString());
+                    }
+                    timeslots.add(hours);
+                }
+
+                cb.onCallback(timeslots);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                cb.exceptionHandler(databaseError.getMessage());
+            }
+        });
+
     }
 
     private void generateTimeslots(DatabaseReference ref) {
