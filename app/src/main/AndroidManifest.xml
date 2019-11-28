@@ -41,6 +41,10 @@
         </activity>
         <activity android:name=".frontend.Employee.AddWorkingHours">
         </activity>
+        <activity android:name=".frontend.Patients.WorkingSlotActivity">
+        </activity>
+        <activity android:name=".frontend.Patients.PatientActivity">
+        </activity>
     </application>
 
 </manifest>
