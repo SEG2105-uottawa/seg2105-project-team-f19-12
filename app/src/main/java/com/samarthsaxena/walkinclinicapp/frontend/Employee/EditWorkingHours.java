@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 import com.samarthsaxena.walkinclinicapp.R;
 
 public class EditWorkingHours extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+    private int[][] times;
     private TextView[][] D, T;
     private Button[][] C;
     private Boolean[][] B;
@@ -179,6 +180,16 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
                     }else{
                         T[j][k].setText(" "+i+":00 "+m);
                     }
+
+                    if(m.equals("AM")){
+                        times[j][k]=i;
+                        if(i==12){
+                            times[j][k]=0;
+                        }
+                    }else{
+                        times[j][k]=i+12;
+                    }
+
                     B[j][k]=false;
                 }
             }
@@ -186,6 +197,7 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
     }
 
     private void initVar(){
+        times=new int[2][7];//temp
         D=new TextView[2][7];
         T=new TextView[2][7];
         C=new Button[2][7];
@@ -254,6 +266,10 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
             B[1][i]=false;
         }
 
+    }
+
+    public int[][] getTimes(){
+        return times;
     }
 
 }
