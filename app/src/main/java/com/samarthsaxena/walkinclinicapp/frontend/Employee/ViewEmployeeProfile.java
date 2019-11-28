@@ -64,8 +64,8 @@ public class ViewEmployeeProfile extends AppCompatActivity {
                 insuranceText.setText(employeeprofile.getInsuranceType());
                 addressText.setText(employeeprofile.getAddress());
                 phoneText.setText(Integer.toString(employeeprofile.getPhoneNumber()));
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewEmployeeProfile.this, android.R.layout.simple_list_item_1, employeeprofile.getWorkingTime());
-                employeehours.setAdapter(adapter);
+                // ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewEmployeeProfile.this, android.R.layout.simple_list_item_1, employeeprofile.getWorkingTime());
+                // employeehours.setAdapter(adapter);
             }
 
             @Override

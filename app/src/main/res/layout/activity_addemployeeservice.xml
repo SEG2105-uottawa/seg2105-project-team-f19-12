@@ -15,23 +15,6 @@
         android:paddingTop="12dp"
         android:textSize="24sp" />
 
-    <EditText
-        android:id="@+id/fullnametext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="Type Anything"
-        android:inputType="text"
-        android:paddingTop="12dp"
-        android:paddingEnd="12dp"
-        android:text=""
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/address"
-        app:layout_constraintTop_toBottomOf="@+id/welcome"
-        app:layout_constraintVertical_bias="0.597"
-      />
-
 
     <ListView
         android:id="@+id/serviceList"
@@ -41,6 +24,5 @@
         android:layout_marginTop="34dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-       />
+        app:layout_constraintStart_toStartOf="parent" />
 </LinearLayout>

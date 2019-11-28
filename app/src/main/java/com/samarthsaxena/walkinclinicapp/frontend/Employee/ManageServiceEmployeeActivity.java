@@ -36,8 +36,6 @@ public class ManageServiceEmployeeActivity extends AppCompatActivity {
 
         welcomeText.setText(welcomeMessage);
 
-
-
         // Replace fake users with actual users from db
         ArrayList<Service> services = Admin.getAllServices(new MyCallback() {
             @Override
@@ -51,9 +49,13 @@ public class ManageServiceEmployeeActivity extends AppCompatActivity {
             }
         });
 
-        CustomEmployeeList adapter = new CustomEmployeeList(ManageServiceEmployeeActivity.this, services, username);
-        ListView listView = (ListView) findViewById(R.id.serviceList);
-        listView.setAdapter(adapter);
+        final CustomEmployeeList adapter = new CustomEmployeeList(ManageServiceEmployeeActivity.this, services, username);
+        final ListView listView = (ListView) findViewById(R.id.serviceList);
+        listView.postDelayed(new Runnable() {
+            public void run() {
+                listView.setAdapter(adapter);
+            }
+        }, 400);
 
 
     }

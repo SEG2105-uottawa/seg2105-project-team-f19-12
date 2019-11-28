@@ -13,7 +13,7 @@ public class ProfileTest {
     Profile FAKE_PROFILE;
     String FAKE_USER="fakeAdmin";
     String FAKE_ADDRESS="73AddressLane";
-    int FAKE_PHONENUMBER=5555555555;
+    int FAKE_PHONENUMBER=555555555;
     String FAKE_CLINIC="tClinic";
     String FAKE_INSURANCETYPE="Dental";
     String FAKE_PAYMENTMETHOD="Visa";

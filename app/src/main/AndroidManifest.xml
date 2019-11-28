@@ -39,6 +39,8 @@
         </activity>
         <activity android:name=".frontend.Employee.DeleteServiceEmployeeActivity">
         </activity>
+        <activity android:name=".frontend.Employee.AddWorkingHours">
+        </activity>
     </application>
 
 </manifest>

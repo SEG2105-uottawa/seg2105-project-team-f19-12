@@ -17,6 +17,7 @@ public class EmployeeActivity extends AppCompatActivity {
     private TextView welcomeText;
     private Button profileButton;
     private Button manageServicesButton;
+    private  Button workingHoursButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class EmployeeActivity extends AppCompatActivity {
         welcomeText = findViewById(R.id.welcome);
         manageServicesButton = findViewById(R.id.serviceButton);
         profileButton = findViewById(R.id.profileButton);
+        workingHoursButton= findViewById(R.id.WorkingHoursButton);
         final String username = getIntent().getStringExtra("EXTRA_USERNAME");
         String welcomeMessage = "Welcome employee "+username;
         welcomeText.setText(welcomeMessage);
@@ -48,6 +50,15 @@ public class EmployeeActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+        workingHoursButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent myIntent = new Intent(EmployeeActivity.this, AddWorkingHours.class);
+                startActivity(myIntent);
+            }
+        });
+
 
 
     }

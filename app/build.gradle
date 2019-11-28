@@ -33,6 +33,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+<<<<<<< HEAD
     implementation 'com.google.android.material:material:1.0.0'
 
+=======
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+>>>>>>> 89b7990a78752c96b9efbaba38b00a5c299a17b4
 }
