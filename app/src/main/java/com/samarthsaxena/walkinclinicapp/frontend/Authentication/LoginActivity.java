@@ -16,6 +16,7 @@ import com.samarthsaxena.walkinclinicapp.backend.models.User;
 import com.samarthsaxena.walkinclinicapp.frontend.Admin.AdminActivity;
 import com.samarthsaxena.walkinclinicapp.frontend.Authentication.WelcomeActivity;
 import com.samarthsaxena.walkinclinicapp.frontend.Employee.EmployeeActivity;
+import com.samarthsaxena.walkinclinicapp.frontend.Patients.PatientActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -60,6 +61,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else if (user.getType().equals("employee")) {
                             intent = new Intent(LoginActivity.this, EmployeeActivity.class);
+                        }
+                        else if(user.getType().equals("patient")) {
+                            intent = new Intent(LoginActivity.this, PatientActivity.class);
                         }
                         else {
                             intent = new Intent(LoginActivity.this, WelcomeActivity.class);
