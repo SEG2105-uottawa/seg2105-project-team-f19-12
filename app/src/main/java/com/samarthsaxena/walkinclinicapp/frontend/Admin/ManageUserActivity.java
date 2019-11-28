@@ -41,9 +41,13 @@ public class ManageUserActivity extends AppCompatActivity {
             }
         });
 
-        CustomListAdapterUser adapter = new CustomListAdapterUser(ManageUserActivity.this, users);
-        ListView listView = (ListView) findViewById(R.id.userlist);
-        listView.setAdapter(adapter);
+        final CustomListAdapterUser adapter = new CustomListAdapterUser(ManageUserActivity.this, users);
+        final ListView listView = (ListView) findViewById(R.id.userlist);
+        listView.postDelayed(new Runnable() {
+            public void run() {
+                listView.setAdapter(adapter);
+            }
+        }, 400);
 
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override

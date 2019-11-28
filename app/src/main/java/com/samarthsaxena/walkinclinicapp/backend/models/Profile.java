@@ -256,13 +256,14 @@ public class Profile {
 
                 ArrayList<ArrayList<String>> timeslots = new ArrayList<>();
 
+                int i = 0; // Counter used for numbering weekdays
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    ArrayList<String> hours = new ArrayList<>();
-                    Iterator<DataSnapshot> iterator = userSnapshot.getChildren().iterator();
+                    ArrayList<String> weekdayHours = new ArrayList<>();
+                    Iterator<DataSnapshot> iterator = userSnapshot.child(weekday[i++]).getChildren().iterator();
                     while (iterator.hasNext()) {
-                        hours.add(iterator.next().toString());
+                        weekdayHours.add(iterator.next().toString());
                     }
-                    timeslots.add(hours);
+                    timeslots.add(weekdayHours);
                 }
 
                 cb.onCallback(timeslots);

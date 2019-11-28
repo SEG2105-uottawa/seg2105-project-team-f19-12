@@ -8,8 +8,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.samarthsaxena.walkinclinicapp.R;
-import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
-import com.samarthsaxena.walkinclinicapp.backend.facades.Admin;
 import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
 import com.samarthsaxena.walkinclinicapp.backend.models.Service;
 
@@ -27,10 +25,13 @@ public class DeleteServiceEmployeeActivity extends AppCompatActivity {
         final String username = getIntent().getStringExtra("EXTRA_USERNAME");
         ArrayList<Service> profileservice = Employee.viewServicesOfUser(username);
 
-
-        CustomEmployeeDeleteList adapter = new CustomEmployeeDeleteList(DeleteServiceEmployeeActivity.this, profileservice, username);
-        ListView listView = (ListView) findViewById(R.id.serviceList);
-        listView.setAdapter(adapter);
+        final CustomEmployeeDeleteList adapter = new CustomEmployeeDeleteList(DeleteServiceEmployeeActivity.this, profileservice, username);
+        final ListView listView = (ListView) findViewById(R.id.serviceList);
+        listView.postDelayed(new Runnable() {
+            public void run() {
+                listView.setAdapter(adapter);
+            }
+        }, 400);
 
 
     }
