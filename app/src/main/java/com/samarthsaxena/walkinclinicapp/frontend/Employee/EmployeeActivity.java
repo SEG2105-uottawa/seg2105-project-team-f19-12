@@ -54,7 +54,7 @@ public class EmployeeActivity extends AppCompatActivity {
         workingHoursButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(EmployeeActivity.this, AddWorkingHours.class);
+                Intent myIntent = new Intent(EmployeeActivity.this, EditWorkingHours.class);
                 startActivity(myIntent);
             }
         });
