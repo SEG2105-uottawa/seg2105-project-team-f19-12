@@ -39,7 +39,7 @@
         </activity>
         <activity android:name=".frontend.Employee.DeleteServiceEmployeeActivity">
         </activity>
-        <activity android:name=".frontend.Employee.AddWorkingHours">
+        <activity android:name=".frontend.Employee.EditWorkingHours">
         </activity>
         <activity android:name=".frontend.Patients.WorkingSlotActivity">
         </activity>
