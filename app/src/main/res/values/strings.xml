@@ -24,4 +24,7 @@
     <string name="settime">Start Time</string>
     <string name="setendtime">End Time</string>
 
+    //EmployeeWorkingHours
+    <string name="wordTo">To</string>>
+
 </resources>
