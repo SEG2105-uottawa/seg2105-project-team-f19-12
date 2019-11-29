@@ -22,7 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class WorkingSlotActivity extends AppCompatActivity {
-    private LinearLayout linearLayout;
+
     private TextView welcome;
     private Button viwedate;
     private TextView dateofappoint;
@@ -32,6 +32,7 @@ public class WorkingSlotActivity extends AppCompatActivity {
     Calendar c;
     DatePickerDialog dpd;
     private TextView day;
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,8 +52,6 @@ public class WorkingSlotActivity extends AppCompatActivity {
                 int month = c.get(Calendar.MONTH);
                 int year = c.get(Calendar.YEAR);
 
-                final String[] strDays = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-                        "Friday", "Saturday"};
 
                 dpd = new DatePickerDialog(WorkingSlotActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -68,8 +67,9 @@ public class WorkingSlotActivity extends AppCompatActivity {
                         }
                         DateFormat format2 = new SimpleDateFormat("EEEE");
                         String finalDay = format2.format(dt1);
-                        
-                        viwedate.setText(format2.format(dt1));
+                        viweday.setText(finalDay);
+
+
                     }
                 }, day, month, year);
 
@@ -84,7 +84,7 @@ public class WorkingSlotActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+
         welcome = (TextView) findViewById(R.id.welcome);
         viwedate = (Button) findViewById(R.id.viwedate);
         dateofappoint = (TextView) findViewById(R.id.dateofappoint);
@@ -92,5 +92,6 @@ public class WorkingSlotActivity extends AppCompatActivity {
         viwetime = (TextView) findViewById(R.id.viwetime);
         serviceList = (ListView) findViewById(R.id.serviceList);
         day = (TextView) findViewById(R.id.day);
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
     }
 }

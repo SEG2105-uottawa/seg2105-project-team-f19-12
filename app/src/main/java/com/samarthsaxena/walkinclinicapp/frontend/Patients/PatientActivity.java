@@ -35,7 +35,7 @@ public class PatientActivity extends AppCompatActivity {
         bookButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(PatientActivity.this, AppointmentSearch.class);
+                Intent myIntent = new Intent(PatientActivity.this, WorkingSlotActivity.class);
                 myIntent.putExtra("EXTRA_USERNAME", username);
                 startActivity(myIntent);
             }
