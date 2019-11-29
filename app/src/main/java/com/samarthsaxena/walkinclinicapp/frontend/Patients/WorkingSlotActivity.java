@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,7 @@ public class WorkingSlotActivity extends AppCompatActivity {
     private TextView dateofappoint;
     private TextView viweday;
     private Button viwetime;
+    private Button bookappointment;
     private TextView timeslot;
     Calendar c;
     DatePickerDialog dpd;
@@ -65,10 +67,12 @@ public class WorkingSlotActivity extends AppCompatActivity {
                 dpd = new DatePickerDialog(WorkingSlotActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int years, int months, int dayOfMonth) {
+
                         dateofappoint.setText(dayOfMonth + "/" + (months + 1) + "/" + years);
                         String input_date = dateofappoint.getText().toString();
                         SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
                         Date dt1 = null;
+                        Date sysDate = c.getTime();
                         try {
                             dt1 = format1.parse(input_date);
                         } catch (ParseException e) {
@@ -76,8 +80,14 @@ public class WorkingSlotActivity extends AppCompatActivity {
                         }
                         DateFormat format2 = new SimpleDateFormat("EEEE");
                         String finalDay = format2.format(dt1);
-                        viweday.setText(finalDay);
 
+                        if(dt1.compareTo(sysDate)<0 || years>2019){
+//                                Toast.makeText(getApplicationContext(), "Wron", Toast.LENGTH_SHORT).show();
+                            dateofappoint.setText("");
+                            alertdateDialog();
+                        }else {
+                            viweday.setText(finalDay);
+                        }
 
                     }
                 }, day, month, year);
@@ -97,7 +107,9 @@ tpd=new TimePickerDialog(WorkingSlotActivity.this, new TimePickerDialog.OnTimeSe
         if(hourOfDay<start_time || hourOfDay>end_time){
             alertDialog();
         }
-timeslot.setText(hourOfDay+":00");
+        else{
+            timeslot.setText(hourOfDay+":00");}
+
         Toast.makeText(getApplicationContext(), "Time must be set in hour intervals only", Toast.LENGTH_SHORT).show();
 
     }
@@ -109,7 +121,20 @@ timeslot.setText(hourOfDay+":00");
     }
 });
 
-
+bookappointment.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if(viweday.getText().toString().matches("")||timeslot.getText().toString().matches("")){
+            Toast.makeText(getApplicationContext(),"Pls fill all the details",Toast.LENGTH_LONG).show();
+        }
+        else
+        {Toast.makeText(getApplicationContext(),"Appointment booked successfully",Toast.LENGTH_LONG).show();
+            Intent myIntent = new Intent(WorkingSlotActivity.this, PatientActivity.class);
+            myIntent.putExtra("EXTRA_USERNAME", username);
+            startActivity(myIntent);
+        }
+    }
+});
 
 
     }
@@ -118,6 +143,7 @@ timeslot.setText(hourOfDay+":00");
 
         welcome = (TextView) findViewById(R.id.welcome);
         viwedate = (Button) findViewById(R.id.viwedate);
+        bookappointment = (Button) findViewById(R.id.bookappointment);
         dateofappoint = (TextView) findViewById(R.id.dateofappoint);
         viweday = (TextView) findViewById(R.id.viweday);
         viwetime = (Button) findViewById(R.id.viwetime);
@@ -137,6 +163,27 @@ timeslot.setText(hourOfDay+":00");
     private void alertDialog() {
         AlertDialog.Builder dialog=new AlertDialog.Builder(this);
         dialog.setMessage("Please Select time between the actual time "+start_time+":00 hrs and "+end_time+":00 hrs");
+        dialog.setTitle("Error");
+        dialog.setPositiveButton("YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        Toast.makeText(getApplicationContext(),"Ok is clicked",Toast.LENGTH_LONG).show();
+                    }
+                });
+        dialog.setNegativeButton("cancel",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"cancel is clicked",Toast.LENGTH_LONG).show();
+            }
+        });
+        AlertDialog alertDialog=dialog.create();
+        alertDialog.show();
+    }
+
+    private void alertdateDialog() {
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        dialog.setMessage("Wrong date selected.Please select the correct date");
         dialog.setTitle("Error");
         dialog.setPositiveButton("YES",
                 new DialogInterface.OnClickListener() {
