@@ -1,14 +1,19 @@
 package com.samarthsaxena.walkinclinicapp.frontend.Patients;
 
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.samarthsaxena.walkinclinicapp.R;
 
@@ -19,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class WorkingSlotActivity extends AppCompatActivity {
@@ -27,13 +33,16 @@ public class WorkingSlotActivity extends AppCompatActivity {
     private Button viwedate;
     private TextView dateofappoint;
     private TextView viweday;
-    private TextView viwetime;
-    private ListView serviceList;
+    private Button viwetime;
+    private TextView timeslot;
     Calendar c;
     DatePickerDialog dpd;
+    TimePickerDialog tpd;
     private TextView day;
     private LinearLayout linearLayout;
-
+    private int minHour = -1;
+    private int maxHour = 25;
+    int start_time=6;int end_time=14;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,12 +82,34 @@ public class WorkingSlotActivity extends AppCompatActivity {
                     }
                 }, day, month, year);
 
-
                 dpd.show();
 
 
             }
         });
+viwetime.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+tpd=new TimePickerDialog(WorkingSlotActivity.this, new TimePickerDialog.OnTimeSetListener() {
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+        if(hourOfDay<start_time || hourOfDay>end_time){
+            alertDialog();
+        }
+timeslot.setText(hourOfDay+":00");
+        Toast.makeText(getApplicationContext(), "Time must be set in hour intervals only", Toast.LENGTH_SHORT).show();
+
+    }
+},0,0,false);
+
+        tpd.show();
+
+
+    }
+});
+
+
 
 
     }
@@ -89,9 +120,38 @@ public class WorkingSlotActivity extends AppCompatActivity {
         viwedate = (Button) findViewById(R.id.viwedate);
         dateofappoint = (TextView) findViewById(R.id.dateofappoint);
         viweday = (TextView) findViewById(R.id.viweday);
-        viwetime = (TextView) findViewById(R.id.viwetime);
-        serviceList = (ListView) findViewById(R.id.serviceList);
+        viwetime = (Button) findViewById(R.id.viwetime);
+        timeslot = (TextView) findViewById(R.id.timeslot);
         day = (TextView) findViewById(R.id.day);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+    }
+    public void setMin(int hour, int minute) {
+        minHour = hour;
+
+    }
+
+    public void setMax(int hour, int minute) {
+        maxHour = hour;
+
+    }
+    private void alertDialog() {
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        dialog.setMessage("Please Select time between the actual time "+start_time+":00 hrs and "+end_time+":00 hrs");
+        dialog.setTitle("Error");
+        dialog.setPositiveButton("YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        Toast.makeText(getApplicationContext(),"Ok is clicked",Toast.LENGTH_LONG).show();
+                    }
+                });
+        dialog.setNegativeButton("cancel",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"cancel is clicked",Toast.LENGTH_LONG).show();
+            }
+        });
+        AlertDialog alertDialog=dialog.create();
+        alertDialog.show();
     }
 }
