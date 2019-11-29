@@ -8,19 +8,34 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <CheckBox
+        <TextView
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.70"
+            android:text="" />
+        <TextView
+            android:id="@+id/toview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.70"
+            android:text="to" />
+        <TextView
+            android:id="@+id/end"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.70"
+            android:text="" />
+
+        <Button
             android:id="@+id/servField"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.25"
+            android:text="Book Appointment"
            />
 
-        <TextView
-            android:id="@+id/roleField"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.70"
-            android:text="TextView" />
+
 
     </LinearLayout>
 

@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                             intent = new Intent(LoginActivity.this, PatientActivity.class);
                         }
                         else {
-                            intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                            intent = new Intent(LoginActivity.this, PatientActivity.class);
                         }
                         intent.putExtra("EXTRA_USERNAME", user.getUsername());
                         intent.putExtra("EXTRA_USER_TYPE", user.getType());
