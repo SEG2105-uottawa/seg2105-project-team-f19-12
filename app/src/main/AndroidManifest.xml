@@ -49,6 +49,8 @@
         </activity>
         <activity android:name=".frontend.Patients.AppointmentSearch">
         </activity>
+        <activity android:name=".frontend.Patients.RateActivity">
+        </activity>
     </application>
 
 </manifest>
