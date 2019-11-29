@@ -49,6 +49,7 @@ public class WorkingSlotActivity extends AppCompatActivity {
     private int minHour = -1;
     private int maxHour = 25;
     int start_time=6;int end_time=14;
+    private int timeChosen = 0;
     private int timearray[][]=new int[7][2];
      int i=0;
     @Override
@@ -60,7 +61,7 @@ public class WorkingSlotActivity extends AppCompatActivity {
         String welcomeMessage = "Welcome patient " + username;
         welcome.setText(welcomeMessage);
 
-        Employee.getWorkingHours(username, new MyCallback() {
+        Employee.getWorkingHours("doge", new MyCallback() {
             @Override
             public void onCallback(Object value) {
                 ArrayList<ArrayList<String>> workingHours = (ArrayList<ArrayList<String>>) value;
@@ -147,10 +148,11 @@ tpd=new TimePickerDialog(WorkingSlotActivity.this, new TimePickerDialog.OnTimeSe
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-        if(hourOfDay<start_time || hourOfDay>end_time){
+        if(hourOfDay<timearray[i][0] || hourOfDay>timearray[i][1] ){
             alertDialog();
         }
         else{
+            timeChosen = hourOfDay;
             timeslot.setText(hourOfDay+":00");}
 
         Toast.makeText(getApplicationContext(), "Time must be set in hour intervals only", Toast.LENGTH_SHORT).show();
@@ -173,11 +175,11 @@ bookappointment.setOnClickListener(new View.OnClickListener() {
         else
         {
 
-            Patient.scheduleTimeSlot(username, i, start_time, new MyCallback() {
+            Patient.scheduleTimeSlot(username, "doge", i, timeChosen, new MyCallback() {
                 @Override
                 public void onCallback(Object value) {
                     String appointmentDate = (String) value;
-                    Toast.makeText(getApplicationContext(),"Appointment booked successfully"+appointmentDate,Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Appointment booked successfully: "+appointmentDate,Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -218,7 +220,7 @@ bookappointment.setOnClickListener(new View.OnClickListener() {
     }
     private void alertDialog() {
         AlertDialog.Builder dialog=new AlertDialog.Builder(this);
-        dialog.setMessage("Please Select time between the actual time "+start_time+":00 hrs and "+end_time+":00 hrs");
+        dialog.setMessage("Please Select time between the actual time "+timearray[i][0]+":00 hrs and "+timearray[i][1]+":00 hrs");
         dialog.setTitle("Error");
         dialog.setPositiveButton("YES",
                 new DialogInterface.OnClickListener() {
