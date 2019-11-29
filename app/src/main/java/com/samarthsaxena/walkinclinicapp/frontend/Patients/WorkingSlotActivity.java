@@ -179,7 +179,8 @@ bookappointment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onCallback(Object value) {
                     String appointmentDate = (String) value;
-                    Toast.makeText(getApplicationContext(),"Appointment booked successfully: "+appointmentDate,Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Appointment booked successfully: "+appointmentDate +
+                            ". Waiting position: " + getWaitingPosition(timeChosen, appointmentDate), Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -211,7 +212,6 @@ bookappointment.setOnClickListener(new View.OnClickListener() {
     }
     public void setMin(int hour, int minute) {
         minHour = hour;
-
     }
 
     public void setMax(int hour, int minute) {
@@ -258,5 +258,19 @@ bookappointment.setOnClickListener(new View.OnClickListener() {
         });
         AlertDialog alertDialog=dialog.create();
         alertDialog.show();
+    }
+
+    private static int getWaitingPosition(int req, String time) {
+        int count = 0;
+        int numCmp;
+        if (time.charAt(1) == ':') {
+            count =  (int)(Integer.parseInt(time.substring(2,4)) / 15);
+            numCmp = Character.getNumericValue(time.charAt(0));
+        } else {
+            count = (int)(Integer.parseInt(time.substring(3,5)) / 15);
+            numCmp = Integer.parseInt(time.substring(0, 2));
+        }
+        count += 4*(numCmp - req);
+        return count;
     }
 }
