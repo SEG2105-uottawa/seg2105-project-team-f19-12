@@ -1,4 +1,4 @@
-package com.samarthsaxena.walkinclinicapp.frontend.Employee;
+package com.samarthsaxena.walkinclinicapp.frontend.Patients;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -41,25 +41,25 @@ public class CustomworkingslotList extends ArrayAdapter {
         final TextView serviceField = (TextView) rowView.findViewById(R.id.servField);
         final TextView roleField = (TextView) rowView.findViewById(R.id.roleField);
 
-        serviceField.setText(slot.get(position).//methodtocalllist());
+//        serviceField.setText(slot.get(position).//methodtocalllist());
 
 
         // set button handlers
-        final Button deleteButton = (Button) rowView.findViewById(R.id.deleteBtn);
+//        final Button deleteButton = (Button) rowView.findViewById(R.id.deleteBtn);
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                String service = serviceField.getText().toString();
+//                Employee.deleteServiceOfUser(username, service);
+////                services.remove(position);
+//                notifyDataSetChanged();
+//            }
+//        });
 
-                String service = serviceField.getText().toString();
-                Employee.deleteServiceOfUser(username, service);
-                services.remove(position);
-                notifyDataSetChanged();
-            }
-        });
 
 
-
-        return rowView;
+     return rowView;
     }
 }
