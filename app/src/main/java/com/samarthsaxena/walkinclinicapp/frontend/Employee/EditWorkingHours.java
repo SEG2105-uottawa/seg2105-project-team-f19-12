@@ -44,6 +44,7 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
                         times[j][i] = Integer.parseInt(workingHours.get(i).get(j));
                     }
                 }
+                setHours(workingHours);
             }
 
             @Override
@@ -319,6 +320,22 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
         return times;
     }
 
+    private void setHours(ArrayList<ArrayList<String>> workingTime){
+        for(int i=0;i<7;i++){
+            if(times[0][i]<13){
+                T[0][i].setText(workingTime.get(i).get(0)+":00 AM ");
+            }else{
+                T[0][i].setText(Integer.parseInt(workingTime.get(i).get(0))-12+":00 PM ");
+            }
+
+            if(times[1][i]<13){
+                T[1][i].setText(" "+workingTime.get(i).get(1)+":00 AM");
+            }else{
+                T[1][i].setText(" "+(Integer.parseInt(workingTime.get(i).get(1))-12)+":00 PM");
+            }
+
+        }
+    }
 
 }
 
