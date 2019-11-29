@@ -169,8 +169,6 @@ public class Profile {
                         String paymentMethod = "";
                         ArrayList<ArrayList<String>> workingTime = new ArrayList<>();
 
-                        Profile profile;
-
                         try {
                             user = userSnapshot.child(PROFILE_USER_STRING).getValue().toString();
                             address = userSnapshot.child(PROFILE_ADDRESS_STRING).getValue().toString();
@@ -191,9 +189,40 @@ public class Profile {
                             break;
                         }
 
-                        profile = new Profile(user, address, phoneNumber, clinic, insuranceType, paymentMethod);
+                        final Profile profile = new Profile(user, address, phoneNumber, clinic, insuranceType, paymentMethod);
                         profile.setWorkingTime(workingTime);
+
+                        /*
+                        UserService.dbGetAll(UserService.USERSERVICE_USER_STRING, user, new MyCallback() {
+                            @Override
+                            public void onCallback(Object value) {
+                                ArrayList<UserService> userServices = (ArrayList<UserService>) value;
+                                ArrayList<Service> services = new ArrayList<>();
+                                for (UserService n : userServices) {
+                                    Service.dbGetAll(Service.SERVICE_OFFERED_STRING, n.getService(), new MyCallback() {
+                                        @Override
+                                        public void onCallback(Object value) {
+                                            ArrayList<Service> servs = (ArrayList<Service>) value;
+
+                                        }
+
+                                        @Override
+                                        public void exceptionHandler(String message) {
+
+                                        }
+                                    })
+                                }
+
+                            }
+
+                            @Override
+                            public void exceptionHandler(String message) {
+
+                            }
+                        });
+                        */
                         profiles.add(profile);
+
                     }
                 }
                 if (cb != null) {
@@ -271,47 +300,27 @@ public class Profile {
         });
     }
 
-    /*
-    public static void dbGetWorkingTime(final String user, final MyCallback cb) {
+    public static void dbGetTimeSlots(final String user, final MyCallback cb) {
 
         Query dbQuery = db.getReference().child(PROFILE_STRING).orderByChild(PROFILE_USER_STRING).equalTo(user);
 
         dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot profile: dataSnapshot.getChildren()) {
-                    if (profile.child(PROFILE_USER_STRING).getValue().toString().equals(user)) {
-
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-    */
-    public static void dbGetTimeSlots(final String username, final MyCallback cb) {
-
-        DatabaseReference ref = db.getReference().child(PROFILE_STRING).child(PROFILE_TIME_SLOT_STRING);
-
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
                 ArrayList<ArrayList<String>> timeslots = new ArrayList<>();
 
-                int i = 0; // Counter used for numbering weekdays
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    ArrayList<String> weekdayHours = new ArrayList<>();
-                    Iterator<DataSnapshot> iterator = userSnapshot.child(weekday[i++]).getChildren().iterator();
-                    while (iterator.hasNext()) {
-                        weekdayHours.add(iterator.next().toString());
+                for (DataSnapshot profile : dataSnapshot.getChildren()) {
+                    if (profile.child(PROFILE_USER_STRING).getValue().toString().equals(user)) {
+                        for (int i = 0; i < 7; i++) {
+                            ArrayList<String> weekdayHours = new ArrayList<>();
+                            Iterator<DataSnapshot> iterator = profile.child(PROFILE_TIME_STRING).child(Integer.toString(i)).getChildren().iterator();
+                            while (iterator.hasNext()) {
+                                weekdayHours.add(iterator.next().getValue().toString());
+                            }
+                            timeslots.add(weekdayHours);
+                        }
                     }
-                    timeslots.add(weekdayHours);
                 }
 
                 cb.onCallback(timeslots);
@@ -323,6 +332,44 @@ public class Profile {
             }
         });
 
+    }
+
+    public static void dbFillTimeSlot(final String user, final int weekday, final int hour, final MyCallback cb) {
+        Query dbQuery = db.getReference().child(PROFILE_STRING).orderByChild(PROFILE_USER_STRING).equalTo(user);
+        dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot profile: dataSnapshot.getChildren()) {
+                    if (profile.child(PROFILE_USER_STRING).getValue().toString().equals(user)) {
+                        DatabaseReference dayRef = profile.getRef().child(PROFILE_TIME_SLOT_STRING).child(Integer.toString(weekday));
+                        // get start and end time boundaries
+                        Iterator<DataSnapshot> iter1 = profile.child(PROFILE_TIME_STRING).child(Integer.toString(weekday)).getChildren().iterator();
+                        int startTime = Integer.parseInt(iter1.next().getValue().toString());
+                        int endTime = Integer.parseInt(iter1.next().getValue().toString());
+                        int length = endTime - startTime;
+                        Iterator<DataSnapshot> iter2 = profile.child(PROFILE_TIME_SLOT_STRING).child(Integer.toString(weekday)).getChildren().iterator();
+                        while (iter2.hasNext()) {
+                            DataSnapshot snap = iter2.next();
+                            String timeSlot = snap.getKey().toString();
+                            int timeParams[] = parseTimeRange(timeSlot);
+                            if (timeParams[0] == hour) {
+                                for (int i = 0; !snap.getValue().toString().equals("") && i < 4; i++) {
+                                    snap = iter2.next();
+                                }
+                                snap.getRef().setValue(user);
+                                cb.onCallback(snap.getKey().toString());
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private static void generateTimeslots(ArrayList<ArrayList<String>> workingTime, DatabaseReference ref) {
@@ -345,4 +392,33 @@ public class Profile {
 
         }
     }
+
+    private static int[] parseTimeRange(String timeStr) {
+        int[] out = {0, 0, 0, 0};
+        if (timeStr.charAt(1) == ':') {
+            out[0] = Character.getNumericValue(timeStr.charAt(0));
+            out[1] = Integer.parseInt(timeStr.substring(2, 4));
+            if (timeStr.charAt(8) == ':') {
+                out[2] = Character.getNumericValue(timeStr.charAt(7));
+                out[3] = Integer.parseInt(timeStr.substring(9, 11));
+            } else {
+                out[2] = Integer.parseInt(timeStr.substring(7, 9));
+                out[3] = Integer.parseInt(timeStr.substring(10, 12));
+            }
+        } else {
+            out[0] = Integer.parseInt(timeStr.substring(0, 2));
+            out[1] = Integer.parseInt(timeStr.substring(3, 5));
+            if (timeStr.charAt(9) == ':') {
+                out[2] = Character.getNumericValue(timeStr.charAt(8));
+                out[3] = Integer.parseInt(timeStr.substring(10, 12));
+            } else {
+                out[2] = Integer.parseInt(timeStr.substring(8, 10));
+                out[3] = Integer.parseInt(timeStr.substring(11, 13));
+            }
+        }
+
+        return out;
+    }
+
 }
+

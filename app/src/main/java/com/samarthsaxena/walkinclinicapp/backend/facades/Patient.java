@@ -30,23 +30,15 @@ public class Patient {
                     cb.exceptionHandler("Error: Requested time outside clinic working hours");
                     return;
                 }
-                // Check waiting time
-                Profile.dbGetTimeSlots(username, new MyCallback() {
+                Profile.dbFillTimeSlot(username, weekday, hour, new MyCallback() {
                     @Override
                     public void onCallback(Object value) {
-                        ArrayList<ArrayList<String>> timeslots = (ArrayList<ArrayList<String>>) value;
-                        ArrayList<String> hours = timeslots.get(weekday);
-                        int waitingPosition = hour;
-                        for (String timeslot : hours) {
-
-                        }
-                        Employee.createUserServiceAssociation(username, "");
+                        cb.onCallback(value);
                     }
-
 
                     @Override
                     public void exceptionHandler(String message) {
-                        cb.exceptionHandler(message);
+
                     }
                 });
             }
