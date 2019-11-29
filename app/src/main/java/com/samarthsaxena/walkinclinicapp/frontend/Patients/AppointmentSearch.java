@@ -78,11 +78,11 @@ public class AppointmentSearch extends AppCompatActivity {
                     toDisplay();
                 }else{
                     if(address.isChecked()){
-                        SF.setParam("address", searchText.getText().toString());
+                        SF.setParam("address", searchText.getText().toString(), dayOfWeek);
                         sortedList=SF.filterMain();
                         toDisplay();
                     }else if(service.isChecked()){
-                        SF.setParam("service", searchText.getText().toString());
+                        SF.setParam("service", searchText.getText().toString(), dayOfWeek);
                         sortedList=SF.filterMain();
                         toDisplay();
                     }else if(wh.isChecked()){
@@ -135,7 +135,7 @@ public class AppointmentSearch extends AppCompatActivity {
     }
 
     private void toDisplay(){
-        SearchAdapter adapter = new SearchAdapter(AppointmentSearch.this,R.layout.layout_searchnode, sortedList);
+        SearchAdapter adapter = new SearchAdapter(AppointmentSearch.this,R.layout.layout_searchnode, sortedList, SF);
         list.setAdapter(adapter);
     }
 
