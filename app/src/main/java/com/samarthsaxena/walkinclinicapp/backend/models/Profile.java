@@ -108,15 +108,14 @@ public class Profile {
                    int phoneNumber,
                    String clinic,
                    String insuranceType,
-                   String paymentMethod,
-                   ArrayList<ArrayList<String>> workingTime) {
+                   String paymentMethod) {
         this.user = user;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.clinic = clinic;
         this.insuranceType = insuranceType;
         this.paymentMethod = paymentMethod;
-        this.workingTime = workingTime;
+        this.workingTime = new ArrayList<>();
     }
 
     public void dbStore(final MyCallback cb) throws RuntimeException {
@@ -128,11 +127,6 @@ public class Profile {
         profileRef.child(PROFILE_CLINIC_STRING)             .setValue(clinic);
         profileRef.child(PROFILE_INSURANCE_STRING)          .setValue(insuranceType);
         profileRef.child(PROFILE_PAYMENT_STRING)            .setValue(paymentMethod);
-        DatabaseReference timeRef = profileRef.child(PROFILE_TIME_STRING);
-        for (int i = 0; i < 7; i++) {
-            timeRef.child(weekday[i])                       .setValue(workingTime.get(i));
-        }
-        generateTimeslots(profileRef);
 
         if (cb != null) {
             cb.onCallback(Profile.this);
@@ -195,7 +189,7 @@ public class Profile {
                             break;
                         }
 
-                        profile = new Profile(user, address, phoneNumber, clinic, insuranceType, paymentMethod, workingTime);
+                        profile = new Profile(user, address, phoneNumber, clinic, insuranceType, paymentMethod);
                         profiles.add(profile);
                     }
                 }
@@ -246,6 +240,32 @@ public class Profile {
         });
     }
 
+    public static void dbStoreWorkingTime(final String user, final ArrayList<ArrayList<String>> workingTime) {
+
+        Query dbQuery = db.getReference().child(PROFILE_STRING).orderByChild(PROFILE_USER_STRING).equalTo(user);
+
+        dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot profile: dataSnapshot.getChildren()) {
+                    if (profile.child(PROFILE_USER_STRING).toString().equals(user)) {
+                        for (int i = 0; i < 7; i++) {
+                            ArrayList<String> interval = workingTime.get(i);
+                            profile.child(PROFILE_TIME_STRING).child(weekday[i]).getRef().setValue(interval);
+                        }
+                        generateTimeslots(workingTime, profile.getRef());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public static void dbGetTimeSlots(final String username, final MyCallback cb) {
 
         DatabaseReference ref = db.getReference().child(PROFILE_STRING).child(PROFILE_TIME_SLOT_STRING);
@@ -277,7 +297,7 @@ public class Profile {
 
     }
 
-    private void generateTimeslots(DatabaseReference ref) {
+    private static void generateTimeslots(ArrayList<ArrayList<String>> workingTime, DatabaseReference ref) {
         for (int i = 0; i < 7; i++) {
             DatabaseReference slotRef = ref.child(PROFILE_TIME_SLOT_STRING).child(weekday[i]);
             // Divide time slot into 15 minutes

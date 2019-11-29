@@ -44,6 +44,11 @@ public class Employee {
         });
     }
 
+    public static void editWorkingHours(String user, ArrayList<ArrayList<String>> workingHours) {
+
+        Profile.dbStoreWorkingTime(user, workingHours);
+    }
+
     public static void createUserServiceAssociation(final String user, final String service) {
         UserService.dbGetAll(UserService.USERSERVICE_USER_STRING, user, new MyCallback() {
             @Override
