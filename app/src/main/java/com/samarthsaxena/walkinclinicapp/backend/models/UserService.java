@@ -125,4 +125,26 @@ public class UserService {
             }
         });
     }
+
+    public void dbSetRating(final int rating, final String service) {
+
+        Query dbQuery = db.getReference().child(USERSERVICE_STRING).orderByChild(USERSERVICE_USER_STRING).equalTo(this.user);
+
+        dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot servSnapshot: dataSnapshot.getChildren()) {
+                    if (servSnapshot.child(USERSERVICE_USER_STRING).getValue().equals(user) &&
+                            servSnapshot.child(USERSERVICE_SERVICE_STRING).getValue().equals(service)) {
+                        servSnapshot.getRef().child("rating").setValue(rating);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
 }

@@ -127,8 +127,8 @@ public class ProfileActivity extends AppCompatActivity {
 //                time_slot.add(sunday);
 
                 String a="User profile saved";
-                //Profile x=new Profile(username,address,phone,fullname,insurancesel,paysel,time_slot);
-                //Employee.createProfile(x);
+                Profile x=new Profile(username,address,phone,fullname,insurancesel,paysel);
+                Employee.createProfile(x);
                 Toast.makeText(ProfileActivity.this, a, Toast.LENGTH_LONG).show();
                 Intent myIntent = new Intent(ProfileActivity.this, ManageProfileActivity.class);
                 Bundle extras = new Bundle();
