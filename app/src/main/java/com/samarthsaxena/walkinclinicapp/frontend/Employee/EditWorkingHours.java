@@ -12,12 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
+
+import java.util.ArrayList;
 
 public class EditWorkingHours extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     private int[][] times;
     private TextView[][] D, T;
     private Button[][] C;
     private Boolean[][] B;
+    private Button saveBtn;
 
     private TextView title;
 
@@ -25,6 +29,8 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editworkinghours);
+
+        final String username = getIntent().getStringExtra("EXTRA_USERNAME");
 
         initVar();
 
@@ -154,6 +160,23 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
             }
         });
 
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<ArrayList<String>> timesArrayList = new ArrayList<>();
+                for (int i = 0; i < times.length; i++) {
+                    ArrayList<String> temp = new ArrayList<>();
+                    for (int j = 0; j < times[0].length; j++) {
+                        int x = times[i][j];
+                        String time = Integer.toString(x);
+                        temp.add(time);
+                    }
+                    timesArrayList.add(temp);
+                }
+                Employee.editWorkingHours(username, timesArrayList);
+            }
+        });
+
     }
 
     @Override
@@ -266,6 +289,7 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
             B[1][i]=false;
         }
 
+        saveBtn = findViewById(R.id.saveButton);
     }
 
     public int[][] getTimes(){

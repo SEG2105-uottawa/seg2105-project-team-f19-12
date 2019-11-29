@@ -60,6 +60,10 @@ public class Patient {
         });
     }
 
+    public static void getWorkingHours(final String username, final MyCallback cb) {
+
+    }
+
     public static void scheduleTimeSlot(final String username, final int weekday, final int hour, final MyCallback cb) {
         Profile.dbGetAll(Profile.PROFILE_USER_STRING, username, new MyCallback() {
             @Override
