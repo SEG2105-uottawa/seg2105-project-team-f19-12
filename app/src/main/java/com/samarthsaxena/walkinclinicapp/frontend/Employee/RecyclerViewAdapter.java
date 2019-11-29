@@ -24,7 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        TextView view = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_employeesetworkinghours, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_employeesetworkinghours, parent, false);
         return new ViewHolder(view);
     }
 
