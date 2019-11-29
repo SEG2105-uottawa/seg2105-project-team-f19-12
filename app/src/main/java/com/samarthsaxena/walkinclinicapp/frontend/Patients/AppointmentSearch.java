@@ -110,19 +110,19 @@ public class AppointmentSearch extends AppCompatActivity {
         int i;
         switch (day){
             case "Monday": i=0;
-            break;
+                break;
             case "Tuesday": i=1;
-            break;
+                break;
             case "Wednesday": i=2;
-            break;
+                break;
             case "Thursday": i=3;
-            break;
+                break;
             case "Friday": i=4;
-            break;
+                break;
             case "Saturday": i=5;
-            break;
+                break;
             case "Sunday": i=6;
-            break;
+                break;
             default: i=-1;
         }
         return i;

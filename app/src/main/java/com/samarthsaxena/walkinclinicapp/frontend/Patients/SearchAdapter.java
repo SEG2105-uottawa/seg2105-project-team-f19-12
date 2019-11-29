@@ -1,27 +1,30 @@
 package com.samarthsaxena.walkinclinicapp.frontend.Patients;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 
-public class SearchAdapter extends BaseAdapter {
-    @Override
-    public int getCount() {
-        return 0;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.samarthsaxena.walkinclinicapp.backend.models.Profile;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class SearchAdapter extends ArrayAdapter<Profile> {
+
+    private Context mContext;
+
+    public SearchAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Profile> objects) {
+        super(context, resource, objects);
     }
 
+    @NonNull
     @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        return super.getView(position, convertView, parent);
     }
 }
