@@ -1,6 +1,7 @@
 package com.samarthsaxena.walkinclinicapp.frontend.Employee;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
 import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
 
 import java.util.ArrayList;
@@ -31,6 +33,24 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
         setContentView(R.layout.activity_editworkinghours);
 
         final String username = getIntent().getStringExtra("EXTRA_USERNAME");
+
+        Employee.getWorkingHours(username, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
+
+                ArrayList<ArrayList<String>> workingHours = (ArrayList<ArrayList<String>>) value;
+                for (int i = 0; i < workingHours.size(); i++) {
+                    for (int j = 0; j < workingHours.get(0).size(); j++) {
+                        times[j][i] = Integer.parseInt(workingHours.get(i).get(j));
+                    }
+                }
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+
+            }
+        });
 
         initVar();
 
@@ -174,6 +194,9 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
                     timesArrayList.add(temp);
                 }
                 Employee.editWorkingHours(username, timesArrayList);
+                Intent myIntent = new Intent(EditWorkingHours.this, WorkingHoursActivity.class);
+                myIntent.putExtra("EXTRA_USERNAME", username);
+                startActivity(myIntent);
             }
         });
 
@@ -295,6 +318,7 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
     public int[][] getTimes(){
         return times;
     }
+
 
 }
 

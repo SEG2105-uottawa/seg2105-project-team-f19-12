@@ -179,10 +179,12 @@ public class Profile {
                             insuranceType = userSnapshot.child(PROFILE_INSURANCE_STRING).getValue().toString();
                             paymentMethod = userSnapshot.child(PROFILE_PAYMENT_STRING).getValue().toString();
                             for (int i = 0; i < 7; i++) {
-                                Iterator<DataSnapshot> iter = userSnapshot.child(Integer.toString(i)).getChildren().iterator();
+                                Iterator<DataSnapshot> iter = userSnapshot.child(PROFILE_TIME_STRING).child(Integer.toString(i)).getChildren().iterator();
+                                ArrayList<String> temp = new ArrayList<>();
                                 while (iter.hasNext()) {
-                                    workingTime.get(i).add(iter.next().toString());
+                                    temp.add(iter.next().getValue().toString());
                                 }
+                                workingTime.add(temp);
                             }
 
                         } catch (NullPointerException e) {
@@ -190,6 +192,7 @@ public class Profile {
                         }
 
                         profile = new Profile(user, address, phoneNumber, clinic, insuranceType, paymentMethod);
+                        profile.setWorkingTime(workingTime);
                         profiles.add(profile);
                     }
                 }
@@ -268,6 +271,29 @@ public class Profile {
         });
     }
 
+    /*
+    public static void dbGetWorkingTime(final String user, final MyCallback cb) {
+
+        Query dbQuery = db.getReference().child(PROFILE_STRING).orderByChild(PROFILE_USER_STRING).equalTo(user);
+
+        dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot profile: dataSnapshot.getChildren()) {
+                    if (profile.child(PROFILE_USER_STRING).getValue().toString().equals(user)) {
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    */
     public static void dbGetTimeSlots(final String username, final MyCallback cb) {
 
         DatabaseReference ref = db.getReference().child(PROFILE_STRING).child(PROFILE_TIME_SLOT_STRING);

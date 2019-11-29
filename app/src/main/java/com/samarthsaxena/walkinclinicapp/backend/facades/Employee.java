@@ -49,6 +49,22 @@ public class Employee {
         Profile.dbStoreWorkingTime(user, workingHours);
     }
 
+    public static void getWorkingHours(final String user, final MyCallback cb) {
+        Profile.dbGetAll(Profile.PROFILE_USER_STRING, user, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
+                ArrayList<Profile> profiles = (ArrayList<Profile>) value;
+                Profile profile = profiles.get(0);
+                cb.onCallback(profile.getWorkingTime());
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+
+            }
+        });
+    }
+
     public static void createUserServiceAssociation(final String user, final String service) {
         UserService.dbGetAll(UserService.USERSERVICE_USER_STRING, user, new MyCallback() {
             @Override
