@@ -21,7 +21,6 @@ public class SearchAdapter extends ArrayAdapter<Profile> {
 
     private Context mContext;
     private int mRessource;
-    private int day=0;
 
     public SearchAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Profile> objects) {
         super(context, resource, objects);
@@ -34,8 +33,8 @@ public class SearchAdapter extends ArrayAdapter<Profile> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String N = getItem(position).getClinic();
         String A = getItem(position).getAddress();
-        String SH = getItem(position).getWorkingTime().get(0).get(day);
-        String EH = getItem(position).getWorkingTime().get(1).get(day);
+        String SH = getItem(position).getWorkingTime().get(0).get(0);
+        String EH = getItem(position).getWorkingTime().get(1).get(0);
 
         Profile profile = new Profile(getItem(position).getUser(), getItem(position).getAddress(),getItem(position).getPhoneNumber(),getItem(position).getClinic(),getItem(position).getInsuranceType(),getItem(position).getPaymentMethod());
 
@@ -65,10 +64,6 @@ public class SearchAdapter extends ArrayAdapter<Profile> {
     @Override
     public Profile getItem(int position) {
         return super.getItem(position);
-    }
-
-    public void setDay(int i){
-        this.day=i;
     }
 
 }

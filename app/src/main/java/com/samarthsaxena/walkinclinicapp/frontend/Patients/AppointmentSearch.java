@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.samarthsaxena.walkinclinicapp.frontend.Patients.SearchFilter;
 import java.util.ArrayList;
 
 public class AppointmentSearch extends AppCompatActivity {
+    private TextView welcomeText;
     private EditText searchText;
     private RadioButton address, service, wh;
     private Spinner myDateSpinner;
@@ -30,15 +32,16 @@ public class AppointmentSearch extends AppCompatActivity {
     private String searchTextString;
     private SearchFilter SF;
     private ArrayList<Profile> sortedList;//TEMP
-    private ArrayList<String> temp;//TEMP
-    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        username=getIntent().getStringExtra("EXTRA_USERNAME");
+        final String username=getIntent().getStringExtra("EXTRA_USERNAME");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointmentsearch);
 
+        welcomeText=findViewById(R.id.wT1);
+        String welcomeMessage =""+username+", Search for a Clinic";
+        welcomeText.setText(welcomeMessage);
         SF=new SearchFilter();
         searchText=findViewById(R.id.searchText);
         address=findViewById(R.id.RB1);
@@ -71,35 +74,24 @@ public class AppointmentSearch extends AppCompatActivity {
             public void onClick(View v) {
                 searchTextString=searchText.getText().toString();
                 if(searchTextString.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Enter Term to Search", Toast.LENGTH_SHORT).show();
+                    sortedList=SF.sortedName();
+                    toDisplay();
                 }else{
                     if(address.isChecked()){
-                        SF.setParam("address");
+                        SF.setParam("address", searchText.getText().toString());
                         sortedList=SF.filterMain();
-
-                        //TEMP
-                        temp = new ArrayList<String>();
-                        for(int i=0;i<sortedList.size();i++){
-                            temp.add(sortedList.get(i).getAddress());
-                        }
-
                         toDisplay();
-
                     }else if(service.isChecked()){
-                        SF.setParam("service");
-                    }else if(wh.isChecked()){
-                        SF.setParam("workingHours", dayOfWeek);
+                        SF.setParam("service", searchText.getText().toString());
                         sortedList=SF.filterMain();
-
-                        //TEMP
-                        temp = new ArrayList<String>();
-                        for(int i=0;i<sortedList.size();i++){
-                            temp.add(sortedList.get(i).getWorkingTime().get(dayOfWeek).get(0));
-                        }
-
                         toDisplay();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "Select a Filter to Search", Toast.LENGTH_SHORT).show();
+                    }else if(wh.isChecked()){
+                        SF.setParam("workingHours", searchText.getText().toString(), dayOfWeek);
+                        SF.setContext(getApplicationContext());
+                        sortedList=SF.filterMain();
+                        if(sortedList!=null){
+                            toDisplay();
+                        }
                     }
                 }
             }
@@ -144,7 +136,6 @@ public class AppointmentSearch extends AppCompatActivity {
 
     private void toDisplay(){
         SearchAdapter adapter = new SearchAdapter(AppointmentSearch.this,R.layout.layout_searchnode, sortedList);
-        adapter.setDay(dayOfWeek);
         list.setAdapter(adapter);
     }
 
