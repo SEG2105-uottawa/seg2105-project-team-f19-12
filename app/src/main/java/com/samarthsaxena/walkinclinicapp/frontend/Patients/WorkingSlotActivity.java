@@ -58,10 +58,11 @@ public class WorkingSlotActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customwaitingslotlist);
         initView();
         final String username = getIntent().getStringExtra("EXTRA_USERNAME");
+        final String clinic = getIntent().getStringExtra("Employee");
         String welcomeMessage = "Welcome patient " + username;
         welcome.setText(welcomeMessage);
 
-        Employee.getWorkingHours("doge", new MyCallback() {
+        Employee.getWorkingHours(clinic, new MyCallback() {
             @Override
             public void onCallback(Object value) {
                 ArrayList<ArrayList<String>> workingHours = (ArrayList<ArrayList<String>>) value;
@@ -174,8 +175,7 @@ bookappointment.setOnClickListener(new View.OnClickListener() {
         }
         else
         {
-
-            Patient.scheduleTimeSlot(username, "doge", i, timeChosen, new MyCallback() {
+            Patient.scheduleTimeSlot(username, clinic, i, timeChosen, new MyCallback() {
                 @Override
                 public void onCallback(Object value) {
                     String appointmentDate = (String) value;

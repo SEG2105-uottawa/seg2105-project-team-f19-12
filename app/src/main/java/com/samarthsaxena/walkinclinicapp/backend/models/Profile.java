@@ -128,6 +128,17 @@ public class Profile {
         profileRef.child(PROFILE_INSURANCE_STRING)          .setValue(insuranceType);
         profileRef.child(PROFILE_PAYMENT_STRING)            .setValue(paymentMethod);
 
+        // Generate empty working time
+        ArrayList<ArrayList<String>> workingHours = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            ArrayList<String> temp = new ArrayList<>();
+            for (int j = 0; j < 7; j++) {
+                temp.add("0");
+            }
+            workingHours.add(temp);
+        }
+        dbStoreWorkingTime(this.user, workingHours);
+
         if (cb != null) {
             cb.onCallback(Profile.this);
         }

@@ -26,7 +26,7 @@ public class ManageProfileActivity extends AppCompatActivity {
         welcomeText = findViewById(R.id.welcome);
         desc = findViewById(R.id.profilepage);
         addbutton = findViewById(R.id.addprofile);
-        editbutton = findViewById(R.id.editprofile);
+        //editbutton = findViewById(R.id.editprofile);
         viewbutton = findViewById(R.id.viewprofile);
         final String username = getIntent().getStringExtra("EXTRA_USERNAME");
         String welcomeMessage = "Welcome employee "+username;
@@ -42,6 +42,7 @@ public class ManageProfileActivity extends AppCompatActivity {
             }
         });
 
+        /*
         editbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -50,6 +51,8 @@ public class ManageProfileActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+         */
         viewbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
