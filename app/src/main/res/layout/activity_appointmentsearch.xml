@@ -19,10 +19,9 @@
 
     <RadioGroup
         android:id="@+id/RG"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchText">
 
@@ -30,22 +29,39 @@
             android:id="@+id/RB1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
             android:text="@string/address" />
-
-        <RadioButton
-            android:id="@+id/RB2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
-            android:text="Working Hours" />
 
         <RadioButton
             android:id="@+id/RB3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Services" />
+
+        <RadioButton
+            android:id="@+id/RB2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Hours" />
+
     </RadioGroup>
+
+    <Spinner
+        android:id="@+id/DateDropDownSpinner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/SearchButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/RG"
+        app:layout_constraintTop_toBottomOf="@+id/searchText" />
+
+    <Button
+        android:id="@+id/SearchButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RG" />
 
     <ListView
         android:id="@+id/LV"
@@ -54,6 +70,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RG" />
+        app:layout_constraintTop_toBottomOf="@+id/SearchButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
