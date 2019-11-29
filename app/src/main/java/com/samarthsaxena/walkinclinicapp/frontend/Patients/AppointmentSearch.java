@@ -26,15 +26,16 @@ public class AppointmentSearch extends AppCompatActivity {
     private Spinner myDateSpinner;
     private Button searchBtn;
     private ListView list;
-    private int dayOfWeek;
+    private int dayOfWeek=0;
     private String searchTextString;
     private SearchFilter SF;
     private ArrayList<Profile> sortedList;//TEMP
     private ArrayList<String> temp;//TEMP
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        username=getIntent().getStringExtra("EXTRA_USERNAME");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointmentsearch);
 
@@ -104,6 +105,19 @@ public class AppointmentSearch extends AppCompatActivity {
             }
         });
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Profile profile = (Profile) adapterView.getItemAtPosition(i);
+                String Employee = profile.getUser();
+
+                Intent myIntent = new Intent(AppointmentSearch.this, WorkingSlotActivity.class);
+                myIntent.putExtra("EXTRA_USERNAME", username);
+                myIntent.putExtra("Employee", Employee);
+                startActivity(myIntent);
+            }
+        });
+
     }
 
     private int dayIndex(String day){
@@ -129,9 +143,9 @@ public class AppointmentSearch extends AppCompatActivity {
     }
 
     private void toDisplay(){
-        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(AppointmentSearch.this, android.R.layout.simple_list_item_1, temp);
-        //SearchAdapter adapter = new SearchAdapter(AppointmentSearch.this,R.layout.layout_searchnode, sortedList);
-        list.setAdapter(itemsAdapter);
+        SearchAdapter adapter = new SearchAdapter(AppointmentSearch.this,R.layout.layout_searchnode, sortedList);
+        adapter.setDay(dayOfWeek);
+        list.setAdapter(adapter);
     }
 
 }

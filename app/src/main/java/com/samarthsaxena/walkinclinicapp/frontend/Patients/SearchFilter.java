@@ -39,17 +39,17 @@ public class SearchFilter {
     }
 
     public ArrayList<Profile> filterMain(){
-        ArrayList<Profile> sortedList= new ArrayList<Profile>();
+        ArrayList<Profile> list= new ArrayList<Profile>();
 
         switch (this.param){
-            case "address":sortedList=sortedAddress();
+            case "address":list=sortedAddress();
                 break;
 //            case "service":sortedList=sortedService();
 //            break;
-            case "workingHours":sortedList=sortedWorkingHours();
-                break;
+         //   case "workingHours":sortedList=sortedWorkingHours();
+           //     break;
         }
-        return sortedList;
+        return list;
     }
 
     private ArrayList<Profile> sortedAddress(){
@@ -78,56 +78,5 @@ public class SearchFilter {
         return profilesSortedByAddress;
     }
 
-//    private ArrayList<Profile> sortedService(){
-//        ArrayList<Profile> profilesSortedByService= new ArrayList<Profile>();
-//        ArrayList<String> sortedServices= new ArrayList<String>();
-//        Profile temp;
-//
-//        for(int i=0;i<profiles.size();i++){
-//            temp=profiles.get(i);
-//            sortedServices.add(temp.getService());
-//        }
-//        Collections.sort(sortedServices, new Comparator<String>() {
-//            @Override
-//            public int compare(String S1, String S2) {
-//                return S1.compareToIgnoreCase(S2);
-//            }
-//        });
-//
-//        for(int i=0;i<sortedServices.size();i++){
-//            for(int j=0;j<sortedServices.size();j++){
-//                if(sortedServices.get(i)==profiles.get(j).getService()){
-//                    profilesSortedByService.add(profiles.get(j));
-//                }
-//            }
-//        }
-//        return profilesSortedByService;
-//    }
-
-    private ArrayList<Profile> sortedWorkingHours() {
-        ArrayList<Profile> profilesSortedByWH= new ArrayList<Profile>();
-        ArrayList<String> sortedWorkingHours= new ArrayList<String>();
-        Profile temp;
-
-        for(int i=0;i<profiles.size();i++){
-            temp=profiles.get(i);
-            sortedWorkingHours.add(temp.getWorkingTime().get(day).get(0));
-        }
-        Collections.sort(sortedWorkingHours, new Comparator<String>() {
-            @Override
-            public int compare(String S1, String S2) {
-                return S1.compareToIgnoreCase(S2);
-            }
-        });
-
-        for(int i=0;i<sortedWorkingHours.size();i++){
-            for(int j=0;j<sortedWorkingHours.size();j++){
-                if(sortedWorkingHours.get(i)==profiles.get(j).getAddress()){
-                    profilesSortedByWH.add(profiles.get(j));
-                }
-            }
-        }
-        return profilesSortedByWH;
-    }
 
 }
