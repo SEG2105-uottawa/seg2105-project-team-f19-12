@@ -17,10 +17,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Patient;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -45,6 +49,8 @@ public class WorkingSlotActivity extends AppCompatActivity {
     private int minHour = -1;
     private int maxHour = 25;
     int start_time=6;int end_time=14;
+    private int timearray[][]=new int[7][2];
+     int i=0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,22 @@ public class WorkingSlotActivity extends AppCompatActivity {
         String welcomeMessage = "Welcome patient " + username;
         welcome.setText(welcomeMessage);
 
+        Employee.getWorkingHours(username, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
+                ArrayList<ArrayList<String>> workingHours = (ArrayList<ArrayList<String>>) value;
+                for (int i = 0; i < workingHours.size(); i++) {
+                    for (int j = 0; j < workingHours.get(0).size(); j++) {
+                        timearray[i][j] = Integer.parseInt(workingHours.get(i).get(j));
+                    }
+                }
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+
+            }
+        });
 
         viwedate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +103,27 @@ public class WorkingSlotActivity extends AppCompatActivity {
                         DateFormat format2 = new SimpleDateFormat("EEEE");
                         String finalDay = format2.format(dt1);
 
+if(finalDay.equals("Monday")){
+    i=0;
+}
+                        if(finalDay.equals("Tuesday")){
+                            i=1;
+                        }
+                        if(finalDay.equals("Wednesday")){
+                            i=2;
+                        }
+                        if(finalDay.equals("Thursday")){
+                            i=3;
+                        }
+                        if(finalDay.equals("Friday")){
+                            i=4;
+                        }
+                        if(finalDay.equals("Saturday")){
+                            i=5;
+                        }
+                        if(finalDay.equals("Sunday")){
+                            i=6;
+                        }
                         if(dt1.compareTo(sysDate)<0 || years>2019){
 //                                Toast.makeText(getApplicationContext(), "Wron", Toast.LENGTH_SHORT).show();
                             dateofappoint.setText("");
@@ -128,7 +171,20 @@ bookappointment.setOnClickListener(new View.OnClickListener() {
             Toast.makeText(getApplicationContext(),"Pls fill all the details",Toast.LENGTH_LONG).show();
         }
         else
-        {Toast.makeText(getApplicationContext(),"Appointment booked successfully",Toast.LENGTH_LONG).show();
+        {
+
+            Patient.scheduleTimeSlot(username, i, start_time, new MyCallback() {
+                @Override
+                public void onCallback(Object value) {
+                    String appointmentDate = (String) value;
+                    Toast.makeText(getApplicationContext(),"Appointment booked successfully"+appointmentDate,Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void exceptionHandler(String message) {
+
+                }
+            });
             Intent myIntent = new Intent(WorkingSlotActivity.this, PatientActivity.class);
             myIntent.putExtra("EXTRA_USERNAME", username);
             startActivity(myIntent);
