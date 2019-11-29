@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Patient;
+import com.samarthsaxena.walkinclinicapp.backend.models.Profile;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,6 +1,7 @@
 package com.samarthsaxena.walkinclinicapp.frontend.Employee;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +13,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
+
+import java.util.ArrayList;
 
 public class EditWorkingHours extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     private int[][] times;
     private TextView[][] D, T;
     private Button[][] C;
     private Boolean[][] B;
+    private Button saveBtn;
 
     private TextView title;
 
@@ -25,6 +31,27 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editworkinghours);
+
+        final String username = getIntent().getStringExtra("EXTRA_USERNAME");
+
+        Employee.getWorkingHours(username, new MyCallback() {
+            @Override
+            public void onCallback(Object value) {
+
+                ArrayList<ArrayList<String>> workingHours = (ArrayList<ArrayList<String>>) value;
+                for (int i = 0; i < workingHours.size(); i++) {
+                    for (int j = 0; j < workingHours.get(0).size(); j++) {
+                        times[j][i] = Integer.parseInt(workingHours.get(i).get(j));
+                    }
+                }
+                setHours(workingHours);
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+
+            }
+        });
 
         initVar();
 
@@ -154,6 +181,26 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
             }
         });
 
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<ArrayList<String>> timesArrayList = new ArrayList<>();
+                for (int i = 0; i < times.length; i++) {
+                    ArrayList<String> temp = new ArrayList<>();
+                    for (int j = 0; j < times[0].length; j++) {
+                        int x = times[i][j];
+                        String time = Integer.toString(x);
+                        temp.add(time);
+                    }
+                    timesArrayList.add(temp);
+                }
+                Employee.editWorkingHours(username, timesArrayList);
+                Intent myIntent = new Intent(EditWorkingHours.this, WorkingHoursActivity.class);
+                myIntent.putExtra("EXTRA_USERNAME", username);
+                startActivity(myIntent);
+            }
+        });
+
     }
 
     @Override
@@ -266,10 +313,28 @@ public class EditWorkingHours extends AppCompatActivity implements TimePickerDia
             B[1][i]=false;
         }
 
+        saveBtn = findViewById(R.id.saveButton);
     }
 
     public int[][] getTimes(){
         return times;
+    }
+
+    private void setHours(ArrayList<ArrayList<String>> workingTime){
+        for(int i=0;i<7;i++){
+            if(times[0][i]<13){
+                T[0][i].setText(workingTime.get(i).get(0)+":00 AM ");
+            }else{
+                T[0][i].setText(Integer.parseInt(workingTime.get(i).get(0))-12+":00 PM ");
+            }
+
+            if(times[1][i]<13){
+                T[1][i].setText(" "+workingTime.get(i).get(1)+":00 AM");
+            }else{
+                T[1][i].setText(" "+(Integer.parseInt(workingTime.get(i).get(1))-12)+":00 PM");
+            }
+
+        }
     }
 
 }

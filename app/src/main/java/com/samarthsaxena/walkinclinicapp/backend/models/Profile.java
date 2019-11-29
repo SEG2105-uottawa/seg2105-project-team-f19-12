@@ -179,10 +179,12 @@ public class Profile {
                             insuranceType = userSnapshot.child(PROFILE_INSURANCE_STRING).getValue().toString();
                             paymentMethod = userSnapshot.child(PROFILE_PAYMENT_STRING).getValue().toString();
                             for (int i = 0; i < 7; i++) {
-                                Iterator<DataSnapshot> iter = userSnapshot.child(weekday[i]).getChildren().iterator();
+                                Iterator<DataSnapshot> iter = userSnapshot.child(PROFILE_TIME_STRING).child(Integer.toString(i)).getChildren().iterator();
+                                ArrayList<String> temp = new ArrayList<>();
                                 while (iter.hasNext()) {
-                                    workingTime.get(i).add(iter.next().toString());
+                                    temp.add(iter.next().getValue().toString());
                                 }
+                                workingTime.add(temp);
                             }
 
                         } catch (NullPointerException e) {
@@ -190,6 +192,7 @@ public class Profile {
                         }
 
                         profile = new Profile(user, address, phoneNumber, clinic, insuranceType, paymentMethod);
+                        profile.setWorkingTime(workingTime);
                         profiles.add(profile);
                     }
                 }
@@ -248,10 +251,12 @@ public class Profile {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot profile: dataSnapshot.getChildren()) {
-                    if (profile.child(PROFILE_USER_STRING).toString().equals(user)) {
+                    if (profile.child(PROFILE_USER_STRING).getValue().toString().equals(user)) {
                         for (int i = 0; i < 7; i++) {
-                            ArrayList<String> interval = workingTime.get(i);
-                            profile.child(PROFILE_TIME_STRING).child(weekday[i]).getRef().setValue(interval);
+                            ArrayList<String> interval = new ArrayList<>();
+                            interval.add(workingTime.get(0).get(i));
+                            interval.add(workingTime.get(1).get(i));
+                            profile.getRef().child(PROFILE_TIME_STRING).child(Integer.toString(i)).setValue(interval);
                         }
                         generateTimeslots(workingTime, profile.getRef());
                     }
@@ -266,6 +271,29 @@ public class Profile {
         });
     }
 
+    /*
+    public static void dbGetWorkingTime(final String user, final MyCallback cb) {
+
+        Query dbQuery = db.getReference().child(PROFILE_STRING).orderByChild(PROFILE_USER_STRING).equalTo(user);
+
+        dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot profile: dataSnapshot.getChildren()) {
+                    if (profile.child(PROFILE_USER_STRING).getValue().toString().equals(user)) {
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    */
     public static void dbGetTimeSlots(final String username, final MyCallback cb) {
 
         DatabaseReference ref = db.getReference().child(PROFILE_STRING).child(PROFILE_TIME_SLOT_STRING);
@@ -299,16 +327,16 @@ public class Profile {
 
     private static void generateTimeslots(ArrayList<ArrayList<String>> workingTime, DatabaseReference ref) {
         for (int i = 0; i < 7; i++) {
-            DatabaseReference slotRef = ref.child(PROFILE_TIME_SLOT_STRING).child(weekday[i]);
+            DatabaseReference slotRef = ref.child(PROFILE_TIME_SLOT_STRING).child(Integer.toString(i));
             // Divide time slot into 15 minutes
-            int timeLimitBegin = Integer.parseInt(workingTime.get(i).get(0));
-            int timeLimitEnd = Integer.parseInt(workingTime.get(i).get(1));
+            int timeLimitBegin = Integer.parseInt(workingTime.get(0).get(i));
+            int timeLimitEnd = Integer.parseInt(workingTime.get(1).get(i));
             int numOf15minSlots = (timeLimitEnd - timeLimitBegin) * 4;
             for (int j = 0; j < numOf15minSlots; j++) {
                 int hour1 = timeLimitBegin + (int)(j / 4);
                 int hour2 = timeLimitBegin + (int)((j + 1) / 4);
-                int min1 = 15*(i % 4);
-                int min2 = 15*((i + 1) % 4);
+                int min1 = 15*(j % 4);
+                int min2 = 15*((j + 1) % 4);
                 String min1Str = (min1 == 0) ? "00" : Integer.toString(min1);
                 String min2Str = (min2 == 0) ? "00" : Integer.toString(min2);
                 String parsedTime = (hour1 + ":" + min1Str + " - " + hour2 + ":" + min2Str);

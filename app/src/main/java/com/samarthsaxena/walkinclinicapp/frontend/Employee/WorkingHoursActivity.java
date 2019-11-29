@@ -9,6 +9,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.samarthsaxena.walkinclinicapp.R;
+import com.samarthsaxena.walkinclinicapp.backend.MyCallback;
+import com.samarthsaxena.walkinclinicapp.backend.facades.Employee;
+
+import java.util.ArrayList;
 
 public class WorkingHoursActivity extends AppCompatActivity {
     private int[][] times;
@@ -23,14 +27,29 @@ public class WorkingHoursActivity extends AppCompatActivity {
         setContentView(R.layout.activity_workinghours);
 
         final String username = getIntent().getStringExtra("EXTRA_USERNAME");
-        init();
 
-        Nav.setOnClickListener(new View.OnClickListener() {
+        Employee.getWorkingHours(username, new MyCallback() {
             @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(WorkingHoursActivity.this, EditWorkingHours.class);
-                myIntent.putExtra("EXTRA_USERNAME", username);
-                startActivity(myIntent);
+            public void onCallback(Object value) {
+
+                ArrayList<ArrayList<String>> workingHours = (ArrayList<ArrayList<String>>) value;
+
+                init();
+                setHours(workingHours);
+
+                Nav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent myIntent = new Intent(WorkingHoursActivity.this, EditWorkingHours.class);
+                        myIntent.putExtra("EXTRA_USERNAME", username);
+                        startActivity(myIntent);
+                    }
+                });
+            }
+
+            @Override
+            public void exceptionHandler(String message) {
+
             }
         });
 
@@ -83,27 +102,20 @@ public class WorkingHoursActivity extends AppCompatActivity {
         T[1][5]=findViewById(R.id.E6);
         T[1][6]=findViewById(R.id.E7);
 
-        //Temp
-        for(int i=0;i<7;i++){
-            times[0][i]=6;
-            times[1][i]=24;
-        }
-        setHours();
-
     }
 
-    private void setHours(){
+    private void setHours(ArrayList<ArrayList<String>> workingTime){
         for(int i=0;i<7;i++){
             if(times[0][i]<13){
-                T[0][i].setText(times[0][i]+":00 AM ");
+                T[0][i].setText(workingTime.get(i).get(0)+":00 AM ");
             }else{
-                T[0][i].setText(times[0][i]-12+":00 PM ");
+                T[0][i].setText(Integer.parseInt(workingTime.get(i).get(0))-12+":00 PM ");
             }
 
             if(times[1][i]<13){
-                T[1][i].setText(" "+times[1][i]+":00 AM");
+                T[1][i].setText(" "+workingTime.get(i).get(1)+":00 AM");
             }else{
-                T[1][i].setText(" "+(times[1][i]-12)+":00 PM");
+                T[1][i].setText(" "+(Integer.parseInt(workingTime.get(i).get(1))-12)+":00 PM");
             }
 
         }

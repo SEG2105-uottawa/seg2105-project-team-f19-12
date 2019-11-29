@@ -27,4 +27,15 @@
     //EmployeeWorkingHours
     <string name="wordTo">To</string>>
 
+    //Search Appointment
+    <string-array name="WeekDays">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
 </resources>
