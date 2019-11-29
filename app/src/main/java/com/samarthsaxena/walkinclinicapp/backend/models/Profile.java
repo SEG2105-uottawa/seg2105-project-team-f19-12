@@ -334,13 +334,13 @@ public class Profile {
 
     }
 
-    public static void dbFillTimeSlot(final String user, final int weekday, final int hour, final MyCallback cb) {
-        Query dbQuery = db.getReference().child(PROFILE_STRING).orderByChild(PROFILE_USER_STRING).equalTo(user);
+    public static void dbFillTimeSlot(final String patient, final String clinic, final int weekday, final int hour, final MyCallback cb) {
+        Query dbQuery = db.getReference().child(PROFILE_STRING).orderByChild(PROFILE_USER_STRING).equalTo(clinic);
         dbQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot profile: dataSnapshot.getChildren()) {
-                    if (profile.child(PROFILE_USER_STRING).getValue().toString().equals(user)) {
+                    if (profile.child(PROFILE_USER_STRING).getValue().toString().equals(clinic)) {
                         DatabaseReference dayRef = profile.getRef().child(PROFILE_TIME_SLOT_STRING).child(Integer.toString(weekday));
                         // get start and end time boundaries
                         Iterator<DataSnapshot> iter1 = profile.child(PROFILE_TIME_STRING).child(Integer.toString(weekday)).getChildren().iterator();
@@ -356,7 +356,7 @@ public class Profile {
                                 for (int i = 0; !snap.getValue().toString().equals("") && i < 4; i++) {
                                     snap = iter2.next();
                                 }
-                                snap.getRef().setValue(user);
+                                snap.getRef().setValue(patient);
                                 cb.onCallback(snap.getKey().toString());
                                 return;
                             }

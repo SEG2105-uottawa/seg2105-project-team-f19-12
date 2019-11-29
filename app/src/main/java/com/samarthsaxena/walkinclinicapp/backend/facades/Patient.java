@@ -12,14 +12,14 @@ public class Patient {
         Profile.dbGetAll("all", null, cb);
     }
 
-    public static void scheduleTimeSlot(final String username, final int weekday, final int hour, final MyCallback cb) {
-        Profile.dbGetAll(Profile.PROFILE_USER_STRING, username, new MyCallback() {
+    public static void scheduleTimeSlot(final String patient, final String clinic, final int weekday, final int hour, final MyCallback cb) {
+        Profile.dbGetAll(Profile.PROFILE_USER_STRING, clinic, new MyCallback() {
             @Override
             public void onCallback(Object value) {
                 ArrayList<Profile> profiles = (ArrayList<Profile>) value;
                 // Check only one employee is returned
                 if (profiles.size() != 1) {
-                    cb.exceptionHandler("Error: Employee with username <" + username + "> doesn't exist");
+                    cb.exceptionHandler("Error: Employee with username <" + clinic + "> doesn't exist");
                     return;
                 }
                 Profile profile = profiles.get(0);
@@ -30,7 +30,7 @@ public class Patient {
                     cb.exceptionHandler("Error: Requested time outside clinic working hours");
                     return;
                 }
-                Profile.dbFillTimeSlot(username, weekday, hour, new MyCallback() {
+                Profile.dbFillTimeSlot(patient, clinic, weekday, hour, new MyCallback() {
                     @Override
                     public void onCallback(Object value) {
                         cb.onCallback(value);
